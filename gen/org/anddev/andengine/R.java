@@ -9,6 +9,27 @@ package org.anddev.andengine;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>BANNER</code></td><td>1</td><td></td></tr>
+<tr><td><code>IAB_MRECT</code></td><td>2</td><td></td></tr>
+<tr><td><code>IAB_BANNER</code></td><td>3</td><td></td></tr>
+<tr><td><code>IAB_LEADERBOARD</code></td><td>4</td><td></td></tr>
+</table>
+         */
+        public static final int adSize=0x7f010000;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int adUnitId=0x7f010001;
     }
     public static final class color {
         public static final int of_transparent=0x7f040000;
@@ -42,23 +63,29 @@ public final class R {
         public static final int of_notification_bkg=0x7f020019;
     }
     public static final class id {
-        public static final int exit_feint=0x7f080010;
-        public static final int home=0x7f08000e;
-        public static final int nativebrowser=0x7f080008;
-        public static final int of_achievement_icon=0x7f080001;
-        public static final int of_achievement_icon_frame=0x7f080002;
-        public static final int of_achievement_notification=0x7f080000;
-        public static final int of_achievement_progress_icon=0x7f080006;
-        public static final int of_achievement_score=0x7f080004;
-        public static final int of_achievement_score_icon=0x7f080005;
-        public static final int of_achievement_text=0x7f080003;
-        public static final int of_icon=0x7f080009;
-        public static final int of_text=0x7f08000a;
-        public static final int of_text1=0x7f08000b;
-        public static final int of_text2=0x7f08000c;
-        public static final int progress=0x7f080007;
-        public static final int settings=0x7f08000f;
-        public static final int webview=0x7f08000d;
+        public static final int BANNER=0x7f070000;
+        public static final int IAB_BANNER=0x7f070002;
+        public static final int IAB_LEADERBOARD=0x7f070003;
+        public static final int IAB_MRECT=0x7f070001;
+        public static final int adView=0x7f070005;
+        public static final int exit_feint=0x7f070016;
+        public static final int home=0x7f070014;
+        public static final int nativebrowser=0x7f07000e;
+        public static final int of_achievement_icon=0x7f070007;
+        public static final int of_achievement_icon_frame=0x7f070008;
+        public static final int of_achievement_notification=0x7f070006;
+        public static final int of_achievement_progress_icon=0x7f07000c;
+        public static final int of_achievement_score=0x7f07000a;
+        public static final int of_achievement_score_icon=0x7f07000b;
+        public static final int of_achievement_text=0x7f070009;
+        public static final int of_icon=0x7f07000f;
+        public static final int of_text=0x7f070010;
+        public static final int of_text1=0x7f070011;
+        public static final int of_text2=0x7f070012;
+        public static final int progress=0x7f07000d;
+        public static final int settings=0x7f070015;
+        public static final int webview=0x7f070013;
+        public static final int xmllayoutexample_rendersurfaceview=0x7f070004;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -70,7 +97,7 @@ public final class R {
         public static final int of_webnav=0x7f030006;
     }
     public static final class menu {
-        public static final int of_dashboard=0x7f070000;
+        public static final int of_dashboard=0x7f080000;
     }
     public static final class string {
         public static final int app_name=0x7f05002b;
@@ -121,4 +148,54 @@ public final class R {
     public static final class style {
         public static final int OFLoading=0x7f060000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a com_google_ads_AdView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_google_ads_AdView_adSize org.anddev.andengine.pvb:adSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_google_ads_AdView_adUnitId org.anddev.andengine.pvb:adUnitId}</code></td><td></td></tr>
+           </table>
+           @see #com_google_ads_AdView_adSize
+           @see #com_google_ads_AdView_adUnitId
+         */
+        public static final int[] com_google_ads_AdView = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link org.anddev.andengine.pvb.R.attr#adSize}
+          attribute's value can be found in the {@link #com_google_ads_AdView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>BANNER</code></td><td>1</td><td></td></tr>
+<tr><td><code>IAB_MRECT</code></td><td>2</td><td></td></tr>
+<tr><td><code>IAB_BANNER</code></td><td>3</td><td></td></tr>
+<tr><td><code>IAB_LEADERBOARD</code></td><td>4</td><td></td></tr>
+</table>
+          @attr name android:adSize
+        */
+        public static final int com_google_ads_AdView_adSize = 0;
+        /**
+          <p>This symbol is the offset where the {@link org.anddev.andengine.pvb.R.attr#adUnitId}
+          attribute's value can be found in the {@link #com_google_ads_AdView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:adUnitId
+        */
+        public static final int com_google_ads_AdView_adUnitId = 1;
+    };
 }

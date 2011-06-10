@@ -6,15 +6,26 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.extra.ExtraGameActivity;
 
+import android.util.Log;
+
 public class PlantsVsBugs extends ExtraGameActivity {
 
 	private static int WIDTH = 720;
 	private static int HEIGHT = 480;
 
 	@Override
+	protected int getLayoutID() {
+		return R.layout.main;
+	}
+
+	@Override
+	protected int getRenderSurfaceViewID() {
+		return R.id.xmllayoutexample_rendersurfaceview;
+	}
+
+	@Override
 	public void onLoadComplete() {
-		// TODO Auto-generated method stub
-		
+		Log.i("Game", "Prova");
 	}
 
 	@Override

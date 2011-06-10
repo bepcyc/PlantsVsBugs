@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="AndEngine_src"/>
 	<classpathentry kind="src" path="OpenFeintAPI_src"/>
+	<classpathentry kind="lib" path="libs/GoogleAdMobAdsSdk-4.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
