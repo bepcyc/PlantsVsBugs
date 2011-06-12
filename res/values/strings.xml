@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, PlantsVsBugs!</string>
-    <string name="app_name">Plants Vs Bugs</string>
+    <string name="app_name">Plants vs Bugs</string>
 </resources>

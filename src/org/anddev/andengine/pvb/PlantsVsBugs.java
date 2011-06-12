@@ -5,8 +5,7 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.extra.ExtraGameActivity;
-
-import android.util.Log;
+import org.anddev.andengine.pvb.singleton.GameData;
 
 public class PlantsVsBugs extends ExtraGameActivity {
 
@@ -25,7 +24,7 @@ public class PlantsVsBugs extends ExtraGameActivity {
 
 	@Override
 	public void onLoadComplete() {
-		Log.i("Game", "Prova");
+		
 	}
 
 	@Override
@@ -35,8 +34,7 @@ public class PlantsVsBugs extends ExtraGameActivity {
 
 	@Override
 	public void onLoadResources() {
-		// TODO Auto-generated method stub
-		
+		GameData.getInstance().initData();
 	}
 
 	@Override

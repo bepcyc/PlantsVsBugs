@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.anddev.andengine.pvb"
-      android:versionCode="1"
-      android:versionName="1.0">
+	package="org.anddev.andengine.pvb"
+	android:versionCode="1"
+	android:versionName="1.0">
+
     <uses-sdk android:minSdkVersion="7" />
 
+	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -18,9 +20,26 @@
             </intent-filter>
         </activity>
 
+	<activity android:name="com.openfeint.internal.ui.IntroFlow"
+              android:label="IntroFlow"
+              android:configChanges="orientation|keyboardHidden"
+              android:theme="@android:style/Theme.NoTitleBar"/>
+	<activity android:name="com.openfeint.api.ui.Dashboard"
+              android:label="Dashboard"
+              android:configChanges="orientation|keyboardHidden"
+              android:theme="@android:style/Theme.NoTitleBar"/>
+	<activity android:name="com.openfeint.internal.ui.Settings"
+              android:label="Settings"
+              android:configChanges="orientation|keyboardHidden"
+              android:theme="@android:style/Theme.NoTitleBar"/>
+	<activity android:name="com.openfeint.internal.ui.NativeBrowser"
+              android:label="NativeBrowser"
+              android:configChanges="orientation|keyboardHidden"
+			  android:theme="@android:style/Theme.NoTitleBar"/>
+
 	<activity android:name="com.google.ads.AdActivity"
-		android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
-		android:configChanges="keyboard|keyboardHidden|orientation"/>
+			  android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+			  android:configChanges="keyboard|keyboardHidden|orientation"/>
 
     </application>
 </manifest>
