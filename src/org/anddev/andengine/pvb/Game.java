@@ -36,10 +36,10 @@ public class Game extends ExtraScene {
 		for (int i = 0; i < 45; i++) {
 			int x = i % 9;
 			int y = (int)(i / 9);
-			Rectangle field = new Rectangle(0, 0, 68, 75);
+			Rectangle field = new Rectangle(0, 0, 68, 74);
 			field.setColor(0f, 0f, 0f);
-			field.setAlpha(0.2f);
-			field.setPosition(44 + x * 71,  93 + y * 78);
+			field.setAlpha(0.05f);
+			field.setPosition(42 + x * 71,  96 + y * 77);
 			getChild(BACKGROUND_LAYER).attachChild(field);
 			
 			registerTouchArea(field);
