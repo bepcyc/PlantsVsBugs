@@ -11,13 +11,18 @@ public class GameData {
     private static GameData mInstance = null;
     
     // cards
-    public TextureRegion mSelect;
-    public TextureRegion mFlower1;
-	public TextureRegion mFlower2;
+    public TextureRegion mCardSelected;
+    
+    public TextureRegion mCard;
+    public TextureRegion mCardTomato;
+	public TextureRegion mCardFlower2;
 
-	// objects
-	public TextureRegion mObjectFlower1;
-	public TextureRegion mObjectFlower2;
+	
+	// plants
+	public TextureRegion mPlantShadow;
+	
+	public TextureRegion mPlantTomato;
+	public TextureRegion mPlantFlower2;
 	
 	private LinkedList<Card> mCards;
 	
@@ -32,13 +37,17 @@ public class GameData {
 	}
 	
 	public void initData() {
-		this.mSelect = Resource.getTexture(64, 128, "select");
+		this.mCardSelected = Resource.getTexture(64, 128, "select");
 		
-		this.mFlower1 = Resource.getTexture(64, 128, "card");
-		this.mFlower2 = Resource.getTexture(64, 128, "card1");
+		this.mCard = Resource.getTexture(64, 128, "card");
 		
-		this.mObjectFlower1 = Resource.getTexture(64, 128, "default");
-		this.mObjectFlower2 = Resource.getTexture(64, 128, "default2");
+		this.mCardTomato = Resource.getTexture(64, 128, "card_tomato");
+		this.mCardFlower2 = Resource.getTexture(64, 128, "card_flower2");
+		
+		this.mPlantShadow = Resource.getTexture(64, 16, "shadow");
+		
+		this.mPlantTomato = Resource.getTexture(64, 128, "tomato");
+		this.mPlantFlower2 = Resource.getTexture(64, 128, "default2");
 		
 		this.mCards = new LinkedList<Card>();
 	}
