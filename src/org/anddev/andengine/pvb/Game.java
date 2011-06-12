@@ -86,7 +86,7 @@ public class Game extends ExtraScene {
 					this.mSelect.startRecharge();
 					
 					IShape obj = this.mSelect.getObject();
-					obj.setPosition(this.mSelect.getWidthScaled() / 2 - obj.getWidthScaled() / 2, this.mSelect.getHeightScaled() / 2 - obj.getHeightScaled() / 2);
+					obj.setPosition(this.mSelect.getWidthScaled() / 2 - obj.getWidthScaled() / 2 + 4, this.mSelect.getHeightScaled() / 2 - obj.getHeightScaled() / 2 - 43);
 					field.attachChild(obj);
 				}
 			}

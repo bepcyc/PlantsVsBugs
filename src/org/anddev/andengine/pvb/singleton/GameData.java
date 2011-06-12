@@ -37,8 +37,8 @@ public class GameData {
 		this.mFlower1 = Resource.getTexture(64, 128, "card");
 		this.mFlower2 = Resource.getTexture(64, 128, "card1");
 		
-		this.mObjectFlower1 = Resource.getTexture(64, 64, "default");
-		this.mObjectFlower2 = Resource.getTexture(64, 64, "default2");
+		this.mObjectFlower1 = Resource.getTexture(64, 128, "default");
+		this.mObjectFlower2 = Resource.getTexture(64, 128, "default2");
 		
 		this.mCards = new LinkedList<Card>();
 	}
