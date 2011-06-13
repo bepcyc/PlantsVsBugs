@@ -39,7 +39,7 @@ public class Game extends ExtraScene {
 			field.setColor(0f, 0f, 0f);
 			field.setAlpha(0.05f);
 			field.setPosition(42 + x * 71,  96 + y * 77);
-			getChild(BACKGROUND_LAYER).attachChild(field);
+			getChild(GAME_LAYER).attachChild(field);
 			
 			registerTouchArea(field);
 		}
