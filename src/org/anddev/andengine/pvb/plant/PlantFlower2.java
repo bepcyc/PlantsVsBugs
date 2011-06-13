@@ -7,6 +7,8 @@ public class PlantFlower2 extends Plant {
 	
 	public PlantFlower2() {
 		super();
+		this.mShotDelay = 5f;
+		
 		getLastChild().attachChild(new Sprite(0, -119, GameData.getInstance().mPlantFlower2));
 	}
 	

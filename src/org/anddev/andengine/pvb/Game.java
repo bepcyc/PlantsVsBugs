@@ -13,6 +13,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.card.Card;
 import org.anddev.andengine.pvb.card.CardTomato;
 import org.anddev.andengine.pvb.card.CardFlower2;
+import org.anddev.andengine.pvb.plant.Plant;
 import org.anddev.andengine.pvb.singleton.GameData;
 
 import android.util.Log;
@@ -83,7 +84,8 @@ public class Game extends ExtraScene {
 					Log.i("Game", "recharge/object");
 					
 					this.mSelect.startRecharge();
-					field.attachChild(this.mSelect.getPlant());
+					Plant plant = this.mSelect.getPlant();
+					field.attachChild(plant);
 				}
 			}
 		}
