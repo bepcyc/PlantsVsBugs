@@ -39,25 +39,14 @@ public abstract class Plant extends Entity {
 	
 	private void shot() {
 		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
-		final Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
+		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
 		Path path = new Path(2).to(getParent().getX() + 45, getParent().getY() + this.mShotHeight).to(680, getParent().getY() + this.mShotHeight);
 		shot.registerEntityModifier(new PathModifier(speed, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				Plant.this.remove(shot);
+				Enviroment.getInstance().safeDetachEntity(pItem);
 			}}, EaseSineInOut.getInstance()));
 		Enviroment.getInstance().getScene().getChild(ExtraScene.GAME_LAYER).attachChild(shot);
-	}
-	
-	private void remove(final IEntity pItem) {
-		//registerUpdateHandler(new TimerHandler(1.2f, true, new ITimerCallback() {
-		//	@Override
-		//	public void onTimePassed(TimerHandler pTimerHandler) {
-				//pItem.clearEntityModifiers();
-				//pItem.clearUpdateHandlers();
-				Enviroment.getInstance().getScene().getChild(ExtraScene.GAME_LAYER).detachChild(pItem);
-		//	}
-		//}));
 	}
 	
 }
