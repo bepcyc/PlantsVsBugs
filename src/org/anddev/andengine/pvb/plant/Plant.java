@@ -17,8 +17,8 @@ import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 public abstract class Plant extends Entity {
 	
 	protected float mShotHeight = 28f;
-	protected float mShotSpeed = 150f;
-	protected float mShotDelay = 3f;
+	protected float mShotSpeed = 200f;
+	protected float mShotDelay = 4f;
 	protected boolean mCanShot = true;
 	
 	public Plant() {
@@ -41,7 +41,7 @@ public abstract class Plant extends Entity {
 		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
 		Sprite shadow = new Sprite(0, 21, GameData.getInstance().mShotShadow);
-		shadow.setAlpha(0.5f);
+		shadow.setAlpha(0.4f);
 		shot.attachChild(shadow);
 		
 		Path path = new Path(2).to(getParent().getX() + 45, getParent().getY() + this.mShotHeight).to(680, getParent().getY() + this.mShotHeight);
