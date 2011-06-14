@@ -40,6 +40,10 @@ public abstract class Plant extends Entity {
 	private void shot() {
 		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
+		Sprite shadow = new Sprite(0, 21, GameData.getInstance().mShotShadow);
+		shadow.setAlpha(0.5f);
+		shot.attachChild(shadow);
+		
 		Path path = new Path(2).to(getParent().getX() + 45, getParent().getY() + this.mShotHeight).to(680, getParent().getY() + this.mShotHeight);
 		shot.registerEntityModifier(new PathModifier(speed, path, new IEntityModifierListener() {
 			@Override

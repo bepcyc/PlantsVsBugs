@@ -11,6 +11,7 @@ public class GameData {
     private static GameData mInstance = null;
     
     public TextureRegion mShot;
+    public TextureRegion mShotShadow;
     
     // cards
     public TextureRegion mCardSelected;
@@ -40,6 +41,7 @@ public class GameData {
 	
 	public void initData() {
 		this.mShot = Resource.getTexture(64, 64, "shot");
+		this.mShotShadow = Resource.getTexture(64, 64, "shadow2");
 		
 		this.mCardSelected = Resource.getTexture(64, 128, "select");
 		

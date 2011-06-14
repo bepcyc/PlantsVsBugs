@@ -29,7 +29,7 @@ public class PlantsVsBugs extends ExtraGameActivity {
 
 	@Override
 	public Engine onLoadEngine() {
-		return Enviroment.createEngine(ScreenOrientation.LANDSCAPE, WIDTH, HEIGHT, true);
+		return Enviroment.createEngine(ScreenOrientation.LANDSCAPE, WIDTH, HEIGHT, true, false);
 	}
 
 	@Override
