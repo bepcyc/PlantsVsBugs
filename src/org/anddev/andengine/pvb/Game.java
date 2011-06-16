@@ -2,19 +2,26 @@ package org.anddev.andengine.pvb;
 
 import java.util.LinkedList;
 
+import org.anddev.andengine.engine.handler.timer.ITimerCallback;
+import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.extra.Resource;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.pvb.bug.Bug;
+import org.anddev.andengine.pvb.bug.BugLadybug;
 import org.anddev.andengine.pvb.card.Card;
 import org.anddev.andengine.pvb.card.CardTomato;
 import org.anddev.andengine.pvb.card.CardFlower2;
 import org.anddev.andengine.pvb.plant.Plant;
 import org.anddev.andengine.pvb.singleton.GameData;
+import org.anddev.andengine.util.MathUtils;
+import org.anddev.andengine.util.SimplePreferences;
 
 import android.util.Log;
 
@@ -26,6 +33,12 @@ public class Game extends ExtraScene {
 
 	@Override
 	public void createScene() {
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count96.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count173.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count250.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
+		
 		this.mBack = Resource.getTexture(1024, 512, "back");
 		this.mTable  = Resource.getTexture(1024, 128, "table");
 		Sprite back = new Sprite(0, 0, this.mBack);
@@ -63,6 +76,15 @@ public class Game extends ExtraScene {
 			c.setPosition(start_x + i * 69, 7);
 			getChild(EXTRA_GAME_LAYER).attachChild(c);
 		}
+		
+		this.getEnemy(5); // first a 3 sec
+		
+		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Game.this.getEnemy(MathUtils.random(3, 13));
+			}
+		}));
 	}
 
 	@Override
@@ -99,6 +121,18 @@ public class Game extends ExtraScene {
 	@Override
 	public MenuScene createMenu() {
 		return null;
+	}
+
+	private void getEnemy(int pDelay) {
+		int y = MathUtils.random(0, 4);
+		final Bug e = new BugLadybug(96 + y * 77); // stessa altezza dei fields
+		
+		registerUpdateHandler(new TimerHandler(pDelay, false, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Game.this.getChild(Game.GAME_LAYER).attachChild(e);
+			}
+		}));
 	}
 
 }

@@ -10,6 +10,8 @@ public class GameData {
 	
     private static GameData mInstance = null;
     
+    private int mLevel = 1;
+    
     public TextureRegion mShot;
     public TextureRegion mShotShadow;
     
@@ -61,4 +63,13 @@ public class GameData {
 	public LinkedList<Card> getCards() {
 		return this.mCards;
 	}
+
+	public int getLevel() {
+		return this.mLevel;
+	}
+
+	public void nextLevel() {
+		this.mLevel++;
+	}
+	
 }

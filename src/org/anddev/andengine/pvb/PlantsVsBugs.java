@@ -9,9 +9,6 @@ import org.anddev.andengine.pvb.singleton.GameData;
 
 public class PlantsVsBugs extends ExtraGameActivity {
 
-	private static int WIDTH = 720;
-	private static int HEIGHT = 480;
-
 	@Override
 	protected int getLayoutID() {
 		return R.layout.main;
@@ -29,7 +26,7 @@ public class PlantsVsBugs extends ExtraGameActivity {
 
 	@Override
 	public Engine onLoadEngine() {
-		return Enviroment.createEngine(ScreenOrientation.LANDSCAPE, WIDTH, HEIGHT, true, false);
+		return Enviroment.createEngine(ScreenOrientation.LANDSCAPE, true, false);
 	}
 
 	@Override

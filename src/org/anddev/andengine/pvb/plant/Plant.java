@@ -1,10 +1,14 @@
 package org.anddev.andengine.pvb.plant;
 
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.PathModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -12,6 +16,7 @@ import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.singleton.GameData;
+import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
@@ -20,7 +25,7 @@ public abstract class Plant extends Entity {
 	protected float mShotHeight = 28f;
 	protected float mShotSpeed = 200f;
 	protected float mShotDelay = 4f;
-	protected boolean mCanShot = true;
+	protected boolean mCanShot = false;
 	
 	public Plant(final TextureRegion pTexture) {
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
@@ -30,6 +35,8 @@ public abstract class Plant extends Entity {
 	}
 	
 	public void onAttached() {
+		check();
+		
 		registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
@@ -37,8 +44,26 @@ public abstract class Plant extends Entity {
 					Plant.this.shot();
 			}
 		}));
+		
+		Enviroment.getInstance().getScene().registerUpdateHandler(new IUpdateHandler() {
+			@Override
+			public void onUpdate(float pSecondsElapsed) {
+				Plant.this.check();
+			}
+
+			@Override
+			public void reset() {}
+		});
 	}
 	
+	private void check() {
+		String y = Float.toString(getParent().getY());
+		if (SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "count" + y) > 0)
+			this.mCanShot = true;
+		else
+			this.mCanShot = false;
+	}
+
 	private void shot() {
 		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
@@ -53,6 +78,13 @@ public abstract class Plant extends Entity {
 				Enviroment.getInstance().safeDetachEntity(pItem);
 			}}, EaseSineInOut.getInstance()));
 		Enviroment.getInstance().getScene().getChild(ExtraScene.GAME_LAYER).attachChild(shot);
+		
+		getFirstChild().registerEntityModifier(
+				new SequenceEntityModifier(
+						new ScaleModifier(0.3f, 1f, 1.1f),
+						new ScaleModifier(0.3f, 1.1f, 1f)
+				)
+		);
 	}
 	
 }
