@@ -7,7 +7,7 @@ import org.anddev.andengine.pvb.singleton.GameData;
 
 public class CardTomato extends Card {
 
-	public CardTomato(Game game, float pX, float pY) {
+	public CardTomato(final Game game, final float pX, final float pY) {
 		super(game, pX, pY, GameData.getInstance().mCardTomato);
 		
 		this.mRecharge = 10f;

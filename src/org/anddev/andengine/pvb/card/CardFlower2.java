@@ -7,7 +7,7 @@ import org.anddev.andengine.pvb.singleton.GameData;
 
 public class CardFlower2 extends Card {
 
-	public CardFlower2(Game game, float pX, float pY) {
+	public CardFlower2(final Game game, final float pX, final float pY) {
 		super(game, pX, pY, GameData.getInstance().mCardFlower2);
 		
 		this.mRecharge = 20f;

@@ -22,7 +22,7 @@ public abstract class Card extends Sprite {
 	protected float mRecharge = 10f;
 	protected boolean mReady = false;
 
-	public Card(Game game, float pX, float pY, TextureRegion pTextureRegion) {
+	public Card(final Game game, final float pX, float pY, final TextureRegion pTextureRegion) {
 		super(pX, pY, GameData.getInstance().mCard);
 		Sprite image = new Sprite(4, 4, pTextureRegion);
 		attachChild(image);
