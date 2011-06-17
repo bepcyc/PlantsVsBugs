@@ -27,8 +27,7 @@ import android.util.Log;
 
 public class Game extends ExtraScene {
 
-	private TextureRegion mBack;
-	private TextureRegion mTable;
+	private TextureRegion mBackground;
 	private Card mSelect;
 
 	@Override
@@ -39,10 +38,9 @@ public class Game extends ExtraScene {
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
 		
-		this.mBack = Resource.getTexture(1024, 512, "back");
-		this.mTable  = Resource.getTexture(1024, 128, "table");
-		Sprite back = new Sprite(0, 0, this.mBack);
-		Sprite table = new Sprite(0, 0, this.mTable);
+		this.mBackground = Resource.getTexture(1024, 512, "back");
+		Sprite back = new Sprite(0, 0, this.mBackground);
+		Sprite table = new Sprite(0, 0, GameData.getInstance().mTable);
 		getChild(BACKGROUND_LAYER).attachChild(back);
 		getChild(EXTRA_GAME_LAYER).attachChild(table);
 		
@@ -62,15 +60,14 @@ public class Game extends ExtraScene {
 	@Override
 	public void startScene() {
 		LinkedList<Card> cards = GameData.getInstance().getCards();
-		cards.add(new CardTomato(this, 0, 0));
-		cards.add(new CardFlower2(this, 0, 0));
-		cards.add(new CardTomato(this, 0, 0));
-		cards.add(new CardTomato(this, 0, 0));
-		cards.add(new CardFlower2(this, 0, 0));
-		cards.add(new CardTomato(this, 0, 0));
+		cards.add(new CardTomato(0, 0));
+		cards.add(new CardFlower2(0, 0));
+		cards.add(new CardTomato(0, 0));
+		cards.add(new CardTomato(0, 0));
+		cards.add(new CardFlower2(0, 0));
+		cards.add(new CardTomato(0, 0));
 		
 		int start_x = 106;
-		
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
 			c.setPosition(start_x + i * 69, 7);

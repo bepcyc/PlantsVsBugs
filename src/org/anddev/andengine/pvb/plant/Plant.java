@@ -6,7 +6,6 @@ import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.PathModifier;
-import org.anddev.andengine.entity.modifier.RotationModifier;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
@@ -65,6 +64,13 @@ public abstract class Plant extends Entity {
 	}
 
 	private void shot() {
+		getFirstChild().registerEntityModifier(
+				new SequenceEntityModifier(
+						new ScaleModifier(0.3f, 1f, 1.1f),
+						new ScaleModifier(0.3f, 1.1f, 1f)
+				)
+		);
+		
 		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
 		Sprite shadow = new Sprite(0, 21, GameData.getInstance().mShotShadow);
@@ -78,13 +84,6 @@ public abstract class Plant extends Entity {
 				Enviroment.getInstance().safeDetachEntity(pItem);
 			}}, EaseSineInOut.getInstance()));
 		Enviroment.getInstance().getScene().getChild(ExtraScene.GAME_LAYER).attachChild(shot);
-		
-		getFirstChild().registerEntityModifier(
-				new SequenceEntityModifier(
-						new ScaleModifier(0.3f, 1f, 1.1f),
-						new ScaleModifier(0.3f, 1.1f, 1f)
-				)
-		);
 	}
 	
 }

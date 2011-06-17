@@ -7,8 +7,8 @@ import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
-import org.anddev.andengine.pvb.Game;
 import org.anddev.andengine.pvb.plant.Plant;
 import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.modifier.IModifier;
@@ -22,7 +22,7 @@ public abstract class Card extends Sprite {
 	protected float mRecharge = 10f;
 	protected boolean mReady = false;
 
-	public Card(final Game game, final float pX, float pY, final TextureRegion pTextureRegion) {
+	public Card(final float pX, float pY, final TextureRegion pTextureRegion) {
 		super(pX, pY, GameData.getInstance().mCard);
 		Sprite image = new Sprite(4, 4, pTextureRegion);
 		attachChild(image);
@@ -33,7 +33,7 @@ public abstract class Card extends Sprite {
 		this.mBlack.setScaleCenter(0, 0);
 		attachChild(this.mBlack);
 		
-		game.registerTouchArea(this);
+		Enviroment.getInstance().getScene().registerTouchArea(this);
 	}
 
 	public void startRecharge() {

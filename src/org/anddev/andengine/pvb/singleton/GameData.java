@@ -10,7 +10,7 @@ public class GameData {
 	
     private static GameData mInstance = null;
     
-    private int mLevel = 1;
+    public TextureRegion mTable;
     
     public TextureRegion mShot;
     public TextureRegion mShotShadow;
@@ -22,7 +22,6 @@ public class GameData {
     public TextureRegion mCardTomato;
 	public TextureRegion mCardFlower2;
 
-	
 	// plants
 	public TextureRegion mPlantShadow;
 	
@@ -42,6 +41,7 @@ public class GameData {
 	}
 	
 	public void initData() {
+		this.mTable  = Resource.getTexture(1024, 128, "table");
 		this.mShot = Resource.getTexture(64, 64, "shot");
 		this.mShotShadow = Resource.getTexture(64, 64, "shadow2");
 		
@@ -62,14 +62,6 @@ public class GameData {
 	
 	public LinkedList<Card> getCards() {
 		return this.mCards;
-	}
-
-	public int getLevel() {
-		return this.mLevel;
-	}
-
-	public void nextLevel() {
-		this.mLevel++;
 	}
 	
 }
