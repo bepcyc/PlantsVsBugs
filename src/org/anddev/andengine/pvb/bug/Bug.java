@@ -16,8 +16,6 @@ import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
-import android.util.Log;
-
 public abstract class Bug extends Entity {
 	
 	protected int mLife = 5;
@@ -25,18 +23,23 @@ public abstract class Bug extends Entity {
 	protected Path mPath;
 	
 	public Bug(final float y, final TextureRegion pTexture) {
-		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(y));
-		
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
 		shadow.setAlpha(0.4f);
 		shadow.attachChild(new Sprite(0, -68, pTexture));
 		attachChild(shadow);
 		
-		this.mPath = new Path(2).to(705, y).to(0, y);
+		setPosition(705, y);
+		this.mPath = new Path(2).to(this.mX, this.mY).to(0, this.mY);
+	}
+	
+	public void onDetached() {
+		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 	}
 	
 	public void onAttached() {
-		this.registerEntityModifier(new PathModifier(this.mDuration, this.mPath, new IEntityModifierListener() {
+		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY));
+		
+		registerEntityModifier(new PathModifier(this.mDuration, this.mPath, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				// game over
@@ -45,36 +48,28 @@ public abstract class Bug extends Entity {
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
-				Bug.this.check();
+				Bug.this.checkAndRemove();
 			}
-
+			
 			@Override
 			public void reset() {}
 		});
 	}
 
-	private void check() {
+	private void checkAndRemove() {
 		final IEntity shotLayer = Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER);
 		
-		Enviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
-			@Override
-			public void run() {
-				int i = 0;
-				while (i < shotLayer.getChildCount()) {
-					IShape shot = (IShape) shotLayer.getChild(i);
-					if (((Sprite) getFirstChild().getFirstChild()).collidesWith(shot)) {
-						Log.i("Game", "Collide");
-						Bug.this.mLife--;
-						if (Bug.this.mLife <= 0) {
-							Bug.this.clearUpdateHandlers();
-							Bug.this.detachSelf();
-						}
-						shot.detachSelf();
-					} else
-						i++;
-				}
+		for (int i = 0; i < shotLayer.getChildCount(); i++) {
+			IShape shot = (IShape) shotLayer.getChild(i);
+			if (((Sprite) getFirstChild().getFirstChild()).collidesWith(shot)) {
+				this.mLife--;
+				if (this.mLife == 0)
+					Enviroment.getInstance().safeDetachEntity(this);
+				// Enviroment.getInstance().safeDetachEntity(shot);
+				shot.detachSelf();
+				break;
 			}
-		});
+		}
 	}
 	
 }

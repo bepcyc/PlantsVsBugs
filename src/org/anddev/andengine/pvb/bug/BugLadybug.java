@@ -5,7 +5,7 @@ import org.anddev.andengine.pvb.singleton.GameData;
 public class BugLadybug extends Bug {
 	
 	public BugLadybug(final float y) {
-		super(y, GameData.getInstance().mPlantFlower2);
+		super(y, GameData.getInstance().mBugLadybug);
 	}
 	
 }

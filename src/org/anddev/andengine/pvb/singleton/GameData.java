@@ -28,6 +28,9 @@ public class GameData {
 	public TextureRegion mPlantTomato;
 	public TextureRegion mPlantFlower2;
 	
+	// bugs
+	public TextureRegion mBugLadybug;
+	
 	private LinkedList<Card> mCards;
 	
 	private GameData() {
@@ -56,6 +59,8 @@ public class GameData {
 		
 		this.mPlantTomato = Resource.getTexture(64, 128, "tomato");
 		this.mPlantFlower2 = Resource.getTexture(64, 128, "default2");
+		
+		this.mBugLadybug = Resource.getTexture(64, 128, "ladybug");
 		
 		this.mCards = new LinkedList<Card>();
 	}
