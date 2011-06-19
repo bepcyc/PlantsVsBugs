@@ -32,18 +32,21 @@ public class Game extends ExtraScene {
 
 	@Override
 	public void createScene() {
+		// contatori per individuare se in una riga c'e' un nemico
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count96.0", 0);
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count173.0", 0);
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count250.0", 0);
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
 		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
 		
+		// sfondo e tabellone
 		this.mBackground = Resource.getTexture(1024, 512, "back");
 		Sprite back = new Sprite(0, 0, this.mBackground);
 		Sprite table = new Sprite(0, 0, GameData.getInstance().mTable);
 		getChild(BACKGROUND_LAYER).attachChild(back);
-		getChild(EXTRA_GAME_LAYER).attachChild(table);
+		getChild(GUI_LAYER).attachChild(table);
 		
+		// field position
 		for (int i = 0; i < 45; i++) {
 			int x = i % 9;
 			int y = (int)(i / 9);
@@ -67,13 +70,15 @@ public class Game extends ExtraScene {
 		cards.add(new CardFlower2(0, 0));
 		cards.add(new CardTomato(0, 0));
 		
+		// add card
 		int start_x = 106;
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
 			c.setPosition(start_x + i * 69, 7);
-			getChild(EXTRA_GAME_LAYER).attachChild(c);
+			getChild(GUI_LAYER).attachChild(c);
 		}
 		
+		//  entrata nemici
 		this.getEnemy(5); // first a 3 sec
 		
 		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {

@@ -44,6 +44,7 @@ public abstract class Plant extends Entity {
 			}
 		}));
 		
+		// sbagliato sull'engine, poi non si puo' ripulire se la pianta viene eliminata, o si va di reset
 		Enviroment.getInstance().getScene().registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
@@ -83,7 +84,7 @@ public abstract class Plant extends Entity {
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				Enviroment.getInstance().safeDetachEntity(pItem);
 			}}, EaseSineInOut.getInstance()));
-		Enviroment.getInstance().getScene().getChild(ExtraScene.GAME_LAYER).attachChild(shot);
+		Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER).attachChild(shot);
 	}
 	
 }
