@@ -12,6 +12,8 @@ public class GameData {
     
     public TextureRegion mTable;
     
+    public TextureRegion mSeed;
+    
     public TextureRegion mShot;
     public TextureRegion mShotShadow;
     
@@ -29,6 +31,7 @@ public class GameData {
 	public TextureRegion mPlantFlower2;
 	
 	// bugs
+	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
 	
 	private LinkedList<Card> mCards;
@@ -45,6 +48,7 @@ public class GameData {
 	
 	public void initData() {
 		this.mTable  = Resource.getTexture(1024, 128, "table");
+		this.mSeed = Resource.getTexture(64, 64, "seed");
 		this.mShot = Resource.getTexture(64, 64, "shot");
 		this.mShotShadow = Resource.getTexture(64, 64, "shadow2");
 		
@@ -60,6 +64,7 @@ public class GameData {
 		this.mPlantTomato = Resource.getTexture(64, 128, "tomato");
 		this.mPlantFlower2 = Resource.getTexture(64, 128, "default2");
 		
+		this.mBugBeetle = Resource.getTexture(64, 128, "beetle");
 		this.mBugLadybug = Resource.getTexture(64, 128, "ladybug");
 		
 		this.mCards = new LinkedList<Card>();

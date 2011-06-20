@@ -18,8 +18,8 @@ import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 public abstract class Bug extends Entity {
 	
-	protected int mLife = 5;
-	protected float mDuration = 35f;
+	protected int mLife = 3;
+	protected float mDuration = 33f;
 	protected Path mPath;
 	
 	public Bug(final float y, final TextureRegion pTexture) {

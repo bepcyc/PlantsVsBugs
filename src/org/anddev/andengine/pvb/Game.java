@@ -14,10 +14,10 @@ import org.anddev.andengine.extra.Resource;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.bug.Bug;
+import org.anddev.andengine.pvb.bug.BugBeetle;
 import org.anddev.andengine.pvb.bug.BugLadybug;
 import org.anddev.andengine.pvb.card.Card;
 import org.anddev.andengine.pvb.card.CardTomato;
-import org.anddev.andengine.pvb.card.CardFlower2;
 import org.anddev.andengine.pvb.plant.Plant;
 import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.MathUtils;
@@ -64,11 +64,11 @@ public class Game extends ExtraScene {
 	public void startScene() {
 		LinkedList<Card> cards = GameData.getInstance().getCards();
 		cards.add(new CardTomato(0, 0));
-		cards.add(new CardFlower2(0, 0));
-		cards.add(new CardTomato(0, 0));
-		cards.add(new CardTomato(0, 0));
-		cards.add(new CardFlower2(0, 0));
-		cards.add(new CardTomato(0, 0));
+		//cards.add(new CardFlower2(0, 0));
+		//cards.add(new CardTomato(0, 0));
+		//cards.add(new CardTomato(0, 0));
+		//cards.add(new CardFlower2(0, 0));
+		//cards.add(new CardTomato(0, 0));
 		
 		// add card
 		int start_x = 106;
@@ -85,6 +85,13 @@ public class Game extends ExtraScene {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Game.this.getEnemy(MathUtils.random(3, 13));
+			}
+		}));
+		
+		registerUpdateHandler(new TimerHandler(10f, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Game.this.getSeed();
 			}
 		}));
 	}
@@ -126,15 +133,38 @@ public class Game extends ExtraScene {
 	}
 
 	private void getEnemy(int pDelay) {
-		int y = MathUtils.random(0, 4);
-		final Bug e = new BugLadybug(96 + y * 77); // stessa altezza dei fields
+		final int y = 96 + MathUtils.random(0, 4) * 77;
 		
 		registerUpdateHandler(new TimerHandler(pDelay, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.getChild(Game.GAME_LAYER).attachChild(e);
+				Bug e = null;
+				
+				if (MathUtils.random(0, 2) == 0)
+					e = new BugLadybug(y); // stessa altezza dei fields
+				else
+					e = new BugBeetle(y); // stessa altezza dei fields
+				
+				getChild(Game.GAME_LAYER).attachChild(e);
 			}
 		}));
 	}
 
+	private void getSeed() {
+		int i = MathUtils.random(0, 8) * MathUtils.random(1, 5);
+		//int x = 42 + x * 71;
+		//int y = 96 + y * 77;
+		final Sprite e = new Sprite(12, 25, GameData.getInstance().mSeed);
+		IEntity field = getChild(Game.GAME_LAYER).getChild(i);
+		if (field.getChildCount() == 0)
+			field.attachChild(e);
+		
+		registerUpdateHandler(new TimerHandler(5f, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Enviroment.getInstance().safeDetachEntity(e);
+			}
+		}));
+	}
+	
 }
