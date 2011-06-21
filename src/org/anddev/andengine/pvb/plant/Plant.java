@@ -78,7 +78,13 @@ public abstract class Plant extends Entity {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				Enviroment.getInstance().safeDetachEntity(pItem);
-			}}, EaseSineInOut.getInstance()));
+			}
+
+			@Override
+			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+				
+			}
+		}, EaseSineInOut.getInstance()));
 		Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER).attachChild(shot);
 	}
 	

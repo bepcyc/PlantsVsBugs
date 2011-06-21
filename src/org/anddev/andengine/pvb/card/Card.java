@@ -45,6 +45,11 @@ public abstract class Card extends Sprite {
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				Card.this.mReady = true;
 			}
+
+			@Override
+			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+				
+			}
 		}));
 	}
 

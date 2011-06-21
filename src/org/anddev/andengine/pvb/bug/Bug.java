@@ -43,7 +43,13 @@ public abstract class Bug extends Entity {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				// game over
-			}}, EaseSineInOut.getInstance()));
+			}
+
+			@Override
+			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+			
+			}
+		}, EaseSineInOut.getInstance()));
 		
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
