@@ -3,8 +3,11 @@ package org.anddev.andengine.pvb.singleton;
 import java.util.LinkedList;
 
 import org.anddev.andengine.extra.Resource;
+import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.card.Card;
+
+import android.graphics.Color;
 
 public class GameData {
 	
@@ -13,6 +16,7 @@ public class GameData {
     // generici
     private LinkedList<Card> mCards;
     
+    public TextureRegion mBackground;
     public TextureRegion mTable;
     public TextureRegion mSeed;
     public TextureRegion mShot;
@@ -32,6 +36,10 @@ public class GameData {
 	// bugs
 	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
+
+	// fonts
+	public Font mFont1;
+	public Font mFont2;
 	
 	private GameData() {
 		
@@ -44,6 +52,10 @@ public class GameData {
 	}
 	
 	public void initData() {
+		this.mFont1 = Resource.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
+		this.mFont2 = Resource.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
+		
+		this.mBackground = Resource.getTexture(1024, 512, "back");
 		this.mTable  = Resource.getTexture(1024, 128, "table");
 		this.mSeed = Resource.getTexture(64, 64, "seed");
 		this.mShot = Resource.getTexture(64, 64, "shot");

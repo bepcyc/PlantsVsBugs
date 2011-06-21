@@ -8,11 +8,10 @@ import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.extra.ExtraScene;
-import org.anddev.andengine.extra.Resource;
 import org.anddev.andengine.input.touch.TouchEvent;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.bug.Bug;
 import org.anddev.andengine.pvb.bug.BugBeetle;
 import org.anddev.andengine.pvb.bug.BugLadybug;
@@ -27,24 +26,23 @@ import android.util.Log;
 
 public class Game extends ExtraScene {
 
-	private TextureRegion mBackground;
 	private Card mSelect;
+	private ChangeableText mSeedNum;
 
 	@Override
 	public void createScene() {
-		// contatori per individuare se in una riga c'e' un nemico
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count96.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count173.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count250.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
-		
 		// sfondo e tabellone
-		this.mBackground = Resource.getTexture(1024, 512, "back");
-		Sprite back = new Sprite(0, 0, this.mBackground);
+		Sprite back = new Sprite(0, 0, GameData.getInstance().mBackground);
 		Sprite table = new Sprite(0, 0, GameData.getInstance().mTable);
 		getChild(BACKGROUND_LAYER).attachChild(back);
 		getChild(GUI_LAYER).attachChild(table);
+		
+		Sprite seed = new Sprite(25, 16, GameData.getInstance().mSeed);
+		table.attachChild(seed);
+		
+		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "0", 3);
+		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
+		table.attachChild(this.mSeedNum);
 		
 		// field position
 		for (int i = 0; i < 45; i++) {
@@ -60,8 +58,14 @@ public class Game extends ExtraScene {
 		}
 	}
 
-	@Override
-	public void startScene() {
+	private void initLevel() {
+		// contatori per individuare se in una riga c'e' un nemico
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count96.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count173.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count250.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
+		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
+		
 		LinkedList<Card> cards = GameData.getInstance().getCards();
 		cards.add(new CardTomato(0, 0));
 		//cards.add(new CardFlower2(0, 0));
@@ -69,8 +73,14 @@ public class Game extends ExtraScene {
 		//cards.add(new CardTomato(0, 0));
 		//cards.add(new CardFlower2(0, 0));
 		//cards.add(new CardTomato(0, 0));
+	}
+
+	@Override
+	public void startScene() {
+		initLevel();
 		
 		// add card
+		LinkedList<Card> cards = GameData.getInstance().getCards();
 		int start_x = 106;
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
@@ -109,27 +119,25 @@ public class Game extends ExtraScene {
 			Card c = (Card) pTouchArea;
 			this.mSelect = c.makeSelect();
 		} else {
+			IEntity field = (IEntity) pTouchArea;
+			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
+				this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) + 1));
+				this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
+				Enviroment.getInstance().safeDetachEntity(field.getFirstChild());
+			}
 			if (this.mSelect != null && this.mSelect.isReady()) { // aggiungere controllo costo
-				IEntity field = (IEntity) pTouchArea;
 				if (field.getChildCount() == 0) {
-					Log.i("Game", "recharge/object");
-					
-					this.mSelect.startRecharge();
-					Plant plant = this.mSelect.getPlant();
-					field.attachChild(plant);
+					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
+						Log.i("Game", "recharge/object");
+						this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) - this.mSelect.getPrice()));
+						this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
+						
+						this.mSelect.startRecharge();
+						field.attachChild(this.mSelect.getPlant());
+					}
 				}
 			}
 		}
-	}
-
-	@Override
-	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
-		
-	}
-
-	@Override
-	public MenuScene createMenu() {
-		return null;
 	}
 
 	private void getEnemy(int pDelay) {
@@ -165,6 +173,16 @@ public class Game extends ExtraScene {
 				Enviroment.getInstance().safeDetachEntity(e);
 			}
 		}));
+	}
+	
+	@Override
+	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
+		
+	}
+
+	@Override
+	public MenuScene createMenu() {
+		return null;
 	}
 	
 }

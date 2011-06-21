@@ -7,6 +7,7 @@ import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.pvb.plant.Plant;
@@ -21,11 +22,18 @@ public abstract class Card extends Sprite {
 
 	protected float mRecharge = 10f;
 	protected boolean mReady = false;
+	protected int mPrice = 2;
 
 	public Card(final float pX, float pY, final TextureRegion pTextureRegion) {
 		super(pX, pY, GameData.getInstance().mCard);
 		Sprite image = new Sprite(4, 4, pTextureRegion);
 		attachChild(image);
+	}
+
+	public void onAttached() {
+		ChangeableText value = new ChangeableText(0, 0, GameData.getInstance().mFont2, Integer.toString(this.mPrice), 3);
+		value.setPosition(31 - value.getWidthScaled() / 2 , 66 - value.getHeightScaled() / 2);
+		attachChild(value);
 		
 		this.mBlack = new Rectangle(1, 1, this.mBaseWidth - 2, this.mBaseHeight - 2);
 		this.mBlack.setColor(0f, 0f, 0f);
@@ -34,8 +42,10 @@ public abstract class Card extends Sprite {
 		attachChild(this.mBlack);
 		
 		Enviroment.getInstance().getScene().registerTouchArea(this);
+		
+		startRecharge();
 	}
-
+	
 	public void startRecharge() {
 		this.mReady = false;
 		this.mBlack.setScaleY(1f);
@@ -57,13 +67,17 @@ public abstract class Card extends Sprite {
 		return this.mReady;
 	}
 
+	public int getPrice() {
+		return this.mPrice;
+	}
+
 	public Card makeSelect() {
 		Card sel = null;
 		LinkedList<Card> cards = GameData.getInstance().getCards();
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
 			if (c == this) {
-				if (getChildCount() == 2) {
+				if (getChildCount() == 3) {
 					Log.i("Game", Integer.toString(this.getChildCount()));
 					Sprite s = new Sprite(0, 0, GameData.getInstance().mCardSelected);
 					attachChild(s);
@@ -77,7 +91,7 @@ public abstract class Card extends Sprite {
 	}
 
 	public void setUnselect() {
-		if (getChildCount() > 2)
+		if (getChildCount() > 3)
 			Enviroment.getInstance().safeDetachEntity(getLastChild());
 			//detachChild(getLastChild());
 	}

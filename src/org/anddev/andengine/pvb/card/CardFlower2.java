@@ -10,8 +10,7 @@ public class CardFlower2 extends Card {
 		super(pX, pY, GameData.getInstance().mCardFlower2);
 		
 		this.mRecharge = 20f;
-		
-		startRecharge();
+		this.mPrice = 4;
 	}
 	
 	public Plant getPlant() {
