@@ -1,5 +1,6 @@
 package org.anddev.andengine.pvb.plant;
 
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
@@ -35,12 +36,18 @@ public abstract class Plant extends Entity {
 	public void onAttached() {
 		check();
 		
-		registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() {
+		registerUpdateHandler(new IUpdateHandler() {
 			@Override
-			public void onTimePassed(TimerHandler pTimerHandler) {
+			public void onUpdate(float pSecondsElapsed) {
 				Plant.this.check();
 			}
-		}));
+
+			@Override
+			public void reset() {
+				
+			}
+			
+		});
 		
 		registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 			@Override

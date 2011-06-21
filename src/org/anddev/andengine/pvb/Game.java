@@ -40,7 +40,7 @@ public class Game extends ExtraScene {
 		Sprite seed = new Sprite(25, 16, GameData.getInstance().mSeed);
 		table.attachChild(seed);
 		
-		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "0", 3);
+		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "2", 3);
 		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 		table.attachChild(this.mSeedNum);
 		
@@ -129,6 +129,7 @@ public class Game extends ExtraScene {
 				if (field.getChildCount() == 0) {
 					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
 						Log.i("Game", "recharge/object");
+						
 						this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) - this.mSelect.getPrice()));
 						this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 						
