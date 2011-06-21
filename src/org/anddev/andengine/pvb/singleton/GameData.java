@@ -10,31 +10,28 @@ public class GameData {
 	
     private static GameData mInstance = null;
     
+    // generici
+    private LinkedList<Card> mCards;
+    
     public TextureRegion mTable;
-    
     public TextureRegion mSeed;
-    
     public TextureRegion mShot;
     public TextureRegion mShotShadow;
-    
-    // cards
+    public TextureRegion mPlantShadow;
     public TextureRegion mCardSelected;
     
+    // cards
     public TextureRegion mCard;
     public TextureRegion mCardTomato;
 	public TextureRegion mCardFlower2;
-
-	// plants
-	public TextureRegion mPlantShadow;
 	
+	// plants
 	public TextureRegion mPlantTomato;
 	public TextureRegion mPlantFlower2;
 	
 	// bugs
 	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
-	
-	private LinkedList<Card> mCards;
 	
 	private GameData() {
 		

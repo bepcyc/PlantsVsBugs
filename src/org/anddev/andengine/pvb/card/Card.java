@@ -38,7 +38,7 @@ public abstract class Card extends Sprite {
 
 	public void startRecharge() {
 		this.mReady = false;
-		Card.this.mBlack.setScaleY(1f);
+		this.mBlack.setScaleY(1f);
 
 		this.mBlack.registerEntityModifier(new ScaleModifier(this.mRecharge, 1f, 1f, 1f, 0f, new IEntityModifierListener() {
 			@Override
@@ -78,7 +78,8 @@ public abstract class Card extends Sprite {
 
 	public void setUnselect() {
 		if (getChildCount() > 2)
-			detachChild(getLastChild());
+			Enviroment.getInstance().safeDetachEntity(getLastChild());
+			//detachChild(getLastChild());
 	}
 
 	public Plant getPlant() {

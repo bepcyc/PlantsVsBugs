@@ -58,7 +58,9 @@ public abstract class Bug extends Entity {
 			}
 			
 			@Override
-			public void reset() {}
+			public void reset() {
+				
+			}
 		});
 	}
 
