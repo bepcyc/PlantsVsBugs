@@ -9,6 +9,7 @@ public class BugLadybug extends Bug {
 		
 		this.mLife = 4;
 		this.mDuration = 31f;
+		this.mPoint = 20;
 	}
 	
 }

@@ -19,6 +19,7 @@ import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 public abstract class Bug extends Entity {
 	
 	protected int mLife = 3;
+	protected int mPoint = 10;
 	protected float mDuration = 33f;
 	protected Path mPath;
 	
@@ -34,6 +35,7 @@ public abstract class Bug extends Entity {
 	
 	public void onDetached() {
 		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
+		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "score", this.mPoint);
 	}
 	
 	public void onAttached() {

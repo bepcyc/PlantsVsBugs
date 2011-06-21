@@ -9,6 +9,7 @@ public class BugBeetle extends Bug {
 		
 		this.mLife = 3;
 		this.mDuration = 33f;
+		this.mPoint = 10;
 	}
 	
 }

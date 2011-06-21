@@ -2,6 +2,7 @@ package org.anddev.andengine.pvb;
 
 import java.util.LinkedList;
 
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
@@ -28,6 +29,7 @@ public class Game extends ExtraScene {
 
 	private Card mSelect;
 	private ChangeableText mSeedNum;
+	private ChangeableText mScore;
 
 	@Override
 	public void createScene() {
@@ -43,6 +45,11 @@ public class Game extends ExtraScene {
 		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "2", 3);
 		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 		table.attachChild(this.mSeedNum);
+		
+		int sc = SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "score");
+		this.mScore = new ChangeableText(0, 0, GameData.getInstance().mFont3, Integer.toString(sc));
+		this.mScore.setPosition(625 - this.mScore.getWidthScaled() / 2 , 47 - this.mScore.getHeightScaled() / 2);
+		getChild(GUI_LAYER).attachChild(this.mScore);
 		
 		// field position
 		for (int i = 0; i < 45; i++) {
@@ -60,11 +67,11 @@ public class Game extends ExtraScene {
 
 	private void initLevel() {
 		// contatori per individuare se in una riga c'e' un nemico
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count96.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count173.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count250.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count327.0", 0);
-		SimplePreferences.setValue(Enviroment.getInstance().getContext(), "count404.0", 0);
+		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count96.0");
+		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count173.0");
+		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count250.0");
+		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count327.0");
+		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count404.0");
 		
 		LinkedList<Card> cards = GameData.getInstance().getCards();
 		cards.add(new CardTomato(0, 0));
@@ -104,6 +111,21 @@ public class Game extends ExtraScene {
 				Game.this.getSeed();
 			}
 		}));
+		
+		registerUpdateHandler(new IUpdateHandler() {
+			@Override
+			public void onUpdate(float pSecondsElapsed) {
+				int sc = SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "score");
+				Game.this.mScore.setText(String.valueOf(sc));
+				Game.this.mScore.setPosition(625 - Game.this.mScore.getWidthScaled() / 2 , 47 - Game.this.mScore.getHeightScaled() / 2);
+			}
+			
+			@Override
+			public void reset() {
+				
+			}
+			
+		});
 	}
 
 	@Override

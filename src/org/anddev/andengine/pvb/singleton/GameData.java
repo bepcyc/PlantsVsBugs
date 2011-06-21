@@ -40,6 +40,7 @@ public class GameData {
 	// fonts
 	public Font mFont1;
 	public Font mFont2;
+	public Font mFont3;
 	
 	private GameData() {
 		
@@ -54,6 +55,7 @@ public class GameData {
 	public void initData() {
 		this.mFont1 = Resource.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
 		this.mFont2 = Resource.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
+		this.mFont3 = Resource.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
 		
 		this.mBackground = Resource.getTexture(1024, 512, "back");
 		this.mTable  = Resource.getTexture(1024, 128, "table");
