@@ -8,7 +8,7 @@ public class BugBeetle extends Bug {
 		super(y, GameData.getInstance().mBugBeetle);
 		
 		this.mLife = 3;
-		this.mDuration = 33f;
+		this.mSpeed = 21f;
 		this.mPoint = 10;
 	}
 	

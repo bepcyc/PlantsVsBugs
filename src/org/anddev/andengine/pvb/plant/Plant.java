@@ -21,10 +21,11 @@ import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 public abstract class Plant extends Entity {
 	
-	private int mLife = 3;
+	protected int mLife = 3;
 	protected float mShotHeight = 28f;
 	protected float mShotSpeed = 200f;
 	protected float mShotDelay = 4f;
+	
 	private boolean mCanShot = false;
 	
 	public Plant(final TextureRegion pTexture) {
@@ -87,14 +88,14 @@ public abstract class Plant extends Entity {
 				)
 		);
 		
-		float speed = (680 - getParent().getX() -  45) / this.mShotSpeed;
+		float duration = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
 		Sprite shadow = new Sprite(0, 21, GameData.getInstance().mShotShadow);
 		shadow.setAlpha(0.4f);
 		shot.attachChild(shadow);
 		
 		Path path = new Path(2).to(getParent().getX() + 45, getParent().getY() + this.mShotHeight).to(680, getParent().getY() + this.mShotHeight);
-		shot.registerEntityModifier(new PathModifier(speed, path, new IEntityModifierListener() {
+		shot.registerEntityModifier(new PathModifier(duration, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				Enviroment.getInstance().safeDetachEntity(pItem);

@@ -26,7 +26,8 @@ public abstract class Bug extends Entity {
 	
 	protected int mLife = 3;
 	protected int mPoint = 10;
-	protected float mDuration = 33f;
+	protected float mSpeed = 21f;
+	
 	private Path mPath;
 	private boolean mCollide = true;
 	
@@ -37,7 +38,6 @@ public abstract class Bug extends Entity {
 		attachChild(shadow);
 		
 		setPosition(705, y);
-		this.mPath = new Path(2).to(this.mX, this.mY).to(0, this.mY);
 	}
 	
 	public void onDetached() {
@@ -73,23 +73,23 @@ public abstract class Bug extends Entity {
 		for (int i = 0; i < 45; i++) {
 			final IEntity field = Enviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
 			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
-				final Sprite obj = (Sprite) field.getFirstChild().getFirstChild().getFirstChild();
-				if (((Sprite) getFirstChild().getFirstChild()).collidesWith(obj) && this.mCollide) {
+				final IShape sprite = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
+				if (((IShape) getFirstChild().getFirstChild()).collidesWith(sprite) && this.mCollide) {
 					Log.i("Game", "collision");
-					this.mCollide = false;			
+					
+					this.mCollide = false;	
 					stop();
-					for (int j = 1; j <= 3; j++) {
-						registerUpdateHandler(new TimerHandler(1.5f * j, false, new ITimerCallback() {
-							@Override
-							public void onTimePassed(TimerHandler pTimerHandler) {
-								try {
-									((Plant) field.getFirstChild()).pushDamage();
-								} catch (Exception e) {
-									Log.i("Game", "Error");
-								}
+					registerUpdateHandler(new TimerHandler(1.5f, false, new ITimerCallback() {
+						@Override
+						public void onTimePassed(TimerHandler pTimerHandler) {
+							try {
+								Bug.this.mCollide = true;
+								((Plant) field.getFirstChild()).pushDamage();
+							} catch (Exception e) {
+								Bug.this.start();
 							}
-						}));
-					}
+						}
+					}));
 				}
 			}
 		}
@@ -98,7 +98,9 @@ public abstract class Bug extends Entity {
 	private void start() {
 		this.mCollide = true;
 		
-		registerEntityModifier(new PathModifier(this.mDuration, this.mPath, new IEntityModifierListener() {
+		this.mPath = new Path(2).to(this.mX, this.mY).to(0, this.mY);
+		float duration = this.mX / this.mSpeed;
+		registerEntityModifier(new PathModifier(duration, this.mPath, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				// game over
@@ -113,7 +115,6 @@ public abstract class Bug extends Entity {
 
 	private void stop() {
 		this.clearEntityModifiers();
-		this.mPath = new Path(2).to(this.mX, this.mY).to(0, this.mY);
 	}
 
 	private void checkAndRemove() {
@@ -121,7 +122,7 @@ public abstract class Bug extends Entity {
 		
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape shot = (IShape) shotLayer.getChild(i);
-			if (((Sprite) getFirstChild().getFirstChild()).collidesWith(shot)) {
+			if (((IShape) getFirstChild().getFirstChild()).collidesWith(shot)) {
 				this.mLife--;
 				if (this.mLife <= 0)
 					this.detachSelf();
