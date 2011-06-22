@@ -1,6 +1,6 @@
-package org.anddev.andengine.pvb.plant;
+package org.anddev.amatidev.pvb.plant;
 
-import org.anddev.andengine.pvb.singleton.GameData;
+import org.anddev.amatidev.pvb.singleton.GameData;
 
 public class PlantFlower2 extends Plant {
 	

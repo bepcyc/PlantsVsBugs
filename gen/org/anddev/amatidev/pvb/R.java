@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.anddev.andengine.pvb;
+package org.anddev.amatidev.pvb;
 
 public final class R {
     public static final class attr {

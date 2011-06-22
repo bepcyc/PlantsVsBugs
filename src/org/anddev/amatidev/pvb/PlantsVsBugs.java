@@ -1,16 +1,16 @@
-package org.anddev.andengine.pvb;
+package org.anddev.amatidev.pvb;
 
+import org.amatidev.AdEnviroment;
+import org.amatidev.AdGameActivity;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.SplashScene;
-import org.anddev.andengine.extra.Enviroment;
-import org.anddev.andengine.extra.ExtraGameActivity;
-import org.anddev.andengine.pvb.singleton.GameData;
 
-public class PlantsVsBugs extends ExtraGameActivity {
+public class PlantsVsBugs extends AdGameActivity {
 
 	@Override
 	protected int getLayoutID() {
@@ -29,7 +29,7 @@ public class PlantsVsBugs extends ExtraGameActivity {
 
 	@Override
 	public Engine onLoadEngine() {
-		return Enviroment.createEngine(ScreenOrientation.LANDSCAPE, true, false);
+		return AdEnviroment.createEngine(ScreenOrientation.LANDSCAPE, true, false);
 	}
 
 	@Override

@@ -1,7 +1,16 @@
-package org.anddev.andengine.pvb;
+package org.anddev.amatidev.pvb;
 
 import java.util.LinkedList;
 
+import org.amatidev.AdEnviroment;
+import org.amatidev.AdScene;
+import org.anddev.amatidev.pvb.bug.Bug;
+import org.anddev.amatidev.pvb.bug.BugBeetle;
+import org.anddev.amatidev.pvb.bug.BugLadybug;
+import org.anddev.amatidev.pvb.card.Card;
+import org.anddev.amatidev.pvb.card.CardTomato;
+import org.anddev.amatidev.pvb.plant.Plant;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
@@ -9,20 +18,11 @@ import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
-import org.anddev.andengine.extra.Enviroment;
-import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.input.touch.TouchEvent;
-import org.anddev.andengine.pvb.bug.Bug;
-import org.anddev.andengine.pvb.bug.BugBeetle;
-import org.anddev.andengine.pvb.bug.BugLadybug;
-import org.anddev.andengine.pvb.card.Card;
-import org.anddev.andengine.pvb.card.CardTomato;
-import org.anddev.andengine.pvb.plant.Plant;
-import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
 
-public class Game extends ExtraScene {
+public class Game extends AdScene {
 
 	private Card mSelect;
 	private ChangeableText mSeedNum;
@@ -60,11 +60,11 @@ public class Game extends ExtraScene {
 
 	private void initLevel() {
 		// contatori per individuare se in una riga c'e' un nemico
-		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count96.0");
-		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count173.0");
-		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count250.0");
-		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count327.0");
-		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count404.0");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count96.0");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count173.0");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count250.0");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count327.0");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.add(new CardTomato(0, 0));
@@ -105,7 +105,7 @@ public class Game extends ExtraScene {
 	@Override
 	public void endScene() {
 		GameData.getInstance().mCards.clear();
-		Enviroment.getInstance().setScene(new Game());
+		AdEnviroment.getInstance().setScene(new Game());
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class Game extends ExtraScene {
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
 				this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) + 1));
 				this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
-				Enviroment.getInstance().safeDetachEntity(field.getFirstChild());
+				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
 			} else {
 				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0) {
 					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
@@ -160,7 +160,7 @@ public class Game extends ExtraScene {
 		registerUpdateHandler(new TimerHandler(5f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Enviroment.getInstance().safeDetachEntity(e);
+				AdEnviroment.getInstance().safeDetachEntity(e);
 			}
 		}));
 	}

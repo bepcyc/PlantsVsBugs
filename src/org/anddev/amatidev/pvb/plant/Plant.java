@@ -1,5 +1,8 @@
-package org.anddev.andengine.pvb.plant;
+package org.anddev.amatidev.pvb.plant;
 
+import org.amatidev.AdEnviroment;
+import org.amatidev.AdScene;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
@@ -11,10 +14,7 @@ import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.extra.Enviroment;
-import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
-import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
@@ -64,7 +64,7 @@ public abstract class Plant extends Entity {
 	
 	private void check() {
 		String y = Float.toString(getParent().getY());
-		if (SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "count" + y) > 0)
+		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "count" + y) > 0)
 			this.mCanShot = true;
 		else
 			this.mCanShot = false;
@@ -73,7 +73,7 @@ public abstract class Plant extends Entity {
 	public void pushDamage() {
 		this.mLife--;
 		if (this.mLife <= 0)
-			Enviroment.getInstance().safeDetachEntity(this);
+			AdEnviroment.getInstance().safeDetachEntity(this);
 	}
 	
 	public int getLife() {
@@ -100,7 +100,7 @@ public abstract class Plant extends Entity {
 		shot.registerEntityModifier(new PathModifier(duration, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				Enviroment.getInstance().safeDetachEntity(pItem);
+				AdEnviroment.getInstance().safeDetachEntity(pItem);
 			}
 
 			@Override
@@ -109,7 +109,7 @@ public abstract class Plant extends Entity {
 			}
 		}, EaseSineInOut.getInstance()));
 		
-		Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER).attachChild(shot);
+		AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER).attachChild(shot);
 	}
 	
 }

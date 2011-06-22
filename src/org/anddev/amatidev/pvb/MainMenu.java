@@ -1,15 +1,15 @@
-package org.anddev.andengine.pvb;
+package org.anddev.amatidev.pvb;
 
+import org.amatidev.AdEnviroment;
+import org.amatidev.AdScene;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.text.Text;
-import org.anddev.andengine.extra.Enviroment;
-import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.input.touch.TouchEvent;
-import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.modifier.IModifier;
 
 import android.content.ActivityNotFoundException;
@@ -18,7 +18,7 @@ import android.net.Uri;
 
 import com.openfeint.api.ui.Dashboard;
 
-public class MainMenu extends ExtraScene {
+public class MainMenu extends AdScene {
 	
 	private int mIndex;
 	
@@ -32,7 +32,7 @@ public class MainMenu extends ExtraScene {
 		//Sprite back = new Sprite(0, 0, this.mBack);
 		//getChild(ExtraScene.BACKGROUND_LAYER).attachChild(back);
 		
-		int x = Enviroment.getInstance().getScreenWidth() / 2;
+		int x = AdEnviroment.getInstance().getScreenWidth() / 2;
 		/*Sprite title = new Sprite(0, 0, this.mTitle);
 		title.setPosition(x - title.getWidthScaled() / 2, 92);
 		title.registerEntityModifier(
@@ -60,9 +60,9 @@ public class MainMenu extends ExtraScene {
     	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "FULL. VERSION");
     	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 180);
     	
-    	getChild(ExtraScene.GAME_LAYER).attachChild(play);
-    	getChild(ExtraScene.GAME_LAYER).attachChild(score);
-    	getChild(ExtraScene.GAME_LAYER).attachChild(more);
+    	getChild(AdScene.GAME_LAYER).attachChild(play);
+    	getChild(AdScene.GAME_LAYER).attachChild(score);
+    	getChild(AdScene.GAME_LAYER).attachChild(more);
     	
     	registerTouchArea(play);
     	registerTouchArea(score);
@@ -72,7 +72,7 @@ public class MainMenu extends ExtraScene {
 	@Override
 	public void endScene() {
 		GameData.getInstance().mCards.clear();
-		Enviroment.getInstance().setScene(new Game());
+		AdEnviroment.getInstance().setScene(new Game());
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class MainMenu extends ExtraScene {
 	private void execute(ITouchArea pTouchArea) {
 		Text item = (Text) pTouchArea;
 		if ((int) item.getY() == this.mIndex) {
-			Enviroment.getInstance().nextScene();
+			AdEnviroment.getInstance().nextScene();
 		} else if ((int) item.getY() == this.mIndex + 90) {
 			try {
 				Dashboard.open();
@@ -110,7 +110,7 @@ public class MainMenu extends ExtraScene {
 			}
 		} else if ((int) item.getY() == this.mIndex + 180) {
 			try{
-				Enviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingame")));
+				AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingame")));
 			} catch (ActivityNotFoundException e) {
 			}
 		}

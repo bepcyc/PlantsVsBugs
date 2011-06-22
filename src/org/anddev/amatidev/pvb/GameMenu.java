@@ -1,18 +1,17 @@
-package org.anddev.andengine.pvb;
+package org.anddev.amatidev.pvb;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import org.amatidev.AdEnviroment;
+import org.amatidev.AdMenuScene;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
-import org.anddev.andengine.extra.Enviroment;
-import org.anddev.andengine.extra.ExtraMenu;
-import org.anddev.andengine.extra.ExtraScene;
 import org.anddev.andengine.opengl.font.Font;
-import org.anddev.andengine.pvb.singleton.GameData;
 
-public class GameMenu extends ExtraMenu {
+public class GameMenu extends AdMenuScene {
 	private static final int MENU_AUDIO = 0;
 	private static final int MENU_VIBRO = 1;
 	private static final int MENU_EXIT = 2;
@@ -21,13 +20,13 @@ public class GameMenu extends ExtraMenu {
 		Font font = GameData.getInstance().mFontGameMenu;
 		
 		String audio = "";
-		if (Enviroment.getInstance().getAudio())
+		if (AdEnviroment.getInstance().getAudio())
 			audio += "ON";
 		else
 			audio += "OFF";
 		
 		String vibro = "";
-		if (Enviroment.getInstance().getVibro())
+		if (AdEnviroment.getInstance().getVibro())
 			vibro += "ON";
 		else
 			vibro += "OFF";
@@ -50,17 +49,15 @@ public class GameMenu extends ExtraMenu {
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch(pMenuItem.getID()) {
 		case MENU_AUDIO:
-			Enviroment.getInstance().getScene().clearChildScene();
-			Enviroment.getInstance().toggleAudio();
-			((ExtraScene) Enviroment.getInstance().getScene()).hideOpacity();
+			AdEnviroment.getInstance().toggleAudio();
+			close();
 			return true;
 		case MENU_VIBRO:
-			Enviroment.getInstance().getScene().clearChildScene();
-			Enviroment.getInstance().toggleVibro();
-			((ExtraScene) Enviroment.getInstance().getScene()).hideOpacity();
+			AdEnviroment.getInstance().toggleVibro();
+			close();
 			return true;
 		case MENU_EXIT:
-			Enviroment.getInstance().setScene(new MainMenu());
+			AdEnviroment.getInstance().setScene(new MainMenu());
 			return true;
 		default:
 			return false;

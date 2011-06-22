@@ -1,6 +1,6 @@
-package org.anddev.andengine.pvb.bug;
+package org.anddev.amatidev.pvb.bug;
 
-import org.anddev.andengine.pvb.singleton.GameData;
+import org.anddev.amatidev.pvb.singleton.GameData;
 
 public class BugLadybug extends Bug {
 	

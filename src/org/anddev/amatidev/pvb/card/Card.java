@@ -1,17 +1,17 @@
-package org.anddev.andengine.pvb.card;
+package org.anddev.amatidev.pvb.card;
 
 import java.util.LinkedList;
 
+import org.amatidev.AdEnviroment;
+import org.anddev.amatidev.pvb.plant.Plant;
+import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
-import org.anddev.andengine.extra.Enviroment;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
-import org.anddev.andengine.pvb.plant.Plant;
-import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.modifier.IModifier;
 
 public abstract class Card extends Sprite {
@@ -39,7 +39,7 @@ public abstract class Card extends Sprite {
 		this.mBlack.setScaleCenter(0, 0);
 		attachChild(this.mBlack);
 		
-		Enviroment.getInstance().getScene().registerTouchArea(this);
+		AdEnviroment.getInstance().getScene().registerTouchArea(this);
 		
 		startRecharge();
 	}
@@ -88,7 +88,7 @@ public abstract class Card extends Sprite {
 
 	private void setUnselect() {
 		if (getChildCount() > 3)
-			Enviroment.getInstance().safeDetachEntity(getLastChild());
+			AdEnviroment.getInstance().safeDetachEntity(getLastChild());
 	}
 
 	public Plant getPlant() {

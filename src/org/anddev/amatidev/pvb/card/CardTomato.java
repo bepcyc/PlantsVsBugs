@@ -1,8 +1,8 @@
-package org.anddev.andengine.pvb.card;
+package org.anddev.amatidev.pvb.card;
 
-import org.anddev.andengine.pvb.plant.Plant;
-import org.anddev.andengine.pvb.plant.PlantTomato;
-import org.anddev.andengine.pvb.singleton.GameData;
+import org.anddev.amatidev.pvb.plant.Plant;
+import org.anddev.amatidev.pvb.plant.PlantTomato;
+import org.anddev.amatidev.pvb.singleton.GameData;
 
 public class CardTomato extends Card {
 
