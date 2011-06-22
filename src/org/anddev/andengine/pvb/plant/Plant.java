@@ -36,12 +36,12 @@ public abstract class Plant extends Entity {
 	}
 	
 	public void onAttached() {
-		checkAndRemove();
+		check();
 		
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
-				Plant.this.checkAndRemove();
+				Plant.this.check();
 			}
 
 			@Override
@@ -60,27 +60,26 @@ public abstract class Plant extends Entity {
 		}));
 	}
 	
-	private void checkAndRemove() {
+	private void check() {
 		String y = Float.toString(getParent().getY());
 		if (SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "count" + y) > 0)
 			this.mCanShot = true;
 		else
 			this.mCanShot = false;
-		
-		Enviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
-			@Override
-			public void run() {
-				if (Plant.this.mLife <= 0)
-					Plant.this.detachSelf();
-			}
-		});
 	}
 
 	public void pushDamage() {
 		this.mLife--;
+		if (this.mLife <= 0)
+			Enviroment.getInstance().safeDetachEntity(this);
+	}
+	
+	public int getLife() {
+		return this.mLife;
 	}
 
 	private void shot() {
+		// plant animation
 		getFirstChild().registerEntityModifier(
 				new SequenceEntityModifier(
 						new ScaleModifier(0.3f, 1f, 1.1f),
@@ -88,6 +87,7 @@ public abstract class Plant extends Entity {
 				)
 		);
 		
+		// creazione shot
 		float duration = (680 - getParent().getX() -  45) / this.mShotSpeed;
 		Sprite shot = new Sprite(getParent().getX() + 45, getParent().getY() + this.mShotHeight, GameData.getInstance().mShot);
 		Sprite shadow = new Sprite(0, 21, GameData.getInstance().mShotShadow);

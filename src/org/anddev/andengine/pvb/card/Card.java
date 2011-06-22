@@ -16,12 +16,12 @@ import org.anddev.andengine.util.modifier.IModifier;
 
 public abstract class Card extends Sprite {
 
-	private Rectangle mBlack;
-
 	protected float mRecharge = 10f;
 	protected boolean mReady = false;
 	protected int mPrice = 2;
 
+	private Rectangle mBlack;
+	
 	public Card(final float pX, float pY, final TextureRegion pTextureRegion) {
 		super(pX, pY, GameData.getInstance().mCard);
 		Sprite image = new Sprite(4, 4, pTextureRegion);
@@ -76,8 +76,7 @@ public abstract class Card extends Sprite {
 			Card c = cards.get(i);
 			if (c == this) {
 				if (getChildCount() == 3) {
-					Sprite s = new Sprite(0, 0, GameData.getInstance().mCardSelected);
-					attachChild(s);
+					attachChild(new Sprite(0, 0, GameData.getInstance().mCardSelected));
 					sel = c;
 				} else
 					c.setUnselect();
@@ -87,7 +86,7 @@ public abstract class Card extends Sprite {
 		return sel;
 	}
 
-	public void setUnselect() {
+	private void setUnselect() {
 		if (getChildCount() > 3)
 			Enviroment.getInstance().safeDetachEntity(getLastChild());
 	}

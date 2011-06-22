@@ -85,7 +85,7 @@ public class Game extends ExtraScene {
 		}
 		
 		// entrata nemici
-		// this.getEnemy(5); // first a 3 sec
+		this.getEnemy(5); // first a 3 sec
 		
 		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {
 			@Override
@@ -110,17 +110,15 @@ public class Game extends ExtraScene {
 	@Override
 	public void manageAreaTouch(ITouchArea pTouchArea) {
 		if (pTouchArea instanceof Card) {
-			Card c = (Card) pTouchArea;
-			this.mSelect = c.makeSelect();
+			this.mSelect = ((Card) pTouchArea).makeSelect();
 		} else {
 			IEntity field = (IEntity) pTouchArea;
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
 				this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) + 1));
 				this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 				Enviroment.getInstance().safeDetachEntity(field.getFirstChild());
-			}
-			if (this.mSelect != null && this.mSelect.isReady()) { // aggiungere controllo costo
-				if (field.getChildCount() == 0) {
+			} else {
+				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0) {
 					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
 						this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) - this.mSelect.getPrice()));
 						this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
@@ -140,12 +138,10 @@ public class Game extends ExtraScene {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Bug e = null;
-				
 				if (MathUtils.random(0, 2) == 0)
 					e = new BugLadybug(y); // stessa altezza dei fields
 				else
 					e = new BugBeetle(y); // stessa altezza dei fields
-				
 				getChild(Game.GAME_LAYER).attachChild(e);
 			}
 		}));

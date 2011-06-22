@@ -40,15 +40,9 @@ public abstract class Bug extends Entity {
 		setPosition(705, y);
 	}
 	
-	public void onDetached() {
-		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
-		GameData.getInstance().mScoring.addScore(this.mPoint);
-	}
-	
 	public void onAttached() {
 		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY));
-		
-		start();
+		start(); // move
 		
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
@@ -69,30 +63,20 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	private void checkAndRestart() {
-		for (int i = 0; i < 45; i++) {
-			final IEntity field = Enviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
-			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
-				final IShape sprite = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
-				if (((IShape) getFirstChild().getFirstChild()).collidesWith(sprite) && this.mCollide) {
-					Log.i("Game", "collision");
-					
-					this.mCollide = false;	
-					stop();
-					registerUpdateHandler(new TimerHandler(1.5f, false, new ITimerCallback() {
-						@Override
-						public void onTimePassed(TimerHandler pTimerHandler) {
-							try {
-								Bug.this.mCollide = true;
-								((Plant) field.getFirstChild()).pushDamage();
-							} catch (Exception e) {
-								Bug.this.start();
-							}
-						}
-					}));
-				}
-			}
-		}
+	public void onDetached() {
+		SimplePreferences.incrementAccessCount(Enviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
+		GameData.getInstance().mScoring.addScore(this.mPoint);
+	}
+	
+	private void pushDamage() {
+		// chiamare solo da thread safe
+		this.mLife--;
+		if (this.mLife <= 0)
+			this.detachSelf();
+	}
+
+	public int getLife() {
+		return this.mLife;
 	}
 
 	private void start() {
@@ -118,16 +102,47 @@ public abstract class Bug extends Entity {
 	}
 
 	private void checkAndRemove() {
-		final IEntity shotLayer = Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER);
-		
+		// chiamare solo da thread safe
+		IEntity shotLayer = Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
-			IShape shot = (IShape) shotLayer.getChild(i);
-			if (((IShape) getFirstChild().getFirstChild()).collidesWith(shot)) {
-				this.mLife--;
-				if (this.mLife <= 0)
-					this.detachSelf();
-				shot.detachSelf();
+			IShape body_bug = ((IShape) getFirstChild().getFirstChild());
+			IShape body_shot = (IShape) shotLayer.getChild(i);
+			if (body_bug.collidesWith(body_shot)) {
+				this.pushDamage();
+				body_shot.detachSelf();
 				break;
+			}
+		}
+	}
+	
+	private void checkAndRestart() {
+		// chiamare solo da thread safe
+		for (int i = 0; i < 45; i++) {
+			IEntity field = Enviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
+			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
+				IShape body_bug = ((IShape) getFirstChild().getFirstChild());
+				IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
+				if (body_bug.collidesWith(body_plant) && this.mCollide) {
+					this.mCollide = false;
+					try {
+						final Plant plant = (Plant) field.getFirstChild();
+						if (plant.getLife() != 0) {
+							stop();
+							registerUpdateHandler(new TimerHandler(1.5f, false, new ITimerCallback() {
+								@Override
+								public void onTimePassed(TimerHandler pTimerHandler) {
+									Bug.this.mCollide = true;
+									plant.pushDamage();
+									Log.i("Game", "collision");
+								}
+							}));
+						} else
+							start();
+					} catch (Exception e) {
+						start();
+						Log.e("Game", "error");
+					}
+				}
 			}
 		}
 	}
