@@ -46,6 +46,7 @@ public class GameData {
 	public Font mFont2;
 	public Font mFont3;
 	public Font mFontMainMenu;
+	public Font mFontGameMenu;
 	
 	private GameData() {
 		
@@ -62,7 +63,7 @@ public class GameData {
 		this.mFont2 = Resource.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFont3 = Resource.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = Resource.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
-		
+		this.mFontGameMenu = Resource.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		this.mSplash = Resource.getTexture(1024, 512, "splash");
 		
 		this.mBackground = Resource.getTexture(1024, 512, "back");

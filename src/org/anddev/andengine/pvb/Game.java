@@ -172,7 +172,7 @@ public class Game extends ExtraScene {
 
 	@Override
 	public MenuScene createMenu() {
-		return null;
+		return new GameMenu();
 	}
 	
 }

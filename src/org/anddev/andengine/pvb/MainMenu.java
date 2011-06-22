@@ -71,6 +71,7 @@ public class MainMenu extends ExtraScene {
 
 	@Override
 	public void endScene() {
+		GameData.getInstance().mCards.clear();
 		Enviroment.getInstance().setScene(new Game());
 	}
 
