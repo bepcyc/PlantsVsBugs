@@ -122,7 +122,7 @@ public abstract class Bug extends Entity {
 			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
 				IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 				IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
-				if (body_bug.collidesWith(body_plant) && this.mCollide) {
+				if (body_bug.collidesWith(body_plant) && this.mY == field.getY() && this.mCollide) {
 					this.mCollide = false;
 					try {
 						final Plant plant = (Plant) field.getFirstChild();
