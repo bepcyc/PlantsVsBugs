@@ -7,7 +7,7 @@ public class PlantFlower2 extends Plant {
 	public PlantFlower2() {
 		super(GameData.getInstance().mPlantFlower2);
 		
-		this.mShotDelay = 5f;
+		this.mShotDelay = 0f;
 	}
 	
 }

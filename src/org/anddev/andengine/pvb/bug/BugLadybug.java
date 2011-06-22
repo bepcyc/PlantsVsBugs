@@ -7,7 +7,7 @@ public class BugLadybug extends Bug {
 	public BugLadybug(final float y) {
 		super(y, GameData.getInstance().mBugLadybug);
 		
-		this.mLife = 4;
+		this.mLife = 13;
 		this.mSpeed = 24f;
 		this.mPoint = 20;
 	}

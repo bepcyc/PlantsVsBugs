@@ -51,13 +51,15 @@ public abstract class Plant extends Entity {
 			
 		});
 		
-		registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
-			@Override
-			public void onTimePassed(TimerHandler pTimerHandler) {
-				if (Plant.this.mCanShot)
-					Plant.this.shot();
-			}
-		}));
+		if (this.mShotDelay > 0) {
+			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					if (Plant.this.mCanShot)
+						Plant.this.shot();
+				}
+			}));
+		}
 	}
 	
 	private void check() {

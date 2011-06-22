@@ -38,7 +38,7 @@ public class Game extends ExtraScene {
 		Sprite seed = new Sprite(25, 16, GameData.getInstance().mSeed);
 		table.attachChild(seed);
 		
-		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "2", 3);
+		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "6", 3);
 		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 		table.attachChild(this.mSeedNum);
 		

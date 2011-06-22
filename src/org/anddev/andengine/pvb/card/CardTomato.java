@@ -9,8 +9,8 @@ public class CardTomato extends Card {
 	public CardTomato(final float pX, final float pY) {
 		super(pX, pY, GameData.getInstance().mCardTomato);
 		
-		this.mRecharge = 10f;
-		this.mPrice = 2;
+		this.mRecharge = 7f;
+		this.mPrice = 4;
 	}
 	
 	public Plant getPlant() {

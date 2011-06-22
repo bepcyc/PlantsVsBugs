@@ -7,7 +7,7 @@ public class PlantTomato extends Plant {
 	public PlantTomato() {
 		super(GameData.getInstance().mPlantTomato);
 		
-		this.mShotDelay = 4f;
+		this.mShotDelay = 1f;
 	}
 	
 }
