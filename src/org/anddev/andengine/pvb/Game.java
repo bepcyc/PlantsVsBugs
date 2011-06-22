@@ -94,7 +94,7 @@ public class Game extends ExtraScene {
 			}
 		}));
 		
-		registerUpdateHandler(new TimerHandler(10f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(7f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Game.this.getSeed();

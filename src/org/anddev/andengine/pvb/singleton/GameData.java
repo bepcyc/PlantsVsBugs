@@ -18,6 +18,8 @@ public class GameData {
     public LinkedList<Card> mCards;
     public ExtraScoring mScoring;
     
+    public TextureRegion mSplash;
+    
     public TextureRegion mBackground;
     public TextureRegion mTable;
     public TextureRegion mSeed;
@@ -43,6 +45,7 @@ public class GameData {
 	public Font mFont1;
 	public Font mFont2;
 	public Font mFont3;
+	public Font mFontMainMenu;
 	
 	private GameData() {
 		
@@ -58,6 +61,9 @@ public class GameData {
 		this.mFont1 = Resource.getFont("akaDylan Plain", 21, 2, Color.WHITE, Color.BLACK);
 		this.mFont2 = Resource.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFont3 = Resource.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
+		this.mFontMainMenu = Resource.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
+		
+		this.mSplash = Resource.getTexture(1024, 512, "splash");
 		
 		this.mBackground = Resource.getTexture(1024, 512, "back");
 		this.mTable  = Resource.getTexture(1024, 128, "table");
