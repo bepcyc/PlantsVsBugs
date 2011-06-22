@@ -87,7 +87,7 @@ public abstract class Bug extends Entity {
 		registerEntityModifier(new PathModifier(duration, this.mPath, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				// game over
+				Enviroment.getInstance().nextScene();
 			}
 
 			@Override
