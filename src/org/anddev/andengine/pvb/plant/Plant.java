@@ -21,10 +21,11 @@ import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 public abstract class Plant extends Entity {
 	
+	private int mLife = 3;
 	protected float mShotHeight = 28f;
 	protected float mShotSpeed = 200f;
 	protected float mShotDelay = 4f;
-	protected boolean mCanShot = false;
+	private boolean mCanShot = false;
 	
 	public Plant(final TextureRegion pTexture) {
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
@@ -34,12 +35,12 @@ public abstract class Plant extends Entity {
 	}
 	
 	public void onAttached() {
-		check();
+		checkAndRemove();
 		
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
-				Plant.this.check();
+				Plant.this.checkAndRemove();
 			}
 
 			@Override
@@ -58,12 +59,24 @@ public abstract class Plant extends Entity {
 		}));
 	}
 	
-	private void check() {
+	private void checkAndRemove() {
 		String y = Float.toString(getParent().getY());
 		if (SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "count" + y) > 0)
 			this.mCanShot = true;
 		else
 			this.mCanShot = false;
+		
+		Enviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
+			@Override
+			public void run() {
+				if (Plant.this.mLife <= 0)
+					Plant.this.detachSelf();
+			}
+		});
+	}
+
+	public void pushDamage() {
+		this.mLife--;
 	}
 
 	private void shot() {
@@ -92,6 +105,7 @@ public abstract class Plant extends Entity {
 				
 			}
 		}, EaseSineInOut.getInstance()));
+		
 		Enviroment.getInstance().getScene().getChild(ExtraScene.EXTRA_GAME_LAYER).attachChild(shot);
 	}
 	

@@ -2,6 +2,7 @@ package org.anddev.andengine.pvb.singleton;
 
 import java.util.LinkedList;
 
+import org.anddev.andengine.extra.ExtraScoring;
 import org.anddev.andengine.extra.Resource;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -14,7 +15,8 @@ public class GameData {
     private static GameData mInstance = null;
     
     // generici
-    private LinkedList<Card> mCards;
+    public LinkedList<Card> mCards;
+    public ExtraScoring mScoring;
     
     public TextureRegion mBackground;
     public TextureRegion mTable;
@@ -78,11 +80,9 @@ public class GameData {
 		this.mBugBeetle = Resource.getTexture(64, 128, "beetle");
 		this.mBugLadybug = Resource.getTexture(64, 128, "ladybug");
 		
+		this.mScoring = new ExtraScoring(625, 47, GameData.getInstance().mFont3);
+		
 		this.mCards = new LinkedList<Card>();
-	}
-	
-	public LinkedList<Card> getCards() {
-		return this.mCards;
 	}
 	
 }

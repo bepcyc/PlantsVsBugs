@@ -14,8 +14,6 @@ import org.anddev.andengine.pvb.plant.Plant;
 import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.modifier.IModifier;
 
-import android.util.Log;
-
 public abstract class Card extends Sprite {
 
 	private Rectangle mBlack;
@@ -73,12 +71,11 @@ public abstract class Card extends Sprite {
 
 	public Card makeSelect() {
 		Card sel = null;
-		LinkedList<Card> cards = GameData.getInstance().getCards();
+		LinkedList<Card> cards = GameData.getInstance().mCards;
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
 			if (c == this) {
 				if (getChildCount() == 3) {
-					Log.i("Game", Integer.toString(this.getChildCount()));
 					Sprite s = new Sprite(0, 0, GameData.getInstance().mCardSelected);
 					attachChild(s);
 					sel = c;
@@ -93,7 +90,6 @@ public abstract class Card extends Sprite {
 	public void setUnselect() {
 		if (getChildCount() > 3)
 			Enviroment.getInstance().safeDetachEntity(getLastChild());
-			//detachChild(getLastChild());
 	}
 
 	public Plant getPlant() {

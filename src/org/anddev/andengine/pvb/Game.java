@@ -2,7 +2,6 @@ package org.anddev.andengine.pvb;
 
 import java.util.LinkedList;
 
-import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
@@ -23,13 +22,10 @@ import org.anddev.andengine.pvb.singleton.GameData;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
 
-import android.util.Log;
-
 public class Game extends ExtraScene {
 
 	private Card mSelect;
 	private ChangeableText mSeedNum;
-	private ChangeableText mScore;
 
 	@Override
 	public void createScene() {
@@ -46,10 +42,7 @@ public class Game extends ExtraScene {
 		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 		table.attachChild(this.mSeedNum);
 		
-		int sc = SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "score");
-		this.mScore = new ChangeableText(0, 0, GameData.getInstance().mFont3, Integer.toString(sc));
-		this.mScore.setPosition(625 - this.mScore.getWidthScaled() / 2 , 47 - this.mScore.getHeightScaled() / 2);
-		getChild(GUI_LAYER).attachChild(this.mScore);
+		getChild(GUI_LAYER).attachChild(GameData.getInstance().mScoring);
 		
 		// field position
 		for (int i = 0; i < 45; i++) {
@@ -73,13 +66,9 @@ public class Game extends ExtraScene {
 		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count327.0");
 		SimplePreferences.resetAccessCount(Enviroment.getInstance().getContext(), "count404.0");
 		
-		LinkedList<Card> cards = GameData.getInstance().getCards();
+		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.add(new CardTomato(0, 0));
 		//cards.add(new CardFlower2(0, 0));
-		//cards.add(new CardTomato(0, 0));
-		//cards.add(new CardTomato(0, 0));
-		//cards.add(new CardFlower2(0, 0));
-		//cards.add(new CardTomato(0, 0));
 	}
 
 	@Override
@@ -87,7 +76,7 @@ public class Game extends ExtraScene {
 		initLevel();
 		
 		// add card
-		LinkedList<Card> cards = GameData.getInstance().getCards();
+		LinkedList<Card> cards = GameData.getInstance().mCards;
 		int start_x = 106;
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
@@ -95,8 +84,8 @@ public class Game extends ExtraScene {
 			getChild(GUI_LAYER).attachChild(c);
 		}
 		
-		//  entrata nemici
-		this.getEnemy(5); // first a 3 sec
+		// entrata nemici
+		// this.getEnemy(5); // first a 3 sec
 		
 		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {
 			@Override
@@ -111,21 +100,6 @@ public class Game extends ExtraScene {
 				Game.this.getSeed();
 			}
 		}));
-		
-		registerUpdateHandler(new IUpdateHandler() {
-			@Override
-			public void onUpdate(float pSecondsElapsed) {
-				int sc = SimplePreferences.getAccessCount(Enviroment.getInstance().getContext(), "score");
-				Game.this.mScore.setText(String.valueOf(sc));
-				Game.this.mScore.setPosition(625 - Game.this.mScore.getWidthScaled() / 2 , 47 - Game.this.mScore.getHeightScaled() / 2);
-			}
-			
-			@Override
-			public void reset() {
-				
-			}
-			
-		});
 	}
 
 	@Override
@@ -136,8 +110,6 @@ public class Game extends ExtraScene {
 	@Override
 	public void manageAreaTouch(ITouchArea pTouchArea) {
 		if (pTouchArea instanceof Card) {
-			Log.i("Game", "card");
-			
 			Card c = (Card) pTouchArea;
 			this.mSelect = c.makeSelect();
 		} else {
@@ -150,8 +122,6 @@ public class Game extends ExtraScene {
 			if (this.mSelect != null && this.mSelect.isReady()) { // aggiungere controllo costo
 				if (field.getChildCount() == 0) {
 					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
-						Log.i("Game", "recharge/object");
-						
 						this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) - this.mSelect.getPrice()));
 						this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
 						
