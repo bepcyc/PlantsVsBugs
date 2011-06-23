@@ -14,10 +14,12 @@ import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
+import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
@@ -56,6 +58,8 @@ public class Game extends AdScene {
 			
 			registerTouchArea(field);
 		}
+		
+		setOnSceneTouchListener(null);
 	}
 
 	private void initLevel() {
@@ -85,27 +89,40 @@ public class Game extends AdScene {
 		}
 		
 		// entrata nemici
-		this.getEnemy(5); // first a 3 sec
+		this.createEnemy(6); // first a 3 sec
 		
 		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.getEnemy(MathUtils.random(3, 13));
+				Game.this.createEnemy(MathUtils.random(3, 13));
 			}
 		}));
 		
 		registerUpdateHandler(new TimerHandler(7f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.getSeed();
+				Game.this.createSeed();
 			}
 		}));
 	}
 
+	public void gameOver() {
+		Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
+		gameover.setColor(1.0f, 0.3f, 0.3f);
+		gameover.registerEntityModifier(new ScaleModifier(0.3f, 0f, 1.0f));
+		gameover.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - gameover.getWidthScaled() / 2, 
+							 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2);
+		getChild(GUI_LAYER).attachChild(gameover);
+		
+		AdEnviroment.getInstance().getEngine().clearUpdateHandlers();
+		
+		setOnAreaTouchListener(null);
+        setOnSceneTouchListener(this);
+	}
+
 	@Override
 	public void endScene() {
-		GameData.getInstance().mCards.clear();
-		AdEnviroment.getInstance().setScene(new Game());
+		AdEnviroment.getInstance().setScene(new MainMenu());
 	}
 
 	@Override
@@ -132,7 +149,7 @@ public class Game extends AdScene {
 		}
 	}
 
-	private void getEnemy(int pDelay) {
+	private void createEnemy(int pDelay) {
 		final int y = 96 + MathUtils.random(0, 4) * 77;
 		
 		registerUpdateHandler(new TimerHandler(pDelay, false, new ITimerCallback() {
@@ -148,7 +165,7 @@ public class Game extends AdScene {
 		}));
 	}
 
-	private void getSeed() {
+	private void createSeed() {
 		int i = MathUtils.random(0, 8) * MathUtils.random(1, 5);
 		//int x = 42 + x * 71;
 		//int y = 96 + y * 77;
@@ -167,7 +184,7 @@ public class Game extends AdScene {
 	
 	@Override
 	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
-		
+		AdEnviroment.getInstance().nextScene();
 	}
 
 	@Override

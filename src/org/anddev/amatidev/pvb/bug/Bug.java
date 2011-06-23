@@ -50,6 +50,7 @@ public abstract class Bug extends Entity {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
+						Log.i("Game", "loop");
 						Bug.this.checkAndRemove();
 						Bug.this.checkAndRestart();
 					}
@@ -87,7 +88,7 @@ public abstract class Bug extends Entity {
 		registerEntityModifier(new PathModifier(duration, this.mPath, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				AdEnviroment.getInstance().nextScene();
+				((Game) AdEnviroment.getInstance().getScene()).gameOver();
 			}
 
 			@Override

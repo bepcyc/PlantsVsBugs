@@ -45,6 +45,7 @@ public class GameData {
 	public Font mFont1;
 	public Font mFont2;
 	public Font mFont3;
+	public Font mFontEvent;
 	public Font mFontMainMenu;
 	public Font mFontGameMenu;
 	
@@ -62,8 +63,11 @@ public class GameData {
 		this.mFont1 = AdResourceLoader.getFont("akaDylan Plain", 21, 2, Color.WHITE, Color.BLACK);
 		this.mFont2 = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFont3 = AdResourceLoader.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
+		
+		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 60, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
+		
 		this.mSplash = AdResourceLoader.getTexture(1024, 512, "splash");
 		
 		this.mBackground = AdResourceLoader.getTexture(1024, 512, "back");
