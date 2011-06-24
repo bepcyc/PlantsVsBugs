@@ -50,7 +50,7 @@ public abstract class Bug extends Entity {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
-						Log.i("Game", "loop");
+						Log.i("Game", "bug");
 						Bug.this.checkAndRemove();
 						Bug.this.checkAndRestart();
 					}

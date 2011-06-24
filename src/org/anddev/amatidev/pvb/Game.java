@@ -28,6 +28,7 @@ public class Game extends AdScene {
 
 	private Card mSelect;
 	private ChangeableText mSeedNum;
+	private boolean mGameOver = false;
 
 	@Override
 	public void createScene() {
@@ -107,17 +108,32 @@ public class Game extends AdScene {
 	}
 
 	public void gameOver() {
-		Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
-		gameover.setColor(1.0f, 0.3f, 0.3f);
-		gameover.registerEntityModifier(new ScaleModifier(0.3f, 0f, 1.0f));
-		gameover.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - gameover.getWidthScaled() / 2, 
-							 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2);
-		getChild(GUI_LAYER).attachChild(gameover);
-		
+		if (this.mGameOver == false) {
+			Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
+			gameover.setColor(1.0f, 0.3f, 0.3f);
+			gameover.registerEntityModifier(new ScaleModifier(0.3f, 0f, 1.0f));
+			gameover.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - gameover.getWidthScaled() / 2, 
+								 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2 + 20);
+			getChild(GUI_LAYER).attachChild(gameover);
+			
+			setOnAreaTouchListener(null);
+			setOnSceneTouchListener(this);
+			
+			clearScene();
+			
+			this.mGameOver = true;
+		}
+	}
+
+	public void clearScene() {
 		AdEnviroment.getInstance().getEngine().clearUpdateHandlers();
-		
-		setOnAreaTouchListener(null);
-        setOnSceneTouchListener(this);
+        clearUpdateHandlers();
+        for (int i = 0; i < getChild(GAME_LAYER).getChildCount(); i++) {
+        	IEntity elem = getChild(GAME_LAYER).getChild(i);
+        	elem.clearUpdateHandlers();
+        	if (elem.getChildCount() > 0)
+        		elem.getFirstChild().clearUpdateHandlers();
+        }
 	}
 
 	@Override
@@ -189,7 +205,10 @@ public class Game extends AdScene {
 
 	@Override
 	public MenuScene createMenu() {
-		return new GameMenu();
+		if (this.mGameOver)
+			return null;
+		else
+			return new GameMenu();
 	}
 	
 }

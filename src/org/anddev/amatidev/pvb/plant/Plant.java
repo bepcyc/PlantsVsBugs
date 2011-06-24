@@ -19,6 +19,8 @@ import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
+import android.util.Log;
+
 public abstract class Plant extends Entity {
 	
 	protected int mLife = 3;
@@ -41,6 +43,7 @@ public abstract class Plant extends Entity {
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
+				Log.i("Game", "plant0");
 				Plant.this.check();
 			}
 
@@ -55,6 +58,7 @@ public abstract class Plant extends Entity {
 			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
+					Log.i("Game", "plant");
 					if (Plant.this.mCanShot)
 						Plant.this.shot();
 				}

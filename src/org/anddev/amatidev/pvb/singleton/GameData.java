@@ -64,7 +64,7 @@ public class GameData {
 		this.mFont2 = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFont3 = AdResourceLoader.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
 		
-		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 60, 3, Color.WHITE, Color.BLACK);
+		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 64, 4, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		
