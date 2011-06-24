@@ -6,8 +6,8 @@ import org.anddev.amatidev.pvb.singleton.GameData;
 
 public class CardFlower2 extends Card {
 
-	public CardFlower2(final float pX, final float pY) {
-		super(pX, pY, GameData.getInstance().mCardFlower2);
+	public CardFlower2() {
+		super(GameData.getInstance().mCardFlower2);
 		
 		this.mRecharge = 7f;
 		this.mPrice = 2;

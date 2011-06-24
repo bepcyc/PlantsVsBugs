@@ -67,6 +67,7 @@ public abstract class Bug extends Entity {
 	public void onDetached() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mScoring.addScore(this.mPoint);
+		((Game) AdEnviroment.getInstance().getScene()).checkLevelFinish();
 	}
 	
 	private void pushDamage() {
@@ -137,11 +138,13 @@ public abstract class Bug extends Entity {
 									Log.i("Game", "collision");
 								}
 							}));
-						} else
+						} else {
 							start();
+							Log.i("Game", "restart");
+						}
 					} catch (Exception e) {
 						start();
-						Log.e("Game", "error");
+						Log.e("Game", "restart");
 					}
 				}
 			}

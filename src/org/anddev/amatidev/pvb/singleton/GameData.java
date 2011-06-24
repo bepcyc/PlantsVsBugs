@@ -16,6 +16,8 @@ public class GameData {
     
     // generici
     public LinkedList<Card> mCards;
+    public int mLevel = 1;
+    
     public AdTextScoring mScoring;
     
     public TextureRegion mSplash;

@@ -22,8 +22,8 @@ public abstract class Card extends Sprite {
 
 	private Rectangle mBlack;
 	
-	public Card(final float pX, float pY, final TextureRegion pTextureRegion) {
-		super(pX, pY, GameData.getInstance().mCard);
+	public Card(final TextureRegion pTextureRegion) {
+		super(0, 0, GameData.getInstance().mCard);
 		Sprite image = new Sprite(4, 4, pTextureRegion);
 		attachChild(image);
 	}

@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import org.amatidev.AdEnviroment;
 import org.amatidev.AdScene;
-import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
 import org.anddev.amatidev.pvb.bug.BugLadybug;
 import org.anddev.amatidev.pvb.card.Card;
@@ -29,6 +28,7 @@ public class Game extends AdScene {
 	private Card mSelect;
 	private ChangeableText mSeedNum;
 	private boolean mGameOver = false;
+	private boolean mLevelFinish = false;
 
 	@Override
 	public void createScene() {
@@ -72,8 +72,9 @@ public class Game extends AdScene {
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
-		cards.add(new CardTomato(0, 0));
-		//cards.add(new CardFlower2(0, 0));
+		cards.add(new CardTomato());
+		if (GameData.getInstance().mLevel > 1)
+			cards.add(new CardTomato());
 	}
 
 	@Override
@@ -89,17 +90,14 @@ public class Game extends AdScene {
 			getChild(GUI_LAYER).attachChild(c);
 		}
 		
-		// entrata nemici
-		this.createEnemy(6); // first a 3 sec
-		
-		registerUpdateHandler(new TimerHandler(15f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(9f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.createEnemy(MathUtils.random(3, 13));
+				Game.this.createEnemy();
 			}
 		}));
 		
-		registerUpdateHandler(new TimerHandler(7f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(5f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Game.this.createSeed();
@@ -107,8 +105,19 @@ public class Game extends AdScene {
 		}));
 	}
 
+	public void checkLevelFinish() {
+		if (GameData.getInstance().mScoring.getScore() >= GameData.getInstance().mLevel * 100) {
+			this.mLevelFinish = true;
+			setOnAreaTouchListener(null);
+			setOnSceneTouchListener(null);
+			clearScene();
+			GameData.getInstance().mLevel++;
+			AdEnviroment.getInstance().nextScene();
+		}
+	}
+	
 	public void gameOver() {
-		if (this.mGameOver == false) {
+		if (this.mGameOver == false && this.mLevelFinish == false) {
 			Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
 			gameover.setColor(1.0f, 0.3f, 0.3f);
 			gameover.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
@@ -138,7 +147,10 @@ public class Game extends AdScene {
 
 	@Override
 	public void endScene() {
-		AdEnviroment.getInstance().setScene(new MainMenu());
+		if (this.mGameOver)
+			AdEnviroment.getInstance().setScene(new MainMenu());
+		else
+			AdEnviroment.getInstance().setScene(new Game());
 	}
 
 	@Override
@@ -165,26 +177,45 @@ public class Game extends AdScene {
 		}
 	}
 
-	private void createEnemy(int pDelay) {
-		final int y = 96 + MathUtils.random(0, 4) * 77;
+	private void createEnemy() {
+		int ss = 2 + (int) (GameData.getInstance().mLevel / 10);
+		int dd = (int) (GameData.getInstance().mLevel / 20);
+		if (dd < 3) 
+			dd = 3;
 		
-		registerUpdateHandler(new TimerHandler(pDelay, false, new ITimerCallback() {
-			@Override
-			public void onTimePassed(TimerHandler pTimerHandler) {
-				Bug e = null;
-				if (MathUtils.random(0, 2) == 0)
-					e = new BugLadybug(y); // stessa altezza dei fields
-				else
-					e = new BugBeetle(y); // stessa altezza dei fields
-				getChild(Game.GAME_LAYER).attachChild(e);
-			}
-		}));
+		int numEnemies = 2;
+		int ee = (int) (GameData.getInstance().mLevel / 5);
+		if (ee >= numEnemies)
+			ee = numEnemies - 1;
+		
+		for (int i = 0; i < MathUtils.random(1, MathUtils.random(2, ss)); i++) { 
+			int delay = MathUtils.random(3, 18 - dd);
+			final int enemyIndex = MathUtils.random(0, ee);
+			final int y = 96 + MathUtils.random(0, 4) * 77;
+			
+			registerUpdateHandler(new TimerHandler(delay, false, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					IEntity e = null;
+					switch (enemyIndex) {
+					case 0:
+						e = new BugBeetle(y);
+						break;
+					case 1:
+						e = new BugLadybug(y);
+						break;
+					default:
+						e = new BugBeetle(y);
+					}
+					if (e != null)
+						getChild(Game.GAME_LAYER).attachChild(e);
+				}
+			}));
+		}
 	}
 
 	private void createSeed() {
 		int i = MathUtils.random(0, 8) * MathUtils.random(1, 5);
-		//int x = 42 + x * 71;
-		//int y = 96 + y * 77;
 		final Sprite e = new Sprite(12, 25, GameData.getInstance().mSeed);
 		IEntity field = getChild(Game.GAME_LAYER).getChild(i);
 		if (field.getChildCount() == 0)

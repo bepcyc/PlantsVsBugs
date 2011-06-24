@@ -6,8 +6,8 @@ import org.anddev.amatidev.pvb.singleton.GameData;
 
 public class CardTomato extends Card {
 
-	public CardTomato(final float pX, final float pY) {
-		super(pX, pY, GameData.getInstance().mCardTomato);
+	public CardTomato() {
+		super(GameData.getInstance().mCardTomato);
 		
 		this.mRecharge = 7f;
 		this.mPrice = 4;
