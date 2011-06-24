@@ -17,7 +17,6 @@ import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
@@ -26,7 +25,6 @@ import org.anddev.andengine.util.SimplePreferences;
 public class Game extends AdScene {
 
 	private Card mSelect;
-	private ChangeableText mSeedNum;
 	private boolean mGameOver = false;
 	private boolean mLevelFinish = false;
 
@@ -40,10 +38,7 @@ public class Game extends AdScene {
 		
 		Sprite seed = new Sprite(25, 16, GameData.getInstance().mSeed);
 		table.attachChild(seed);
-		
-		this.mSeedNum = new ChangeableText(0, 0, GameData.getInstance().mFont1, "6", 3);
-		this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
-		table.attachChild(this.mSeedNum);
+		table.attachChild(GameData.getInstance().mMySeed);
 		
 		getChild(GUI_LAYER).attachChild(GameData.getInstance().mScoring);
 		
@@ -72,6 +67,7 @@ public class Game extends AdScene {
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
+		cards.clear();
 		cards.add(new CardTomato());
 		if (GameData.getInstance().mLevel > 1)
 			cards.add(new CardTomato());
@@ -160,15 +156,12 @@ public class Game extends AdScene {
 		} else {
 			IEntity field = (IEntity) pTouchArea;
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
-				this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) + 1));
-				this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
+				GameData.getInstance().mMySeed.addScore(1);
 				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
 			} else {
 				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0) {
-					if (Integer.parseInt(this.mSeedNum.getText()) >= this.mSelect.getPrice()) {
-						this.mSeedNum.setText(String.valueOf(Integer.parseInt(this.mSeedNum.getText()) - this.mSelect.getPrice()));
-						this.mSeedNum.setPosition(48 - this.mSeedNum.getWidthScaled() / 2 , 68 - this.mSeedNum.getHeightScaled() / 2);
-						
+					if (GameData.getInstance().mMySeed.getScore() >= this.mSelect.getPrice()) {
+						GameData.getInstance().mMySeed.addScore(-this.mSelect.getPrice());
 						this.mSelect.startRecharge();
 						field.attachChild(this.mSelect.getPlant());
 					}

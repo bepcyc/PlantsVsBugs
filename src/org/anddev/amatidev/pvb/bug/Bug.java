@@ -134,7 +134,7 @@ public abstract class Bug extends Entity {
 								@Override
 								public void onTimePassed(TimerHandler pTimerHandler) {
 									Bug.this.mCollide = true;
-									plant.pushDamage();
+									plant.pushDamage(Bug.this);
 									Log.i("Game", "collision");
 								}
 							}));
