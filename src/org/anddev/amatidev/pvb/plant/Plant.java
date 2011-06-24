@@ -43,7 +43,7 @@ public abstract class Plant extends Entity {
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
-				Log.i("Game", "plant0");
+				//Log.i("Game", "plant0");
 				Plant.this.check();
 			}
 
@@ -58,7 +58,7 @@ public abstract class Plant extends Entity {
 			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					Log.i("Game", "plant");
+					//Log.i("Game", "plant");
 					if (Plant.this.mCanShot)
 						Plant.this.shot();
 				}

@@ -111,9 +111,9 @@ public class Game extends AdScene {
 		if (this.mGameOver == false) {
 			Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
 			gameover.setColor(1.0f, 0.3f, 0.3f);
-			gameover.registerEntityModifier(new ScaleModifier(0.3f, 0f, 1.0f));
+			gameover.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
 			gameover.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - gameover.getWidthScaled() / 2, 
-								 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2 + 20);
+								 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2);
 			getChild(GUI_LAYER).attachChild(gameover);
 			
 			setOnAreaTouchListener(null);

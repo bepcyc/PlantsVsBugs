@@ -67,11 +67,14 @@ public class MainMenu extends AdScene {
     	registerTouchArea(play);
     	registerTouchArea(score);
     	registerTouchArea(more);
+    	
+    	setOnSceneTouchListener(null);
 	}
 
 	@Override
 	public void endScene() {
 		GameData.getInstance().mCards.clear();
+		GameData.getInstance().mScoring.resetScore();
 		AdEnviroment.getInstance().setScene(new Game());
 	}
 
@@ -94,8 +97,8 @@ public class MainMenu extends AdScene {
 								
 							}
 						},
-						new ScaleModifier(0.1f, 1f, 1.3f),
-						new ScaleModifier(0.1f, 1.3f, 1f)
+						new ScaleModifier(0.1f, 1f, 1.5f),
+						new ScaleModifier(0.1f, 1.5f, 1f)
 		));
 	}
 
