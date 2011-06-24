@@ -2,6 +2,7 @@ package org.anddev.amatidev.pvb.plant;
 
 import org.amatidev.AdEnviroment;
 import org.amatidev.AdScene;
+import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -74,7 +75,7 @@ public abstract class Plant extends Entity {
 			this.mCanShot = false;
 	}
 
-	public void pushDamage() {
+	public void pushDamage(Bug pBug) {
 		this.mLife--;
 		if (this.mLife <= 0)
 			AdEnviroment.getInstance().safeDetachEntity(this);

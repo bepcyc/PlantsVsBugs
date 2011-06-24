@@ -139,11 +139,11 @@ public abstract class Bug extends Entity {
 								}
 							}));
 						} else {
-							start();
+							//start();
 							Log.i("Game", "restart");
 						}
 					} catch (Exception e) {
-						start();
+						//start();
 						Log.e("Game", "restart");
 					}
 				}
