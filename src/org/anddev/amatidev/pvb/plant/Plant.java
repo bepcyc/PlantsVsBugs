@@ -4,7 +4,6 @@ import org.amatidev.AdEnviroment;
 import org.amatidev.AdScene;
 import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.singleton.GameData;
-import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
@@ -20,16 +19,12 @@ import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
-import android.util.Log;
-
 public abstract class Plant extends Entity {
 	
 	protected int mLife = 3;
 	protected float mShotHeight = 28f;
 	protected float mShotSpeed = 200f;
 	protected float mShotDelay = 4f;
-	
-	private boolean mCanShot = false;
 	
 	public Plant(final TextureRegion pTexture) {
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
@@ -39,46 +34,37 @@ public abstract class Plant extends Entity {
 	}
 	
 	public void onAttached() {
-		check();
-		
-		registerUpdateHandler(new IUpdateHandler() {
-			@Override
-			public void onUpdate(float pSecondsElapsed) {
-				//Log.i("Game", "plant0");
-				Plant.this.check();
-			}
-
-			@Override
-			public void reset() {
-				
-			}
-			
-		});
-		
 		if (this.mShotDelay > 0) {
 			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
 					//Log.i("Game", "plant");
-					if (Plant.this.mCanShot)
+					if (Plant.this.canShot())
 						Plant.this.shot();
 				}
 			}));
 		}
 	}
 	
-	private void check() {
+	private boolean canShot() {
 		String y = Float.toString(getParent().getY());
 		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "count" + y) > 0)
-			this.mCanShot = true;
+			return true;
 		else
-			this.mCanShot = false;
+			return false;
 	}
 
-	public void pushDamage(Bug pBug) {
+	public void pushDamage(final Bug pBug) {
 		this.mLife--;
-		if (this.mLife <= 0)
-			AdEnviroment.getInstance().safeDetachEntity(this);
+		if (this.mLife <= 0) {
+			AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
+				@Override
+				public void run() {
+					Plant.this.detachSelf();
+					pBug.restart();
+				}
+			});
+		}
 	}
 	
 	public int getLife() {

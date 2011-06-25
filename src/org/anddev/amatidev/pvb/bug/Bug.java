@@ -27,6 +27,7 @@ public abstract class Bug extends Entity {
 	protected int mLife = 3;
 	protected int mPoint = 10;
 	protected float mSpeed = 21f;
+	protected float mAttack = 1.5f; // danni a tempo di collisione
 	
 	private Path mPath;
 	private boolean mCollide = true;
@@ -42,7 +43,7 @@ public abstract class Bug extends Entity {
 	
 	public void onAttached() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY));
-		start(); // move
+		restart(); // move
 		
 		registerUpdateHandler(new IUpdateHandler() {
 			@Override
@@ -51,8 +52,8 @@ public abstract class Bug extends Entity {
 					@Override
 					public void run() {
 						//Log.i("Game", "bug");
-						Bug.this.checkAndRemove();
-						Bug.this.checkAndRestart();
+						Bug.this.checkCollisionShot(); // controlla danni da colpi
+						Bug.this.checkCollisionPlant(); // crea danni a piange se collide e se vince riparte
 					}
 				});
 			}
@@ -81,7 +82,8 @@ public abstract class Bug extends Entity {
 		return this.mLife;
 	}
 
-	private void start() {
+	public void restart() {
+		stop();
 		this.mCollide = true;
 		
 		this.mPath = new Path(2).to(this.mX, this.mY).to(0, this.mY);
@@ -89,7 +91,12 @@ public abstract class Bug extends Entity {
 		registerEntityModifier(new PathModifier(duration, this.mPath, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				((Game) AdEnviroment.getInstance().getScene()).gameOver();
+				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
+					@Override
+					public void run() {
+						((Game) AdEnviroment.getInstance().getScene()).gameOver();
+					}
+				});
 			}
 
 			@Override
@@ -99,25 +106,26 @@ public abstract class Bug extends Entity {
 		}, EaseSineInOut.getInstance()));
 	}
 
-	private void stop() {
+	public void stop() {
+		this.mCollide = false;
 		this.clearEntityModifiers();
 	}
 
-	private void checkAndRemove() {
+	private void checkCollisionShot() {
 		// chiamare solo da thread safe
 		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 			IShape body_shot = (IShape) shotLayer.getChild(i);
 			if (body_bug.collidesWith(body_shot)) {
-				this.pushDamage();
+				pushDamage();
 				body_shot.detachSelf();
 				break;
 			}
 		}
 	}
 	
-	private void checkAndRestart() {
+	private void checkCollisionPlant() {
 		// chiamare solo da thread safe
 		for (int i = 0; i < 45; i++) {
 			IEntity field = AdEnviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
@@ -125,26 +133,23 @@ public abstract class Bug extends Entity {
 				IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 				IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
 				if (body_bug.collidesWith(body_plant) && this.mY == field.getY() && this.mCollide) {
-					this.mCollide = false;
 					try {
 						final Plant plant = (Plant) field.getFirstChild();
 						if (plant.getLife() != 0) {
 							stop();
-							registerUpdateHandler(new TimerHandler(1.5f, false, new ITimerCallback() {
+							registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
 								@Override
 								public void onTimePassed(TimerHandler pTimerHandler) {
-									Bug.this.mCollide = true;
 									plant.pushDamage(Bug.this);
+									Bug.this.mCollide = true;
+									
 									Log.i("Game", "collision");
 								}
 							}));
-						} else {
-							//start();
-							Log.i("Game", "restart");
-						}
+						} else
+							Log.w("Game", "plant 0 life");
 					} catch (Exception e) {
-						//start();
-						Log.e("Game", "restart");
+						Log.w("Game", "plant no exist");
 					}
 				}
 			}

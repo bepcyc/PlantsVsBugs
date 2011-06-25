@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.amatidev.AdEnviroment;
 import org.amatidev.AdScene;
+import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
 import org.anddev.amatidev.pvb.bug.BugLadybug;
 import org.anddev.amatidev.pvb.card.Card;
@@ -36,7 +37,7 @@ public class Game extends AdScene {
 		getChild(BACKGROUND_LAYER).attachChild(back);
 		getChild(GUI_LAYER).attachChild(table);
 		
-		Sprite seed = new Sprite(25, 16, GameData.getInstance().mSeed);
+		Sprite seed = new Sprite(25, 14, GameData.getInstance().mSeed);
 		table.attachChild(seed);
 		table.attachChild(GameData.getInstance().mMySeed);
 		
@@ -103,12 +104,20 @@ public class Game extends AdScene {
 
 	public void checkLevelFinish() {
 		if (GameData.getInstance().mScoring.getScore() >= GameData.getInstance().mLevel * 100) {
-			this.mLevelFinish = true;
+			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Level Complete");
+			level.setColor(1.0f, 0.3f, 0.3f);
+			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
+			level.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - level.getWidthScaled() / 2, 
+							  AdEnviroment.getInstance().getScreenHeight() / 2 - level.getHeightScaled() / 2);
+			getChild(GUI_LAYER).attachChild(level);
+			
 			setOnAreaTouchListener(null);
-			setOnSceneTouchListener(null);
+			setOnSceneTouchListener(this);
+			
 			clearScene();
+			
+			this.mLevelFinish = true;
 			GameData.getInstance().mLevel++;
-			AdEnviroment.getInstance().nextScene();
 		}
 	}
 	
@@ -135,9 +144,12 @@ public class Game extends AdScene {
         clearUpdateHandlers();
         for (int i = 0; i < getChild(GAME_LAYER).getChildCount(); i++) {
         	IEntity elem = getChild(GAME_LAYER).getChild(i);
-        	elem.clearUpdateHandlers();
-        	if (elem.getChildCount() > 0)
+        	if (elem.getChildCount() > 0 && elem.getFirstChild() instanceof Plant)
         		elem.getFirstChild().clearUpdateHandlers();
+        	if (elem instanceof Bug) {
+        		elem.clearUpdateHandlers();
+        		((Bug) elem).stop();
+        	}
         }
 	}
 
@@ -201,7 +213,7 @@ public class Game extends AdScene {
 						e = new BugBeetle(y);
 					}
 					if (e != null)
-						getChild(Game.GAME_LAYER).attachChild(e);
+						getChild(GAME_LAYER).attachChild(e);
 				}
 			}));
 		}
@@ -210,11 +222,11 @@ public class Game extends AdScene {
 	private void createSeed() {
 		int i = MathUtils.random(0, 8) * MathUtils.random(1, 5);
 		final Sprite e = new Sprite(12, 25, GameData.getInstance().mSeed);
-		IEntity field = getChild(Game.GAME_LAYER).getChild(i);
+		IEntity field = getChild(GAME_LAYER).getChild(i);
 		if (field.getChildCount() == 0)
 			field.attachChild(e);
 		
-		registerUpdateHandler(new TimerHandler(5f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(3f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				AdEnviroment.getInstance().safeDetachEntity(e);

@@ -67,7 +67,7 @@ public class GameData {
 		this.mFont2 = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFont3 = AdResourceLoader.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
 		
-		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 64, 3, Color.WHITE, Color.BLACK);
+		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 4, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		
@@ -94,7 +94,7 @@ public class GameData {
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
 		
-		this.mMySeed = new AdTextScoring(48, 68, GameData.getInstance().mFont1, 6);
+		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFont1, 6);
 		this.mScoring = new AdTextScoring(625, 47, GameData.getInstance().mFont3);
 		
 		this.mCards = new LinkedList<Card>();
