@@ -8,6 +8,7 @@ import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
+import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.modifier.IModifier;
@@ -29,8 +30,8 @@ public class MainMenu extends AdScene {
 
 	@Override
 	public void createScene() {
-		//Sprite back = new Sprite(0, 0, this.mBack);
-		//getChild(ExtraScene.BACKGROUND_LAYER).attachChild(back);
+		Sprite back = new Sprite(0, 0, GameData.getInstance().mMainBackground);
+		getChild(BACKGROUND_LAYER).attachChild(back);
 		
 		int x = AdEnviroment.getInstance().getScreenWidth() / 2;
 		/*Sprite title = new Sprite(0, 0, this.mTitle);
@@ -49,7 +50,7 @@ public class MainMenu extends AdScene {
 		getChild(ExtraScene.GAME_LAYER).attachChild(title);
 		*/
 		
-		this.mIndex = 120;
+		this.mIndex = 118;
 		
     	Text play = new Text(0, 0, GameData.getInstance().mFontMainMenu, "PLAY");
     	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex);
@@ -57,7 +58,7 @@ public class MainMenu extends AdScene {
     	Text score = new Text(0, 0, GameData.getInstance().mFontMainMenu, "SCORE");
     	score.setPosition(x - score.getWidthScaled() / 2, this.mIndex + 90);
     	
-    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "FULL. VERSION");
+    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "MORE GAMES");
     	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 180);
     	
     	getChild(AdScene.GAME_LAYER).attachChild(play);

@@ -27,6 +27,8 @@ import org.anddev.andengine.util.SimplePreferences;
 
 public class Game extends AdScene {
 
+	public static int FIELDS = 36;
+	
 	private Card mSelect;
 	private boolean mGameOver = false;
 	private boolean mLevelFinish = false;
@@ -46,7 +48,7 @@ public class Game extends AdScene {
 		getChild(GUI_LAYER).attachChild(GameData.getInstance().mScoring);
 		
 		// field position
-		for (int i = 0; i < 45; i++) {
+		for (int i = 0; i < FIELDS; i++) {
 			int x = i % 9;
 			int y = (int)(i / 9);
 			Rectangle field = new Rectangle(0, 0, 68, 74);
@@ -200,7 +202,7 @@ public class Game extends AdScene {
 		for (int i = 0; i < MathUtils.random(1, MathUtils.random(2, ss)); i++) { 
 			int delay = MathUtils.random(3, 18 - dd);
 			final int enemyIndex = MathUtils.random(0, ee);
-			final int y = 96 + MathUtils.random(0, 4) * 77;
+			final int y = 96 + MathUtils.random(0, FIELDS / 9 - 1) * 77;
 			
 			registerUpdateHandler(new TimerHandler(delay, false, new ITimerCallback() {
 				@Override
@@ -224,7 +226,7 @@ public class Game extends AdScene {
 	}
 
 	private void createSeed() {
-		int i = MathUtils.random(0, 8) * MathUtils.random(1, 5);
+		int i = MathUtils.random(0, 8) * MathUtils.random(1, FIELDS/ 9);
 		final Sprite e = new Sprite(12, 25, GameData.getInstance().mSeed);
 		IEntity field = getChild(GAME_LAYER).getChild(i);
 		if (field.getChildCount() == 0)

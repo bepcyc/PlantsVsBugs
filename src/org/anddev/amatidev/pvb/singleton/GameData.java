@@ -23,6 +23,7 @@ public class GameData {
     
     public TextureRegion mSplash;
     
+    public TextureRegion mMainBackground;
     public TextureRegion mBackground;
     public TextureRegion mTable;
     public TextureRegion mSeed;
@@ -71,12 +72,13 @@ public class GameData {
 		this.mFont3 = AdResourceLoader.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
 		
 		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 4, Color.WHITE, Color.BLACK);
-		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 43, 3, Color.WHITE, Color.BLACK);
+		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		
 		this.mSplash = AdResourceLoader.getTexture(1024, 512, "splash");
 		
 		this.mBackground = AdResourceLoader.getTexture(1024, 512, "back");
+		this.mMainBackground = AdResourceLoader.getTexture(1024, 512, "main2");
 		this.mTable  = AdResourceLoader.getTexture(1024, 128, "table");
 		this.mSeed = AdResourceLoader.getTexture(64, 64, "seed");
 		this.mSeed2 = AdResourceLoader.getTexture(64, 64, "seed2");

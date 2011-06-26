@@ -135,7 +135,7 @@ public abstract class Bug extends Entity {
 	
 	private void checkCollisionPlant() {
 		// chiamare solo da thread safe
-		for (int i = 0; i < 45; i++) {
+		for (int i = 0; i < Game.FIELDS; i++) {
 			IEntity field = AdEnviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
 			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
 				IShape body_bug = ((IShape) getFirstChild().getFirstChild());
