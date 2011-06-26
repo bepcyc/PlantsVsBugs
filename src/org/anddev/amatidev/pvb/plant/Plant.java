@@ -55,6 +55,14 @@ public abstract class Plant extends Entity {
 	}
 
 	public void pushDamage(final Bug pBug) {
+		getFirstChild().getFirstChild().setColor(4f, 4f, 4f);
+		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Plant.this.getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
+			}
+		}));
+		
 		this.mLife--;
 		if (this.mLife <= 0) {
 			AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {

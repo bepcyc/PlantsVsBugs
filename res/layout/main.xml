@@ -18,8 +18,7 @@
 		android:layout_alignRight="@id/xmllayoutexample_rendersurfaceview"
 		android:layout_alignParentBottom="true"
 		ads:adUnitId="@string/admob_code"
-		ads:adSize="BANNER" 
-		ads:loadAdOnCreate="true"
+		ads:adSize="BANNER"
 		/>
 	
 </RelativeLayout>
