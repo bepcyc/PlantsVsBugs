@@ -8,6 +8,8 @@ import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
 import org.anddev.amatidev.pvb.bug.BugLadybug;
 import org.anddev.amatidev.pvb.card.Card;
+import org.anddev.amatidev.pvb.card.CardBag;
+import org.anddev.amatidev.pvb.card.CardPotato;
 import org.anddev.amatidev.pvb.card.CardTomato;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;
@@ -70,6 +72,8 @@ public class Game extends AdScene {
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
+		cards.add(new CardPotato());
+		cards.add(new CardBag());
 		if (GameData.getInstance().mLevel > 1)
 			cards.add(new CardTomato());
 	}

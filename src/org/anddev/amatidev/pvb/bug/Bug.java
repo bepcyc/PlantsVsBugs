@@ -73,7 +73,7 @@ public abstract class Bug extends Entity {
 	
 	private void pushDamage() {
 		// chiamare solo da thread safe
-		getFirstChild().getFirstChild().setColor(4f, 4f, 4f);
+		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {

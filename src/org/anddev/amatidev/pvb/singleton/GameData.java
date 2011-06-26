@@ -26,6 +26,7 @@ public class GameData {
     public TextureRegion mBackground;
     public TextureRegion mTable;
     public TextureRegion mSeed;
+    public TextureRegion mSeed2;
     public TextureRegion mShot;
     public TextureRegion mShotShadow;
     public TextureRegion mPlantShadow;
@@ -34,11 +35,13 @@ public class GameData {
     // cards
     public TextureRegion mCard;
     public TextureRegion mCardTomato;
-	public TextureRegion mCardFlower2;
+	public TextureRegion mCardPotato;
+	public TextureRegion mCardBag;
 	
 	// plants
 	public TextureRegion mPlantTomato;
-	public TextureRegion mPlantFlower2;
+	public TextureRegion mPlantPotato;
+	public TextureRegion mPlantBag;
 	
 	// bugs
 	public TextureRegion mBugBeetle;
@@ -76,6 +79,7 @@ public class GameData {
 		this.mBackground = AdResourceLoader.getTexture(1024, 512, "back");
 		this.mTable  = AdResourceLoader.getTexture(1024, 128, "table");
 		this.mSeed = AdResourceLoader.getTexture(64, 64, "seed");
+		this.mSeed2 = AdResourceLoader.getTexture(64, 64, "seed2");
 		this.mShot = AdResourceLoader.getTexture(64, 64, "shot");
 		this.mShotShadow = AdResourceLoader.getTexture(64, 64, "shadow2");
 		
@@ -83,13 +87,15 @@ public class GameData {
 		
 		this.mCard = AdResourceLoader.getTexture(64, 128, "card");
 		
-		this.mCardTomato = AdResourceLoader.getTexture(64, 128, "card_tomato");
-		this.mCardFlower2 = AdResourceLoader.getTexture(64, 128, "card_flower2");
+		this.mCardTomato = AdResourceLoader.getTexture(64, 64, "card_tomato");
+		this.mCardPotato = AdResourceLoader.getTexture(64, 64, "card_potato");
+		this.mCardBag = AdResourceLoader.getTexture(64, 64, "card_bag");
 		
 		this.mPlantShadow = AdResourceLoader.getTexture(64, 16, "shadow");
 		
 		this.mPlantTomato = AdResourceLoader.getTexture(64, 128, "tomato");
-		this.mPlantFlower2 = AdResourceLoader.getTexture(64, 128, "default2");
+		this.mPlantPotato = AdResourceLoader.getTexture(64, 128, "potato");
+		this.mPlantBag = AdResourceLoader.getTexture(64, 128, "bag");
 		
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
