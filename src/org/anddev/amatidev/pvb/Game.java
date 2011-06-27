@@ -71,13 +71,15 @@ public class Game extends AdScene {
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count327.0");
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
+		GameData.getInstance().mMySeed.resetScore();
+		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		cards.add(new CardPotato());
-		cards.add(new CardBag());
 		if (GameData.getInstance().mLevel > 1)
-			cards.add(new CardTomato());
+			cards.add(new CardBag());
+		if (GameData.getInstance().mLevel > 4)
+			cards.add(new CardPotato());
 	}
 
 	@Override
@@ -100,7 +102,7 @@ public class Game extends AdScene {
 			}
 		}));
 		
-		registerUpdateHandler(new TimerHandler(5f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(7f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Game.this.createSeed();

@@ -34,31 +34,19 @@ public class MainMenu extends AdScene {
 		getChild(BACKGROUND_LAYER).attachChild(back);
 		
 		int x = AdEnviroment.getInstance().getScreenWidth() / 2;
-		/*Sprite title = new Sprite(0, 0, this.mTitle);
-		title.setPosition(x - title.getWidthScaled() / 2, 92);
-		title.registerEntityModifier(
-				new LoopEntityModifier(
-						null, 
-						-1, 
-						null,
-						new SequenceEntityModifier(
-								new ScaleModifier(0.7f, 1f, 1.04f),
-								new ScaleModifier(0.7f, 1.04f, 1f)
-						)
-				)
-		);
-		getChild(ExtraScene.GAME_LAYER).attachChild(title);
-		*/
 		
-		this.mIndex = 118;
+		this.mIndex = 159;
 		
     	Text play = new Text(0, 0, GameData.getInstance().mFontMainMenu, "PLAY");
+    	//play.setColor(1.0f, 1.0f, 0.6f);
     	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex);
     	
     	Text score = new Text(0, 0, GameData.getInstance().mFontMainMenu, "SCORE");
+    	//score.setColor(1.0f, 1.0f, 0.6f);
     	score.setPosition(x - score.getWidthScaled() / 2, this.mIndex + 90);
     	
     	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "MORE GAMES");
+    	//more.setColor(1.0f, 1.0f, 0.6f);
     	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 180);
     	
     	getChild(AdScene.GAME_LAYER).attachChild(play);
