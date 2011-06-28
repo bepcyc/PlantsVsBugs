@@ -42,6 +42,7 @@ public abstract class Bug extends Entity {
 	}
 	
 	public void onAttached() {
+		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY));
 		restart(); // move
 		
@@ -66,8 +67,9 @@ public abstract class Bug extends Entity {
 	}
 
 	public void onDetached() {
+		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
-		GameData.getInstance().mScoring.addScore(this.mPoint);
+		GameData.getInstance().mMyScore.addScore(this.mPoint);
 		((Game) AdEnviroment.getInstance().getScene()).checkLevelFinish();
 	}
 	

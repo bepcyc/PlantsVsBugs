@@ -29,7 +29,7 @@ public abstract class Card extends Sprite {
 	}
 
 	public void onAttached() {
-		ChangeableText value = new ChangeableText(0, 0, GameData.getInstance().mFont2, Integer.toString(this.mPrice), 3);
+		ChangeableText value = new ChangeableText(0, 0, GameData.getInstance().mFontCard, Integer.toString(this.mPrice), 3);
 		value.setPosition(31 - value.getWidthScaled() / 2 , 66 - value.getHeightScaled() / 2);
 		attachChild(value);
 		

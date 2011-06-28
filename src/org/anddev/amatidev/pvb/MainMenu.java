@@ -62,9 +62,9 @@ public class MainMenu extends AdScene {
 
 	@Override
 	public void endScene() {
-		GameData.getInstance().mLevel = 1;
+		GameData.getInstance().mMyLevel.resetScore();
+		GameData.getInstance().mMyScore.resetScore();
 		GameData.getInstance().mMySeed.resetScore();
-		GameData.getInstance().mScoring.resetScore();
 		AdEnviroment.getInstance().setScene(new Game());
 	}
 

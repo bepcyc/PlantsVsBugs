@@ -9,7 +9,7 @@ public class BugLadybug extends Bug {
 		
 		this.mLife = 13;
 		this.mSpeed = 15f;
-		this.mPoint = 20;
+		this.mPoint = 4;
 		this.mAttack = 1.3f;
 	}
 	

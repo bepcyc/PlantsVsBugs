@@ -39,13 +39,32 @@ public class Game extends AdScene {
 		Sprite back = new Sprite(0, 0, GameData.getInstance().mBackground);
 		Sprite table = new Sprite(0, 0, GameData.getInstance().mTable);
 		getChild(BACKGROUND_LAYER).attachChild(back);
-		getChild(GUI_LAYER).attachChild(table);
+		getChild(BACKGROUND_LAYER).attachChild(table);
 		
 		Sprite seed = new Sprite(25, 14, GameData.getInstance().mSeed);
 		table.attachChild(seed);
+		
 		table.attachChild(GameData.getInstance().mMySeed);
 		
-		getChild(GUI_LAYER).attachChild(GameData.getInstance().mScoring);
+		//GameData.getInstance().mMyScore.setColor(1.0f, 0.3f, 0.3f);
+		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyScore);
+		
+		Text score = new Text(GameData.getInstance().mMyScore.getX() - 50, 
+							  GameData.getInstance().mMyScore.getY(), 
+							  GameData.getInstance().mFontLabelScore,
+							  "Pt.");
+		//score.setColor(1.0f, 0.3f, 0.3f);
+		getChild(BACKGROUND_LAYER).attachChild(score);
+		
+		//GameData.getInstance().mMyLevel.setColor(1.0f, 0.3f, 0.3f);
+		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyLevel);
+		
+		Text level = new Text(GameData.getInstance().mMyLevel.getX() - 50, 
+				  GameData.getInstance().mMyLevel.getY(), 
+				  GameData.getInstance().mFontLabelScore,
+				  "Lv.");
+		//level.setColor(1.0f, 0.3f, 0.3f);
+		getChild(BACKGROUND_LAYER).attachChild(level);
 		
 		// field position
 		for (int i = 0; i < FIELDS; i++) {
@@ -65,20 +84,24 @@ public class Game extends AdScene {
 
 	private void initLevel() {
 		// contatori per individuare se in una riga c'e' un nemico
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy");
+		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
+		
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count96.0");
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count173.0");
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count250.0");
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count327.0");
 		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
+		GameData.getInstance().mMyLevel.addScore(1);
 		GameData.getInstance().mMySeed.resetScore();
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		if (GameData.getInstance().mLevel > 1)
+		if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
-		if (GameData.getInstance().mLevel > 4)
+		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
 	}
 
@@ -92,7 +115,7 @@ public class Game extends AdScene {
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
 			c.setPosition(start_x + i * 69, 7);
-			getChild(GUI_LAYER).attachChild(c);
+			getChild(BACKGROUND_LAYER).attachChild(c);
 		}
 		
 		registerUpdateHandler(new TimerHandler(9f, true, new ITimerCallback() {
@@ -102,7 +125,7 @@ public class Game extends AdScene {
 			}
 		}));
 		
-		registerUpdateHandler(new TimerHandler(7f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(6f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				Game.this.createSeed();
@@ -111,7 +134,8 @@ public class Game extends AdScene {
 	}
 
 	public void checkLevelFinish() {
-		if (GameData.getInstance().mScoring.getScore() >= GameData.getInstance().mLevel * 100) {
+		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 
+				9 + GameData.getInstance().mMyLevel.getScore()) {
 			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Level Complete");
 			level.setColor(1.0f, 0.3f, 0.3f);
 			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
@@ -125,7 +149,6 @@ public class Game extends AdScene {
 			clearScene();
 			
 			this.mLevelFinish = true;
-			GameData.getInstance().mLevel++;
 		}
 	}
 	
@@ -191,13 +214,14 @@ public class Game extends AdScene {
 	}
 
 	private void createEnemy() {
-		int ss = 2 + (int) (GameData.getInstance().mLevel / 10);
-		int dd = (int) (GameData.getInstance().mLevel / 20);
+		int ss = 2 + (int) (GameData.getInstance().mMyLevel.getScore() / 10);
+		int dd = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
 		if (dd < 3) 
 			dd = 3;
 		
+		// tipi di nemici
 		int numEnemies = 2;
-		int ee = (int) (GameData.getInstance().mLevel / 5);
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
 		if (ee >= numEnemies)
 			ee = numEnemies - 1;
 		

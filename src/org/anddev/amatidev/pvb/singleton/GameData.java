@@ -7,6 +7,7 @@ import org.amatidev.AdTextScoring;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.util.HorizontalAlign;
 
 import android.graphics.Color;
 
@@ -16,10 +17,10 @@ public class GameData {
     
     // generici
     public LinkedList<Card> mCards;
-    public int mLevel = 1;
     
     public AdTextScoring mMySeed;
-    public AdTextScoring mScoring;
+    public AdTextScoring mMyScore;
+    public AdTextScoring mMyLevel;
     
     public TextureRegion mSplash;
     
@@ -49,9 +50,10 @@ public class GameData {
 	public TextureRegion mBugLadybug;
 
 	// fonts
-	public Font mFont1;
-	public Font mFont2;
-	public Font mFont3;
+	public Font mFontSeed;
+	public Font mFontCard;
+	public Font mFontScore;
+	public Font mFontLabelScore;
 	public Font mFontEvent;
 	public Font mFontMainMenu;
 	public Font mFontGameMenu;
@@ -67,9 +69,10 @@ public class GameData {
 	}
 	
 	public void initData() {
-		this.mFont1 = AdResourceLoader.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
-		this.mFont2 = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
-		this.mFont3 = AdResourceLoader.getFont("akaDylan Plain", 30, 2, Color.WHITE, Color.BLACK);
+		this.mFontSeed = AdResourceLoader.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
+		this.mFontCard = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
+		this.mFontScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
+		this.mFontLabelScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
 		
 		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 40	, 2, Color.WHITE, Color.BLACK);
@@ -102,8 +105,9 @@ public class GameData {
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
 		
-		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFont1, 6);
-		this.mScoring = new AdTextScoring(625, 47, GameData.getInstance().mFont3);
+		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
+		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT);
+		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT);
 		
 		this.mCards = new LinkedList<Card>();
 	}
