@@ -39,7 +39,7 @@ public class PlantsVsBugs extends AdGameActivity {
 
 	@Override
 	public Scene onLoadScene() {
-		SplashScene splashScene = new SplashScene(this.mEngine.getCamera(), GameData.getInstance().mSplash, 0f, 1f, 1f);
+		/*SplashScene splashScene = new SplashScene(this.mEngine.getCamera(), GameData.getInstance().mSplash, 0f, 1f, 1f);
         splashScene.registerUpdateHandler(new TimerHandler(7f, new ITimerCallback() {
         	@Override
         	public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -47,8 +47,8 @@ public class PlantsVsBugs extends AdGameActivity {
         	}
         }));
 		return splashScene;
-		
-		//return new MainMenu();
+		*/
+		return new MainMenu();
 	}
 	
 }
