@@ -43,10 +43,12 @@ public class PlantsVsBugs extends AdGameActivity {
         splashScene.registerUpdateHandler(new TimerHandler(7f, new ITimerCallback() {
         	@Override
         	public void onTimePassed(final TimerHandler pTimerHandler) {
-        		PlantsVsBugs.this.mEngine.setScene(new MainMenu());
+        		AdEnviroment.getInstance().setScene(new MainMenu());
         	}
         }));
 		return splashScene;
+		
+		//return new MainMenu();
 	}
 	
 }

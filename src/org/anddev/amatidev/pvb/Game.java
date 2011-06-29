@@ -49,22 +49,8 @@ public class Game extends AdScene {
 		//GameData.getInstance().mMyScore.setColor(1.0f, 0.3f, 0.3f);
 		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyScore);
 		
-		Text score = new Text(GameData.getInstance().mMyScore.getX() - 50, 
-							  GameData.getInstance().mMyScore.getY(), 
-							  GameData.getInstance().mFontLabelScore,
-							  "Pt.");
-		//score.setColor(1.0f, 0.3f, 0.3f);
-		getChild(BACKGROUND_LAYER).attachChild(score);
-		
 		//GameData.getInstance().mMyLevel.setColor(1.0f, 0.3f, 0.3f);
 		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyLevel);
-		
-		Text level = new Text(GameData.getInstance().mMyLevel.getX() - 50, 
-				  GameData.getInstance().mMyLevel.getY(), 
-				  GameData.getInstance().mFontLabelScore,
-				  "Lv.");
-		//level.setColor(1.0f, 0.3f, 0.3f);
-		getChild(BACKGROUND_LAYER).attachChild(level);
 		
 		// field position
 		for (int i = 0; i < FIELDS; i++) {

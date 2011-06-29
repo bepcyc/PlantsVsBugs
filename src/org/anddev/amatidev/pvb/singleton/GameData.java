@@ -53,7 +53,6 @@ public class GameData {
 	public Font mFontSeed;
 	public Font mFontCard;
 	public Font mFontScore;
-	public Font mFontLabelScore;
 	public Font mFontEvent;
 	public Font mFontMainMenu;
 	public Font mFontGameMenu;
@@ -72,16 +71,15 @@ public class GameData {
 		this.mFontSeed = AdResourceLoader.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
 		this.mFontCard = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFontScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
-		this.mFontLabelScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
 		
 		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 40	, 2, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		
 		this.mSplash = AdResourceLoader.getTexture(1024, 512, "splash");
-		
 		this.mBackground = AdResourceLoader.getTexture(1024, 512, "back");
 		this.mMainBackground = AdResourceLoader.getTexture(1024, 512, "main2");
+		
 		this.mTable  = AdResourceLoader.getTexture(1024, 128, "table");
 		this.mSeed = AdResourceLoader.getTexture(64, 64, "seed");
 		this.mSeed2 = AdResourceLoader.getTexture(64, 64, "seed2");
@@ -106,8 +104,8 @@ public class GameData {
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
 		
 		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
-		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT);
-		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT);
+		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");
+		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Lv.");
 		
 		this.mCards = new LinkedList<Card>();
 	}
