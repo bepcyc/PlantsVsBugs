@@ -19,18 +19,16 @@ public class PlantMelon extends Plant {
 	public PlantMelon() {
 		super(null);
 		
-		//this.getFirstChild().getFirstChild().setPosition(0, -300);
-		
 		this.mLife = 1;
 		this.mShotDelay = 0f;
 	}
 	
 	public void onAttached() {
-		final Sprite plant = new Sprite(getParent().getX() + 2, getParent().getY() - 300, GameData.getInstance().mPlantPotato);
+		final Sprite plant = new Sprite(getParent().getX() + 2, getParent().getY() - 300, GameData.getInstance().mPlantMelon);
 		AdEnviroment.getInstance().getScene().getChild(AdScene.GAME_LAYER).attachChild(plant);
 		
 		Path path = new Path(2).to(getParent().getX() + 2, getParent().getY() - 300).to(getParent().getX() + 2,  getParent().getY() - 13);
-		plant.registerEntityModifier(new PathModifier(2, path, new IEntityModifierListener() {
+		plant.registerEntityModifier(new PathModifier(1.5f, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
@@ -39,7 +37,7 @@ public class PlantMelon extends Plant {
 						plant.setPosition(0, -68);
 						PlantMelon.this.getFirstChild().attachChild(plant);
 						
-						PlantMelon.this.registerUpdateHandler(new TimerHandler(1, true, new ITimerCallback() {
+						PlantMelon.this.registerUpdateHandler(new TimerHandler(0.5f, false, new ITimerCallback() {
 							@Override
 							public void onTimePassed(TimerHandler pTimerHandler) {
 								AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {

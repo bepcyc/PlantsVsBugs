@@ -38,11 +38,13 @@ public class GameData {
     public TextureRegion mCard;
     public TextureRegion mCardTomato;
 	public TextureRegion mCardPotato;
+	public TextureRegion mCardMelon;
 	public TextureRegion mCardBag;
 	
 	// plants
 	public TextureRegion mPlantTomato;
 	public TextureRegion mPlantPotato;
+	public TextureRegion mPlantMelon;
 	public TextureRegion mPlantBag;
 	
 	// bugs
@@ -93,12 +95,14 @@ public class GameData {
 		
 		this.mCardTomato = AdResourceLoader.getTexture(64, 64, "card_tomato");
 		this.mCardPotato = AdResourceLoader.getTexture(64, 64, "card_potato");
+		this.mCardMelon = AdResourceLoader.getTexture(64, 64, "card_melon");
 		this.mCardBag = AdResourceLoader.getTexture(64, 64, "card_bag");
 		
 		this.mPlantShadow = AdResourceLoader.getTexture(64, 16, "shadow");
 		
 		this.mPlantTomato = AdResourceLoader.getTexture(64, 128, "tomato");
 		this.mPlantPotato = AdResourceLoader.getTexture(64, 128, "potato");
+		this.mPlantMelon = AdResourceLoader.getTexture(64, 128, "melon");
 		this.mPlantBag = AdResourceLoader.getTexture(64, 128, "bag");
 		
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");

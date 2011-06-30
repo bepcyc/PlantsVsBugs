@@ -93,11 +93,12 @@ public class Game extends AdScene {
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		cards.add(new CardMelon());
 		if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
 		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
+		if (GameData.getInstance().mMyLevel.getScore() > 9)
+			cards.add(new CardMelon());
 	}
 
 	@Override
