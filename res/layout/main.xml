@@ -17,7 +17,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignRight="@id/xmllayoutexample_rendersurfaceview"
 		android:layout_alignParentBottom="true"
-		ads:adUnitId="@string/admob_code"
+		ads:adUnitId="@string/admobPublisherID"
 		ads:adSize="BANNER"
 		ads:loadAdOnCreate="true"
 		/>

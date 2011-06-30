@@ -75,7 +75,7 @@ public final class R {
         public static final int of_dashboard=0x7f070000;
     }
     public static final class string {
-        public static final int admob_code=0x7f05002a;
+        public static final int admobPublisherID=0x7f05002a;
         public static final int app_name=0x7f05002f;
         public static final int clientAppID=0x7f05002b;
         public static final int of_achievement_load_null=0x7f050008;
