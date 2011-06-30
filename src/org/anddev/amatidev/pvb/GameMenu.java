@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdMenuScene;
+import org.amatidev.menu.AdMenuScene;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.opengl.font.Font;
 

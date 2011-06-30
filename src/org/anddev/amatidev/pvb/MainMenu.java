@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdScene;
+import org.amatidev.scene.AdScene;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.ScaleModifier;

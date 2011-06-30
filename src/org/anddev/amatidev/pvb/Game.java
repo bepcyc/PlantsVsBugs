@@ -2,10 +2,12 @@ package org.anddev.amatidev.pvb;
 
 import java.util.LinkedList;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdScene;
+import org.amatidev.scene.AdScene;
+import org.amatidev.util.AdEnviroment;
+import org.amatidev.util.AdPrefs;
 import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
+import org.anddev.amatidev.pvb.bug.BugCaterpillar;
 import org.anddev.amatidev.pvb.bug.BugLadybug;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.amatidev.pvb.card.CardBag;
@@ -70,14 +72,14 @@ public class Game extends AdScene {
 
 	private void initLevel() {
 		// contatori per individuare se in una riga c'e' un nemico
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy");
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count96.0");
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count173.0");
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count250.0");
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count327.0");
-		SimplePreferences.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count96.0");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count173.0");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count250.0");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count327.0");
+		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
 		GameData.getInstance().mMyLevel.addScore(1);
 		GameData.getInstance().mMySeed.resetScore();
@@ -206,10 +208,11 @@ public class Game extends AdScene {
 			dd = 3;
 		
 		// tipi di nemici
-		int numEnemies = 2;
+		int numEnemies = 3;
 		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
 		if (ee >= numEnemies)
 			ee = numEnemies - 1;
+		//ee = 2; 
 		
 		for (int i = 0; i < MathUtils.random(1, MathUtils.random(2, ss)); i++) { 
 			int delay = MathUtils.random(3, 18 - dd);
@@ -226,6 +229,9 @@ public class Game extends AdScene {
 						break;
 					case 1:
 						e = new BugLadybug(y);
+						break;
+					case 2:
+						e = new BugCaterpillar(y);
 						break;
 					default:
 						e = new BugBeetle(y);

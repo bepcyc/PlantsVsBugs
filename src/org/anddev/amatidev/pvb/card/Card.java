@@ -2,7 +2,7 @@ package org.anddev.amatidev.pvb.card;
 
 import java.util.LinkedList;
 
-import org.amatidev.AdEnviroment;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;

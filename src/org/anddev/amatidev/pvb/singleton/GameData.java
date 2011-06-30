@@ -2,8 +2,8 @@ package org.anddev.amatidev.pvb.singleton;
 
 import java.util.LinkedList;
 
-import org.amatidev.AdResourceLoader;
-import org.amatidev.AdTextScoring;
+import org.amatidev.text.AdTextScoring;
+import org.amatidev.util.AdResourceLoader;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -48,6 +48,7 @@ public class GameData {
 	// bugs
 	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
+	public TextureRegion mBugCaterpillar;
 
 	// fonts
 	public Font mFontSeed;
@@ -102,6 +103,7 @@ public class GameData {
 		
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
+		this.mBugCaterpillar = AdResourceLoader.getTexture(64, 128, "caterpillar");
 		
 		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");

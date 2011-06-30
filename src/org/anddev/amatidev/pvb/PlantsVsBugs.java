@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdGameActivity;
+import org.amatidev.activity.AdGameActivity;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -39,7 +39,7 @@ public class PlantsVsBugs extends AdGameActivity {
 
 	@Override
 	public Scene onLoadScene() {
-		/*SplashScene splashScene = new SplashScene(this.mEngine.getCamera(), GameData.getInstance().mSplash, 0f, 1f, 1f);
+		SplashScene splashScene = new SplashScene(this.mEngine.getCamera(), GameData.getInstance().mSplash, 0f, 1f, 1f);
         splashScene.registerUpdateHandler(new TimerHandler(7f, new ITimerCallback() {
         	@Override
         	public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -47,8 +47,6 @@ public class PlantsVsBugs extends AdGameActivity {
         	}
         }));
 		return splashScene;
-		*/
-		return new MainMenu();
 	}
 	
 }

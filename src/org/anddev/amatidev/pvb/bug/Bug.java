@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb.bug;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdScene;
+import org.amatidev.scene.AdScene;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.Game;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;

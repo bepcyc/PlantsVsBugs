@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb.plant;
 
-import org.amatidev.AdEnviroment;
-import org.amatidev.AdScene;
+import org.amatidev.scene.AdScene;
+import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
