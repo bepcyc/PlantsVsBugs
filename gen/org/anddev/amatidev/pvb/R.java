@@ -76,7 +76,8 @@ public final class R {
     }
     public static final class string {
         public static final int admob_code=0x7f05002a;
-        public static final int app_name=0x7f05002b;
+        public static final int app_name=0x7f05002f;
+        public static final int clientAppID=0x7f05002b;
         public static final int of_achievement_load_null=0x7f050008;
         public static final int of_achievement_unlock_null=0x7f050007;
         public static final int of_achievement_unlocked=0x7f050016;
@@ -119,6 +120,9 @@ public final class R {
         public static final int of_unexpected_response_format=0x7f050004;
         public static final int of_unknown_server_error=0x7f050005;
         public static final int of_yes=0x7f050010;
+        public static final int productKey=0x7f05002c;
+        public static final int productSecret=0x7f05002d;
+        public static final int score=0x7f05002e;
     }
     public static final class style {
         public static final int OFLoading=0x7f060000;

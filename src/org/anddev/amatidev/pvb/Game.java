@@ -27,6 +27,11 @@ import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
 
+import android.app.Activity;
+
+import com.openfeint.api.resource.Leaderboard;
+import com.openfeint.api.resource.Score;
+
 public class Game extends AdScene {
 
 	public static int FIELDS = 36;
@@ -155,6 +160,22 @@ public class Game extends AdScene {
 			clearScene();
 			
 			this.mGameOver = true;
+			
+			try {
+				Score s = new Score(GameData.getInstance().mMyScore.getScore());
+				Leaderboard l = new Leaderboard(AdEnviroment.getInstance().getContext().getString(R.string.score));
+				s.submitTo(l, new Score.SubmitToCB() {
+					@Override public void onSuccess(boolean newHighScore) {
+						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_OK);
+					}
+					
+					@Override public void onFailure(String exceptionMessage) {
+						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_CANCELED);
+					}
+				});
+			} catch (Exception e) {
+				
+			}
 		}
 	}
 
