@@ -8,9 +8,9 @@ public class BugCaterpillar extends Bug {
 		super(y, GameData.getInstance().mBugCaterpillar);
 		
 		this.mLife = 20;
-		this.mSpeed = 11f;
-		this.mPoint = 6;
-		this.mAttack = 2f;
+		this.mSpeed = 15f;
+		this.mPoint = 8;
+		this.mAttack = 2.5f;
 	}
 	
 }

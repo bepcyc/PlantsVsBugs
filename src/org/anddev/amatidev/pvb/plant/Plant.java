@@ -2,6 +2,7 @@ package org.anddev.amatidev.pvb.plant;
 
 import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
+import org.amatidev.util.AdVibration;
 import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -29,7 +30,8 @@ public abstract class Plant extends Entity {
 	public Plant(final TextureRegion pTexture) {
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
 		shadow.setAlpha(0.4f);
-		shadow.attachChild(new Sprite(0, -68, pTexture));
+		if (pTexture != null)
+			shadow.attachChild(new Sprite(0, -68, pTexture));
 		attachChild(shadow);
 	}
 	
@@ -56,6 +58,7 @@ public abstract class Plant extends Entity {
 
 	public void pushDamage(final Bug pBug) {
 		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
+		AdVibration.duration(100);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {

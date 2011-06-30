@@ -4,6 +4,7 @@ import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.Game;
 import org.anddev.amatidev.pvb.plant.Plant;
+import org.anddev.amatidev.pvb.plant.PlantMelon;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -74,6 +75,10 @@ public abstract class Bug extends Entity {
 	}
 	
 	private void pushDamage() {
+		pushDamage(1);
+	}
+	
+	private void pushDamage(final int pDamage) {
 		// chiamare solo da thread safe
 		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
@@ -83,7 +88,7 @@ public abstract class Bug extends Entity {
 			}
 		}));
 		
-		this.mLife--;
+		this.mLife -= pDamage;
 		if (this.mLife <= 0)
 			this.detachSelf();
 	}
@@ -147,15 +152,19 @@ public abstract class Bug extends Entity {
 						final Plant plant = (Plant) field.getFirstChild();
 						if (plant.getLife() != 0) {
 							stop();
-							registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
-								@Override
-								public void onTimePassed(TimerHandler pTimerHandler) {
-									plant.pushDamage(Bug.this);
-									Bug.this.mCollide = true;
-									
-									Log.i("Game", "collision");
-								}
-							}));
+							if (plant instanceof PlantMelon) {
+								Bug.this.detachSelf();
+							} else {
+								registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
+									@Override
+									public void onTimePassed(TimerHandler pTimerHandler) {
+										plant.pushDamage(Bug.this);
+										Bug.this.mCollide = true;
+										
+										Log.i("Game", "collision");
+									}
+								}));
+							}
 						} else
 							Log.w("Game", "plant 0 life");
 					} catch (Exception e) {
