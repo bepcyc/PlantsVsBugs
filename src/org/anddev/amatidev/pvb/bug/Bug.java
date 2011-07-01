@@ -11,7 +11,10 @@ import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.AlphaModifier;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
 import org.anddev.andengine.entity.modifier.PathModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.shape.IShape;
@@ -89,8 +92,30 @@ public abstract class Bug extends Entity {
 		}));
 		
 		this.mLife -= pDamage;
-		if (this.mLife <= 0)
-			this.detachSelf();
+		if (this.mLife <= 0) {
+			stop();
+			getFirstChild().getFirstChild().registerEntityModifier(
+					new LoopEntityModifier(
+							new IEntityModifierListener() {
+								@Override
+								public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+									
+								}
+								
+								@Override
+								public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+									AdEnviroment.getInstance().safeDetachEntity(Bug.this);
+								}
+							}, 
+							3, 
+							null,
+							new SequenceEntityModifier(
+									new AlphaModifier(0.2f, 1f, 0f),
+									new AlphaModifier(0.2f, 0f, 1f),
+									new AlphaModifier(0.2f, 1f, 0f)
+							)
+					));
+		}
 	}
 
 	public int getLife() {
@@ -132,7 +157,7 @@ public abstract class Bug extends Entity {
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 			IShape body_shot = (IShape) shotLayer.getChild(i);
-			if (body_bug.collidesWith(body_shot)) {
+			if (body_bug.collidesWith(body_shot) && this.mLife > 0) {
 				pushDamage();
 				body_shot.detachSelf();
 				break;
@@ -150,10 +175,10 @@ public abstract class Bug extends Entity {
 				if (body_bug.collidesWith(body_plant) && this.mY == field.getY() && this.mCollide) {
 					try {
 						final Plant plant = (Plant) field.getFirstChild();
-						if (plant.getLife() != 0) {
+						if (plant.getLife() > 0) {
 							stop();
 							if (plant instanceof PlantMelon) {
-								Bug.this.detachSelf();
+								Bug.this.pushDamage(Bug.this.mLife);
 							} else {
 								registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
 									@Override
@@ -166,6 +191,7 @@ public abstract class Bug extends Entity {
 								}));
 							}
 						} else
+							restart();
 							Log.w("Game", "plant 0 life");
 					} catch (Exception e) {
 						Log.w("Game", "plant no exist");
