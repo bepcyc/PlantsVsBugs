@@ -51,6 +51,7 @@ public class GameData {
 	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
 	public TextureRegion mBugCaterpillar;
+	public TextureRegion mBugSnail;
 
 	// fonts
 	public Font mFontSeed;
@@ -108,6 +109,7 @@ public class GameData {
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
 		this.mBugCaterpillar = AdResourceLoader.getTexture(64, 128, "caterpillar");
+		this.mBugSnail = AdResourceLoader.getTexture(64, 128, "snail");
 		
 		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");

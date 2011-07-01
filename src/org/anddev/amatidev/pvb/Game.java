@@ -9,6 +9,7 @@ import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
 import org.anddev.amatidev.pvb.bug.BugCaterpillar;
 import org.anddev.amatidev.pvb.bug.BugLadybug;
+import org.anddev.amatidev.pvb.bug.BugSnail;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.amatidev.pvb.card.CardBag;
 import org.anddev.amatidev.pvb.card.CardMelon;
@@ -93,11 +94,11 @@ public class Game extends AdScene {
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 1)
+		if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
-		//if (GameData.getInstance().mMyLevel.getScore() > 4)
+		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 9)
+		if (GameData.getInstance().mMyLevel.getScore() > 9)
 			cards.add(new CardMelon());
 	}
 
@@ -232,11 +233,11 @@ public class Game extends AdScene {
 			dd = 3;
 		
 		// tipi di nemici
-		int numEnemies = 3;
+		int numEnemies = 4;
 		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
 		if (ee >= numEnemies)
 			ee = numEnemies - 1;
-		//ee = 2; 
+		//ee = 3; 
 		
 		for (int i = 0; i < MathUtils.random(1, MathUtils.random(2, ss)); i++) { 
 			int delay = MathUtils.random(3, 18 - dd);
@@ -256,6 +257,9 @@ public class Game extends AdScene {
 						break;
 					case 2:
 						e = new BugCaterpillar(y);
+						break;
+					case 3:
+						e = new BugSnail(y);
 						break;
 					default:
 						e = new BugBeetle(y);
