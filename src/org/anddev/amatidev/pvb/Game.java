@@ -20,7 +20,9 @@ import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -41,6 +43,7 @@ public class Game extends AdScene {
 	private Card mSelect;
 	private boolean mGameOver = false;
 	private boolean mLevelFinish = false;
+	private Sprite mTutorial;
 
 	@Override
 	public void createScene() {
@@ -100,6 +103,24 @@ public class Game extends AdScene {
 			cards.add(new CardPotato());
 		if (GameData.getInstance().mMyLevel.getScore() > 9)
 			cards.add(new CardMelon());
+		
+		// TUTORIAL
+		if (GameData.getInstance().mMyLevel.getScore() == 1) {
+			this.mTutorial = new Sprite(106, 95, GameData.getInstance().mArrow);
+			this.mTutorial.setColor(1f, 0.4f, 0.4f);
+			this.mTutorial.registerEntityModifier(
+					new LoopEntityModifier(
+							null, 
+							-1, 
+							null,
+							new SequenceEntityModifier(
+									new ScaleModifier(0.5f, 1f, 1.2f),
+									new ScaleModifier(0.5f, 1.2f, 1f)
+							)
+					)
+			);
+			getChild(GUI_LAYER).attachChild(this.mTutorial);
+		}
 	}
 
 	@Override
@@ -131,7 +152,8 @@ public class Game extends AdScene {
 	}
 
 	public void checkLevelFinish() {
-		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 
+		if (this.mGameOver == false && this.mLevelFinish == false && 
+				SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 
 				9 + GameData.getInstance().mMyLevel.getScore()) {
 			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Level Complete");
 			level.setColor(1.0f, 0.3f, 0.3f);
@@ -209,6 +231,12 @@ public class Game extends AdScene {
 	public void manageAreaTouch(ITouchArea pTouchArea) {
 		if (pTouchArea instanceof Card) {
 			this.mSelect = ((Card) pTouchArea).makeSelect();
+			
+			// TUTORIAL
+			if (GameData.getInstance().mMyLevel.getScore() == 1) {
+				this.mTutorial.setPosition(115, 253);
+				this.mTutorial.setRotation(-90f);
+			}
 		} else {
 			IEntity field = (IEntity) pTouchArea;
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {

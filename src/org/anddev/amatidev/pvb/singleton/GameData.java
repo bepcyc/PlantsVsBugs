@@ -24,8 +24,11 @@ public class GameData {
     
     public TextureRegion mSplash;
     
+    public TextureRegion mMainTitle;
     public TextureRegion mMainBackground;
     public TextureRegion mBackground;
+    
+    public TextureRegion mArrow;
     public TextureRegion mTable;
     public TextureRegion mSeed;
     public TextureRegion mSeed2;
@@ -83,6 +86,7 @@ public class GameData {
 		this.mSplash = AdResourceLoader.getTexture(1024, 512, "splash");
 		this.mBackground = AdResourceLoader.getTexture(1024, 512, "back");
 		this.mMainBackground = AdResourceLoader.getTexture(1024, 512, "main2");
+		this.mMainTitle = AdResourceLoader.getTexture(1024, 256, "title");
 		
 		this.mTable  = AdResourceLoader.getTexture(1024, 128, "table");
 		this.mSeed = AdResourceLoader.getTexture(64, 64, "seed");
@@ -93,6 +97,7 @@ public class GameData {
 		this.mCardSelected = AdResourceLoader.getTexture(64, 128, "select");
 		
 		this.mCard = AdResourceLoader.getTexture(64, 128, "card");
+		this.mArrow = AdResourceLoader.getTexture(64, 128, "arrow");
 		
 		this.mCardTomato = AdResourceLoader.getTexture(64, 64, "card_tomato");
 		this.mCardPotato = AdResourceLoader.getTexture(64, 64, "card_potato");

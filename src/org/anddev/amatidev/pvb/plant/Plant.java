@@ -71,6 +71,7 @@ public abstract class Plant extends Entity {
 		this.mLife--;
 		if (this.mLife <= 0) {
 			clearUpdateHandlers();
+			pBug.restart();
 			getFirstChild().getFirstChild().registerEntityModifier(
 					new LoopEntityModifier(
 							new IEntityModifierListener() {
@@ -85,7 +86,6 @@ public abstract class Plant extends Entity {
 										@Override
 										public void run() {
 											Plant.this.detachSelf();
-											pBug.restart();
 										}
 									});
 								}

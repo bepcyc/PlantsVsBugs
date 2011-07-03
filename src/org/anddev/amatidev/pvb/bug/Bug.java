@@ -56,7 +56,6 @@ public abstract class Bug extends Entity {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
-						//Log.i("Game", "bug");
 						Bug.this.checkCollisionShot(); // controlla danni da colpi
 						Bug.this.checkCollisionPlant(); // crea danni a piange se collide e se vince riparte
 					}
@@ -93,6 +92,7 @@ public abstract class Bug extends Entity {
 		
 		this.mLife -= pDamage;
 		if (this.mLife <= 0) {
+			clearUpdateHandlers();
 			stop();
 			getFirstChild().getFirstChild().registerEntityModifier(
 					new LoopEntityModifier(
@@ -157,7 +157,7 @@ public abstract class Bug extends Entity {
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 			IShape body_shot = (IShape) shotLayer.getChild(i);
-			if (body_bug.collidesWith(body_shot) && this.mLife > 0) {
+			if (this.mLife > 0 && body_bug.collidesWith(body_shot)) {
 				pushDamage();
 				body_shot.detachSelf();
 				break;
@@ -172,7 +172,7 @@ public abstract class Bug extends Entity {
 			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
 				IShape body_bug = ((IShape) getFirstChild().getFirstChild());
 				IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
-				if (body_bug.collidesWith(body_plant) && this.mY == field.getY() && this.mCollide) {
+				if (this.mCollide && this.mY == field.getY() && this.mLife > 0 && body_bug.collidesWith(body_plant)) {
 					try {
 						final Plant plant = (Plant) field.getFirstChild();
 						if (plant.getLife() > 0) {
@@ -186,14 +186,16 @@ public abstract class Bug extends Entity {
 										plant.pushDamage(Bug.this);
 										Bug.this.mCollide = true;
 										
-										Log.i("Game", "collision");
+										Log.w("Game", "collision");
 									}
 								}));
 							}
-						} else
-							restart();
+						} else {
+							//restart();
 							Log.w("Game", "plant 0 life");
+						}
 					} catch (Exception e) {
+						//restart();
 						Log.w("Game", "plant no exist");
 					}
 				}

@@ -4,6 +4,7 @@ import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
@@ -32,6 +33,20 @@ public class MainMenu extends AdScene {
 	public void createScene() {
 		Sprite back = new Sprite(0, 0, GameData.getInstance().mMainBackground);
 		getChild(BACKGROUND_LAYER).attachChild(back);
+		
+		Sprite title = new Sprite(3, 9, GameData.getInstance().mMainTitle);
+		getChild(BACKGROUND_LAYER).attachChild(title);
+		title.registerEntityModifier(
+				new LoopEntityModifier(
+						null, 
+						-1, 
+						null,
+						new SequenceEntityModifier(
+								new ScaleModifier(0.7f, 1f, 1.03f),
+								new ScaleModifier(0.7f, 1.03f, 1f)
+						)
+				)
+		);
 		
 		int x = AdEnviroment.getInstance().getScreenWidth() / 2;
 		
@@ -87,8 +102,8 @@ public class MainMenu extends AdScene {
 								
 							}
 						},
-						new ScaleModifier(0.1f, 1f, 1.5f),
-						new ScaleModifier(0.1f, 1.5f, 1f)
+						new ScaleModifier(0.1f, 1f, 1.3f),
+						new ScaleModifier(0.1f, 1.3f, 1f)
 		));
 	}
 
