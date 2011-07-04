@@ -69,7 +69,7 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	public void onDetached() {
+	private void killed() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
@@ -94,6 +94,7 @@ public abstract class Bug extends Entity {
 		if (this.mLife <= 0) {
 			clearUpdateHandlers();
 			stop();
+			killed();
 			getFirstChild().getFirstChild().registerEntityModifier(
 					new LoopEntityModifier(
 							new IEntityModifierListener() {

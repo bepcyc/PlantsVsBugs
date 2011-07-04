@@ -2,6 +2,7 @@ package org.anddev.amatidev.pvb;
 
 import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
+import org.amatidev.util.AdPrefs;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.LoopEntityModifier;
@@ -80,7 +81,12 @@ public class MainMenu extends AdScene {
 		GameData.getInstance().mMyLevel.resetScore();
 		GameData.getInstance().mMyScore.resetScore();
 		GameData.getInstance().mMySeed.resetScore();
-		AdEnviroment.getInstance().setScene(new Game());
+		
+		if (AdPrefs.getAccessCount(AdEnviroment.getInstance().getContext(), "tutorial") < 3) {
+			AdPrefs.incrementAccessCount(AdEnviroment.getInstance().getContext(), "tutorial");
+			AdEnviroment.getInstance().setScene(new Tutorial());
+		} else
+			AdEnviroment.getInstance().setScene(new Game());
 	}
 
 	@Override
@@ -118,7 +124,7 @@ public class MainMenu extends AdScene {
 			}
 		} else if ((int) item.getY() == this.mIndex + 180) {
 			try{
-				AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingame")));
+				AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingamelite")));
 			} catch (ActivityNotFoundException e) {
 			}
 		}
