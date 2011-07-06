@@ -22,8 +22,6 @@ import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
-import android.util.Log;
-
 public abstract class Plant extends Entity {
 	
 	protected int mLife = 3;

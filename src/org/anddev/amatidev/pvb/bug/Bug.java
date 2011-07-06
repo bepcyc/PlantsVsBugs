@@ -11,10 +11,7 @@ import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
-import org.anddev.andengine.entity.modifier.AlphaModifier;
-import org.anddev.andengine.entity.modifier.LoopEntityModifier;
 import org.anddev.andengine.entity.modifier.PathModifier;
-import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.shape.IShape;
@@ -69,7 +66,7 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	private void killed() {
+	private void score_killed() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
@@ -92,31 +89,10 @@ public abstract class Bug extends Entity {
 		
 		this.mLife -= pDamage;
 		if (this.mLife <= 0) {
-			getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
 			clearUpdateHandlers();
-			stop();
-			killed();
-			getFirstChild().getFirstChild().registerEntityModifier(
-					new LoopEntityModifier(
-							new IEntityModifierListener() {
-								@Override
-								public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-									
-								}
-								
-								@Override
-								public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-									AdEnviroment.getInstance().safeDetachEntity(Bug.this);
-								}
-							}, 
-							3, 
-							null,
-							new SequenceEntityModifier(
-									new AlphaModifier(0.2f, 1f, 0f),
-									new AlphaModifier(0.2f, 0f, 1f),
-									new AlphaModifier(0.2f, 1f, 0f)
-							)
-					));
+			detachSelf();
+			AdEnviroment.getInstance().getScene().getChild(AdScene.GAME_LAYER).attachChild(new Rip(getX(), getY()));
+			score_killed(); // score e check level
 		}
 	}
 

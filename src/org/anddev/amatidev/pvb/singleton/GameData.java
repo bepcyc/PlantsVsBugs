@@ -51,6 +51,8 @@ public class GameData {
 	public TextureRegion mPlantMelon;
 	public TextureRegion mPlantBag;
 	
+	public TextureRegion mBugRip;
+	
 	// bugs
 	public TextureRegion mBugBeetle;
 	public TextureRegion mBugLadybug;
@@ -115,6 +117,8 @@ public class GameData {
 		this.mPlantPotato = AdResourceLoader.getTexture(64, 128, "potato");
 		this.mPlantMelon = AdResourceLoader.getTexture(64, 128, "melon");
 		this.mPlantBag = AdResourceLoader.getTexture(64, 128, "bag");
+		
+		this.mBugRip = AdResourceLoader.getTexture(64, 128, "rip");
 		
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
