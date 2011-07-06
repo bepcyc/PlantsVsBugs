@@ -72,6 +72,13 @@ public class Tutorial extends Game {
 			c.setPosition(start_x + i * 69, 7);
 			getChild(BACKGROUND_LAYER).attachChild(c);
 		}
+		
+		Text skip = new Text(0, 0, GameData.getInstance().mFontTutorial, "Skip");
+		skip.setColor(1.0f, 0.3f, 0.3f);
+		skip.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
+		skip.setPosition(36, 400);
+		getChild(GUI_LAYER).attachChild(skip);
+		registerTouchArea(skip);
 	}
 
 	public void checkLevelFinish() {
@@ -97,7 +104,7 @@ public class Tutorial extends Game {
 	
 	private void levelFinish() {
 		if (this.mGameOver == false && this.mLevelFinish == false) {
-			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Click to Start");
+			Text level = new Text(0, 0, GameData.getInstance().mFontTutorial, "Click to Start");
 			level.setColor(1.0f, 0.3f, 0.3f);
 			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
 			level.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - level.getWidthScaled() / 2, 
@@ -163,6 +170,8 @@ public class Tutorial extends Game {
 						}
 					}));
 				}
+			} else if (field instanceof Text) {
+				AdEnviroment.getInstance().nextScene();
 			} else {
 				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0 && this.mTutorialStep >= 3 && field.getY() == 250.0f) {
 					if (GameData.getInstance().mMySeed.getScore() >= this.mSelect.getPrice()) {

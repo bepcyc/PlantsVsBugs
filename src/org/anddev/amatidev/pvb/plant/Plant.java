@@ -22,6 +22,8 @@ import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
+import android.util.Log;
+
 public abstract class Plant extends Entity {
 	
 	protected int mLife = 3;
@@ -70,6 +72,7 @@ public abstract class Plant extends Entity {
 		
 		this.mLife--;
 		if (this.mLife <= 0) {
+			getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
 			clearUpdateHandlers();
 			pBug.restart();
 			getFirstChild().getFirstChild().registerEntityModifier(

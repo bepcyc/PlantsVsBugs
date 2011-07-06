@@ -2,7 +2,6 @@ package org.anddev.amatidev.pvb;
 
 import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
-import org.amatidev.util.AdPrefs;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.LoopEntityModifier;
@@ -43,8 +42,8 @@ public class MainMenu extends AdScene {
 						-1, 
 						null,
 						new SequenceEntityModifier(
-								new ScaleModifier(0.7f, 1f, 1.03f),
-								new ScaleModifier(0.7f, 1.03f, 1f)
+								new ScaleModifier(0.7f, 1f, 1.02f),
+								new ScaleModifier(0.7f, 1.02f, 1f)
 						)
 				)
 		);
@@ -82,11 +81,7 @@ public class MainMenu extends AdScene {
 		GameData.getInstance().mMyScore.resetScore();
 		GameData.getInstance().mMySeed.resetScore();
 		
-		if (AdPrefs.getAccessCount(AdEnviroment.getInstance().getContext(), "tutorial") < 3) {
-			AdPrefs.incrementAccessCount(AdEnviroment.getInstance().getContext(), "tutorial");
-			AdEnviroment.getInstance().setScene(new Tutorial());
-		} else
-			AdEnviroment.getInstance().setScene(new Game());
+		AdEnviroment.getInstance().setScene(new Tutorial());
 	}
 
 	@Override

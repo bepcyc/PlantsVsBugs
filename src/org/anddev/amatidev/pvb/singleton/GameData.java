@@ -7,6 +7,7 @@ import org.amatidev.util.AdResourceLoader;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.util.HorizontalAlign;
 
 import android.graphics.Color;
@@ -61,8 +62,11 @@ public class GameData {
 	public Font mFontCard;
 	public Font mFontScore;
 	public Font mFontEvent;
+	public Font mFontTutorial;
 	public Font mFontMainMenu;
 	public Font mFontGameMenu;
+
+	public TiledTextureRegion mBugLeg;
 	
 	private GameData() {
 		
@@ -80,6 +84,7 @@ public class GameData {
 		this.mFontScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
 		
 		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 3, Color.WHITE, Color.BLACK);
+		this.mFontTutorial = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 56, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 40	, 2, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
 		
@@ -119,6 +124,8 @@ public class GameData {
 		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");
 		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Lv.");
+		
+		this.mBugLeg = AdResourceLoader.getTexture(64, 64, "leg", 1, 2);
 		
 		this.mCards = new LinkedList<Card>();
 	}

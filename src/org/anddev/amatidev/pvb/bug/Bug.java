@@ -92,6 +92,7 @@ public abstract class Bug extends Entity {
 		
 		this.mLife -= pDamage;
 		if (this.mLife <= 0) {
+			getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
 			clearUpdateHandlers();
 			stop();
 			killed();
