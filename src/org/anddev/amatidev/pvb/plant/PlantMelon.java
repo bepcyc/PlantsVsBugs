@@ -62,9 +62,8 @@ public class PlantMelon extends Plant {
 												3, 
 												null,
 												new SequenceEntityModifier(
-														new AlphaModifier(0.2f, 1f, 0f),
-														new AlphaModifier(0.2f, 0f, 1f),
-														new AlphaModifier(0.2f, 1f, 0f)	
+														new AlphaModifier(0.2f, 1f, 0.5f),
+														new AlphaModifier(0.2f, 0.5f, 1f)
 										)
 								));
 							}

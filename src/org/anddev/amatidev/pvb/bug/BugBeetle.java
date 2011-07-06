@@ -13,7 +13,7 @@ public class BugBeetle extends Bug {
 		leg.animate(400);
 		
 		this.mLife = 10;
-		this.mSpeed = 13f;
+		this.mSpeed = 11f;
 		this.mPoint = 2;
 		this.mAttack = 1.5f;
 	}
