@@ -76,7 +76,7 @@ public class Tutorial extends Game {
 		Text skip = new Text(0, 0, GameData.getInstance().mFontTutorial, "Skip");
 		skip.setColor(1.0f, 0.3f, 0.3f);
 		skip.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
-		skip.setPosition(36, 400);
+		skip.setPosition(37, 400);
 		getChild(GUI_LAYER).attachChild(skip);
 		registerTouchArea(skip);
 	}
