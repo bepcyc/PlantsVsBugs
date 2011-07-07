@@ -28,10 +28,6 @@ public class BugCaterpillar extends Bug {
 		this.mAttack = 2.5f;
 	}
 	
-	public void onAttached() {
-		super.onAttached();
-	}
-	
 	protected IShape getBody() {
 		return ((IShape) getFirstChild().getChild(3));
 	}
