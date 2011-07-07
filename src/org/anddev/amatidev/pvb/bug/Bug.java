@@ -77,15 +77,23 @@ public abstract class Bug extends Entity {
 		pushDamage(1);
 	}
 	
-	private void pushDamage(final int pDamage) {
-		// chiamare solo da thread safe
-		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
+	protected IShape getBody() {
+		return ((IShape) getFirstChild().getFirstChild());
+	}
+	
+	protected void colorDamage() {
+		getBody().setColor(3f, 3f, 3f);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Bug.this.getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
+				Bug.this.getBody().setColor(1f, 1f, 1f);
 			}
 		}));
+	}
+	
+	private void pushDamage(final int pDamage) {
+		// chiamare solo da thread safe
+		colorDamage();
 		
 		this.mLife -= pDamage;
 		if (this.mLife <= 0) {
@@ -141,7 +149,7 @@ public abstract class Bug extends Entity {
 		// chiamare solo da thread safe
 		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
-			IShape body_bug = ((IShape) getFirstChild().getFirstChild());
+			IShape body_bug = getBody();
 			IShape body_shot = (IShape) shotLayer.getChild(i);
 			if (this.mLife > 0 && body_bug.collidesWith(body_shot)) {
 				pushDamage();
@@ -157,7 +165,7 @@ public abstract class Bug extends Entity {
 			IEntity field = AdEnviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
 			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
 				try {
-					IShape body_bug = ((IShape) getFirstChild().getFirstChild());
+					IShape body_bug = getBody();
 					IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
 					if (this.mCollide && this.mY == field.getY() && this.mLife > 0 && body_bug.collidesWith(body_plant)) {
 						final Plant plant = (Plant) field.getFirstChild();

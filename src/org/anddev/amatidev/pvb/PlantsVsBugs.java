@@ -65,8 +65,8 @@ public class PlantsVsBugs extends AdGameActivity {
         		AdEnviroment.getInstance().setScene(new MainMenu());
         	}
         }));
-		return splashScene;
-        //return new Tutorial();
+		//return splashScene;
+        return new Game();
 	}
 	
 }
