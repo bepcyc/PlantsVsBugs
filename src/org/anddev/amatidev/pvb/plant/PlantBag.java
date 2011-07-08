@@ -27,7 +27,7 @@ public class PlantBag extends Plant {
 	public void onAttached() {
 		super.onAttached();
 		
-		registerUpdateHandler(new TimerHandler(20, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(10, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				PlantBag.this.genSeed();

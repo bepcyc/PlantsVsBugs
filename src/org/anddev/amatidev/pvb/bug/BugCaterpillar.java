@@ -14,36 +14,35 @@ public class BugCaterpillar extends Bug {
 	
 	public BugCaterpillar(final float y) {
 		super(y, GameData.getInstance().mBugCaterpillar2);
-		getFirstChild().attachChild(new Sprite(-10, -68, GameData.getInstance().mBugCaterpillar2));
-		getFirstChild().attachChild(new Sprite(-20, -68, GameData.getInstance().mBugCaterpillar2));
-		getFirstChild().attachChild(new Sprite(0, -68, GameData.getInstance().mBugCaterpillar));
+		getFirstChild().getFirstChild().attachChild(new Sprite(-10, 0, GameData.getInstance().mBugCaterpillar2));
+		getFirstChild().getFirstChild().attachChild(new Sprite(-20, 0, GameData.getInstance().mBugCaterpillar2));
+		getFirstChild().getFirstChild().attachChild(new Sprite(0, 0, GameData.getInstance().mBugCaterpillar));
 		
-		move(-71, -66, getFirstChild().getChild(0));
-		move(-66, -71, getFirstChild().getChild(1));
-		move(-71, -66, getFirstChild().getChild(2));
+		move(-3, 2, getFirstChild().getFirstChild().getChild(0));
+		move(2, -3, getFirstChild().getFirstChild().getChild(1));
 		
-		this.mLife = 15;
-		this.mSpeed = 13f;
+		this.mLife = 16;
+		this.mSpeed = 14f;
 		this.mPoint = 8;
 		this.mAttack = 2.5f;
 	}
 	
 	protected IShape getBody() {
-		return ((IShape) getFirstChild().getChild(3));
+		return ((IShape) getFirstChild().getFirstChild().getChild(2));
 	}
 	
 	protected void colorDamage() {
-		getFirstChild().getChild(0).setColor(3f, 3f, 3f);
-		getFirstChild().getChild(1).setColor(3f, 3f, 3f);
-		getFirstChild().getChild(2).setColor(3f, 3f, 3f);
-		getFirstChild().getChild(3).setColor(3f, 3f, 3f);
+		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
+		getFirstChild().getFirstChild().getChild(0).setColor(3f, 3f, 3f);
+		getFirstChild().getFirstChild().getChild(1).setColor(3f, 3f, 3f);
+		getBody().setColor(3f, 3f, 3f);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				BugCaterpillar.this.getFirstChild().getChild(0).setColor(1f, 1f, 1f);
-				BugCaterpillar.this.getFirstChild().getChild(1).setColor(1f, 1f, 1f);
-				BugCaterpillar.this.getFirstChild().getChild(2).setColor(1f, 1f, 1f);
-				BugCaterpillar.this.getFirstChild().getChild(3).setColor(1f, 1f, 1f);
+				BugCaterpillar.this.getFirstChild().getFirstChild().getChild(0).setColor(1f, 1f, 1f);
+				BugCaterpillar.this.getFirstChild().getFirstChild().getChild(1).setColor(1f, 1f, 1f);
+				BugCaterpillar.this.getBody().setColor(1f, 1f, 1f);
 			}
 		}));
 	}

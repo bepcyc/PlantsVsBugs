@@ -37,6 +37,7 @@ import com.openfeint.api.resource.Score;
 public class Game extends AdScene {
 
 	public static int FIELDS = 36;
+	protected static int ENEMIES = 4;
 	
 	protected Card mSelect;
 	protected boolean mGameOver = false;
@@ -67,7 +68,10 @@ public class Game extends AdScene {
 			int y = (int)(i / 9);
 			Rectangle field = new Rectangle(0, 0, 68, 74);
 			field.setColor(0f, 0f, 0f);
-			field.setAlpha(0.05f);
+			if (i % 2 == 0)
+				field.setAlpha(0.05f);
+			else
+				field.setAlpha(0.08f);
 			field.setPosition(42 + x * 71,  96 + y * 77);
 			getChild(GAME_LAYER).attachChild(field);
 			
@@ -94,11 +98,11 @@ public class Game extends AdScene {
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 1)
+		if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
-		//if (GameData.getInstance().mMyLevel.getScore() > 4)
+		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 9)
+		if (GameData.getInstance().mMyLevel.getScore() > 9)
 			cards.add(new CardMelon());
 	}
 
@@ -115,10 +119,10 @@ public class Game extends AdScene {
 			getChild(BACKGROUND_LAYER).attachChild(c);
 		}
 		
-		registerUpdateHandler(new TimerHandler(9f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(5f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.createEnemy();
+				Game.this.firstRushEnemy();
 			}
 		}));
 		
@@ -131,9 +135,10 @@ public class Game extends AdScene {
 	}
 
 	public void checkLevelFinish() {
+		int diff = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
+		
 		if (this.mGameOver == false && this.mLevelFinish == false && 
-				SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 
-				9 + GameData.getInstance().mMyLevel.getScore()) {
+				SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 22 + 4 * diff) {
 			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Level Complete");
 			level.setColor(1.0f, 0.3f, 0.3f);
 			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
@@ -227,52 +232,80 @@ public class Game extends AdScene {
 		}
 	}
 
-	protected void createEnemy() {
-		int ss = 2 + (int) (GameData.getInstance().mMyLevel.getScore() / 10);
-		int dd = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
-		if (dd < 3) 
-			dd = 3;
+	private void addMonster(final int pEnemyIndex, final int pY) {
+		IEntity e = null;
+		switch (pEnemyIndex) {
+		case 0:
+			e = new BugBeetle(pY);
+			break;
+		case 1:
+			e = new BugLadybug(pY);
+			break;
+		case 2:
+			e = new BugCaterpillar(pY);
+			break;
+		case 3:
+			e = new BugSnail(pY);
+			break;
+		default:
+			e = new BugBeetle(pY);
+		}
+		if (e != null)
+			getChild(GAME_LAYER).attachChild(e);
+	}
+	
+	private void firstRushEnemy() {
+		// tipi di nemici
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
+		if (ee >= ENEMIES)
+			ee = ENEMIES - 1;
+		
+		int enemyIndex = MathUtils.random(0, ee);
+		int y = 96 + MathUtils.random(0, FIELDS / 9 - 1) * 77;
+		addMonster(enemyIndex, y);
+		
+		registerUpdateHandler(new TimerHandler(12f, false, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				Game.this.secondRushEnemy(3);
+			}
+		}));
+	}
+
+	private void secondRushEnemy(final int pNum) {
+		int diff = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
 		
 		// tipi di nemici
-		int numEnemies = 4;
 		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
-		if (ee >= numEnemies)
-			ee = numEnemies - 1;
-		ee = 3; 
+		if (ee >= ENEMIES)
+			ee = ENEMIES - 1;
+		//ee = 3; 
 		
-		for (int i = 0; i < MathUtils.random(1, MathUtils.random(2, ss)); i++) { 
-			int delay = MathUtils.random(3, 18 - dd);
+		int n = pNum + diff;
+		for (int i = 0; i < n; i++) {
+			int delay = MathUtils.random(3, 15);
 			final int enemyIndex = MathUtils.random(0, ee);
 			final int y = 96 + MathUtils.random(0, FIELDS / 9 - 1) * 77;
 			
 			registerUpdateHandler(new TimerHandler(delay, false, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					IEntity e = null;
-					switch (enemyIndex) {
-					case 0:
-						e = new BugBeetle(y);
-						break;
-					case 1:
-						e = new BugLadybug(y);
-						break;
-					case 2:
-						e = new BugCaterpillar(y);
-						break;
-					case 3:
-						e = new BugSnail(y);
-						break;
-					default:
-						e = new BugBeetle(y);
-					}
-					if (e != null)
-						getChild(GAME_LAYER).attachChild(e);
+					Game.this.addMonster(enemyIndex, y);
+				}
+			}));
+		}
+		
+		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy") < 16 - diff + 4 * diff) {
+			registerUpdateHandler(new TimerHandler(20f, false, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					Game.this.secondRushEnemy(6);
 				}
 			}));
 		}
 	}
-
-	protected void createSeed() {
+	
+	private void createSeed() {
 		int i = MathUtils.random(0, 8) * MathUtils.random(1, FIELDS/ 9);
 		final Sprite e = new Sprite(12, 25, GameData.getInstance().mSeed);
 		IEntity field = getChild(GAME_LAYER).getChild(i);

@@ -66,7 +66,7 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	private void score_killed() {
+	private void addScore() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
@@ -108,7 +108,7 @@ public abstract class Bug extends Entity {
 					AdEnviroment.getInstance().safeDetachEntity(Bug.this);
 				}
 			}));
-			score_killed(); // score e check level
+			addScore(); // score e check level
 		}
 	}
 
