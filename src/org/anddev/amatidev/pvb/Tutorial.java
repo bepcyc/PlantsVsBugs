@@ -124,6 +124,7 @@ public class Tutorial extends Game {
 	@Override
 	public void manageAreaTouch(ITouchArea pTouchArea) {
 		if (pTouchArea instanceof Card) {
+			GameData.getInstance().mSoundCard.play();
 			this.mSelect = ((Card) pTouchArea).makeSelect();
 			
 			// TUTORIAL
@@ -149,6 +150,7 @@ public class Tutorial extends Game {
 		} else {
 			IEntity field = (IEntity) pTouchArea;
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
+				GameData.getInstance().mSoundSeed.play();
 				GameData.getInstance().mMySeed.addScore(1);
 				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
 				if (this.mTutorialStep == 5) {
@@ -170,6 +172,7 @@ public class Tutorial extends Game {
 					}));
 				}
 			} else if (field instanceof Text) {
+				GameData.getInstance().mSoundMenu.play();
 				AdEnviroment.getInstance().nextScene();
 			} else {
 				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0 && this.mTutorialStep >= 3 && field.getY() == 250.0f) {

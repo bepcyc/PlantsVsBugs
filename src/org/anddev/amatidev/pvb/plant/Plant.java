@@ -38,6 +38,7 @@ public abstract class Plant extends Entity {
 	}
 	
 	public void onAttached() {
+		GameData.getInstance().mSoundPlanting.play();
 		if (this.mShotDelay > 0) {
 			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 				@Override

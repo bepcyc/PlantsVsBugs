@@ -14,7 +14,7 @@ public class BugBeetle extends Bug {
 		getFirstChild().getFirstChild().attachChild(leg);
 		leg.animate(400);
 		
-		this.mLife = 11;
+		this.mLife = 9;
 		this.mSpeed = 12f;
 		this.mPoint = 2;
 		this.mAttack = 1.5f;

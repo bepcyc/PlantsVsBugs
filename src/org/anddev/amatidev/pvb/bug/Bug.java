@@ -152,6 +152,7 @@ public abstract class Bug extends Entity {
 			IShape body_bug = getBody();
 			IShape body_shot = (IShape) shotLayer.getChild(i);
 			if (this.mLife > 0 && body_bug.collidesWith(body_shot)) {
+				GameData.getInstance().mSoundPop.play();
 				pushDamage();
 				body_shot.detachSelf();
 				break;

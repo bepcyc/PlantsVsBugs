@@ -34,6 +34,7 @@ public class GameMenu extends AdMenuScene {
 
 	@Override
 	public boolean manageMenuItemClicked(final int pItemID) {
+		GameData.getInstance().mSoundMenu.play();
 		switch(pItemID) {
 		case MENU_AUDIO:
 			AdEnviroment.getInstance().toggleAudio();

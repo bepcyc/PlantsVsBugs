@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.amatidev.text.AdTextScoring;
 import org.amatidev.util.AdResourceLoader;
+import org.amatidev.util.AdSound;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -71,6 +72,12 @@ public class GameData {
 
 	public TiledTextureRegion mBugLeg;
 	
+	public AdSound mSoundPlanting;
+	public AdSound mSoundPop;
+	public AdSound mSoundCard;
+	public AdSound mSoundSeed;
+	public AdSound mSoundMenu;
+	
 	private GameData() {
 		
 	}
@@ -82,11 +89,17 @@ public class GameData {
 	}
 	
 	public void initData() {
+		this.mSoundPlanting = AdResourceLoader.getSound("planting");
+		this.mSoundPop = AdResourceLoader.getSound("pop");
+		this.mSoundCard = AdResourceLoader.getSound("card");
+		this.mSoundSeed = AdResourceLoader.getSound("seed");
+		this.mSoundMenu = AdResourceLoader.getSound("ok");
+		
 		this.mFontSeed = AdResourceLoader.getFont("akaDylan Plain", 20, 2, Color.WHITE, Color.BLACK);
 		this.mFontCard = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFontScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
 		
-		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 62, 3, Color.WHITE, Color.BLACK);
+		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 60, 3, Color.WHITE, Color.BLACK);
 		this.mFontTutorial = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 56, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 40	, 2, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);

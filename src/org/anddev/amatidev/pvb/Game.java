@@ -186,6 +186,22 @@ public class Game extends AdScene {
 			} catch (Exception e) {
 				
 			}
+			
+			try {
+				Score s = new Score(GameData.getInstance().mMyLevel.getScore());
+				Leaderboard l = new Leaderboard(AdEnviroment.getInstance().getContext().getString(R.string.level));
+				s.submitTo(l, new Score.SubmitToCB() {
+					@Override public void onSuccess(boolean newHighScore) {
+						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_OK);
+					}
+					
+					@Override public void onFailure(String exceptionMessage) {
+						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_CANCELED);
+					}
+				});
+			} catch (Exception e) {
+				
+			}
 		}
 	}
 
@@ -214,10 +230,12 @@ public class Game extends AdScene {
 	@Override
 	public void manageAreaTouch(ITouchArea pTouchArea) {
 		if (pTouchArea instanceof Card) {
+			GameData.getInstance().mSoundCard.play();
 			this.mSelect = ((Card) pTouchArea).makeSelect();
 		} else {
 			IEntity field = (IEntity) pTouchArea;
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
+				GameData.getInstance().mSoundSeed.play();
 				GameData.getInstance().mMySeed.addScore(1);
 				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
 			} else {
@@ -312,7 +330,7 @@ public class Game extends AdScene {
 		if (field.getChildCount() == 0)
 			field.attachChild(e);
 		
-		registerUpdateHandler(new TimerHandler(3f, true, new ITimerCallback() {
+		registerUpdateHandler(new TimerHandler(4f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				AdEnviroment.getInstance().safeDetachEntity(e);
@@ -322,6 +340,7 @@ public class Game extends AdScene {
 	
 	@Override
 	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
+		GameData.getInstance().mSoundMenu.play();
 		AdEnviroment.getInstance().nextScene();
 	}
 

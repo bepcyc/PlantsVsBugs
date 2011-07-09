@@ -109,6 +109,7 @@ public class MainMenu extends AdScene {
 	}
 
 	private void execute(ITouchArea pTouchArea) {
+		GameData.getInstance().mSoundMenu.play();
 		Text item = (Text) pTouchArea;
 		if ((int) item.getY() == this.mIndex) {
 			AdEnviroment.getInstance().nextScene();
