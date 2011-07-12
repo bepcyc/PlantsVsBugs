@@ -42,7 +42,7 @@ public class Game extends AdScene {
 	protected Card mSelect;
 	protected boolean mGameOver = false;
 	protected boolean mLevelFinish = false;
-
+	
 	@Override
 	public void createScene() {
 		// sfondo e tabellone
@@ -93,6 +93,9 @@ public class Game extends AdScene {
 		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "count404.0");
 		
 		GameData.getInstance().mMyLevel.addScore(1);
+		if (AdPrefs.getValue(AdEnviroment.getInstance().getContext(), "level", 1) < GameData.getInstance().mMyLevel.getScore() - 1)
+			AdPrefs.setValue(AdEnviroment.getInstance().getContext(), "level", GameData.getInstance().mMyLevel.getScore() - 1);
+		
 		GameData.getInstance().mMySeed.resetScore();
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;

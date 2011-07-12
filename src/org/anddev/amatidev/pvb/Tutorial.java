@@ -15,6 +15,7 @@ import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.LoopEntityModifier;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
+import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.Text;
 
@@ -23,6 +24,38 @@ public class Tutorial extends Game {
 	private Sprite mTutorial;
 	private int mTutorialStep = 1;
 
+	@Override
+	public void createScene() {
+		// sfondo e tabellone
+		Sprite back = new Sprite(0, 0, GameData.getInstance().mBackground);
+		Sprite table = new Sprite(0, 0, GameData.getInstance().mTable);
+		getChild(BACKGROUND_LAYER).attachChild(back);
+		getChild(BACKGROUND_LAYER).attachChild(table);
+		
+		Sprite seed = new Sprite(25, 14, GameData.getInstance().mSeed);
+		table.attachChild(seed);
+		
+		table.attachChild(GameData.getInstance().mMySeed);
+		
+		// field position
+		for (int i = 0; i < FIELDS; i++) {
+			int x = i % 9;
+			int y = (int)(i / 9);
+			Rectangle field = new Rectangle(0, 0, 68, 74);
+			field.setColor(0f, 0f, 0f);
+			if (i % 2 == 0)
+				field.setAlpha(0.05f);
+			else
+				field.setAlpha(0.08f);
+			field.setPosition(42 + x * 71,  96 + y * 77);
+			getChild(GAME_LAYER).attachChild(field);
+			
+			registerTouchArea(field);
+		}
+		
+		setOnSceneTouchListener(null);
+	}
+	
 	protected void initLevel() {
 		// contatori per individuare se in una riga c'e' un nemico
 		AdPrefs.resetAccessCount(AdEnviroment.getInstance().getContext(), "enemy");

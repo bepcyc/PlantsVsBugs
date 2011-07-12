@@ -2,6 +2,7 @@ package org.anddev.amatidev.pvb;
 
 import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
+import org.amatidev.util.AdPrefs;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.LoopEntityModifier;
@@ -14,15 +15,12 @@ import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.modifier.IModifier;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
-
 import com.openfeint.api.ui.Dashboard;
 
 public class MainMenu extends AdScene {
 	
 	private int mIndex;
+	private boolean mContinue;
 	
 	@Override
 	public MenuScene createMenu() {
@@ -56,13 +54,13 @@ public class MainMenu extends AdScene {
     	//play.setColor(1.0f, 1.0f, 0.6f);
     	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex);
     	
+    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "CONTINUE");
+    	//more.setColor(1.0f, 1.0f, 0.6f);
+    	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 90);
+    	
     	Text score = new Text(0, 0, GameData.getInstance().mFontMainMenu, "SCORE");
     	//score.setColor(1.0f, 1.0f, 0.6f);
-    	score.setPosition(x - score.getWidthScaled() / 2, this.mIndex + 90);
-    	
-    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "MORE GAMES");
-    	//more.setColor(1.0f, 1.0f, 0.6f);
-    	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 180);
+    	score.setPosition(x - score.getWidthScaled() / 2, this.mIndex + 180);
     	
     	getChild(AdScene.GAME_LAYER).attachChild(play);
     	getChild(AdScene.GAME_LAYER).attachChild(score);
@@ -81,7 +79,13 @@ public class MainMenu extends AdScene {
 		GameData.getInstance().mMyScore.resetScore();
 		GameData.getInstance().mMySeed.resetScore();
 		
-		AdEnviroment.getInstance().setScene(new Tutorial());
+		if (this.mContinue) {
+			int lev = AdPrefs.getValue(AdEnviroment.getInstance().getContext(), "level", 0);
+			GameData.getInstance().mMyLevel.addScore(lev);
+			AdEnviroment.getInstance().setScene(new Game());
+		} else {
+			AdEnviroment.getInstance().setScene(new Tutorial());
+		}
 	}
 
 	@Override
@@ -112,16 +116,15 @@ public class MainMenu extends AdScene {
 		GameData.getInstance().mSoundMenu.play();
 		Text item = (Text) pTouchArea;
 		if ((int) item.getY() == this.mIndex) {
+			this.mContinue = false;
 			AdEnviroment.getInstance().nextScene();
 		} else if ((int) item.getY() == this.mIndex + 90) {
+			this.mContinue = true;
+			AdEnviroment.getInstance().nextScene();
+		} else if ((int) item.getY() == this.mIndex + 180) {
 			try {
 				Dashboard.open();
 			} catch (Exception e) {
-			}
-		} else if ((int) item.getY() == this.mIndex + 180) {
-			try{
-				AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingamelite")));
-			} catch (ActivityNotFoundException e) {
 			}
 		}
 	}
