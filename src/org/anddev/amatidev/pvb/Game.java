@@ -19,6 +19,7 @@ import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
+import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
@@ -36,12 +37,19 @@ import com.openfeint.api.resource.Score;
 
 public class Game extends AdScene {
 
+	public static int EXTRA2_GAME_LAYER = 5;
 	public static int FIELDS = 36;
 	protected static int ENEMIES = 4;
 	
 	protected Card mSelect;
 	protected boolean mGameOver = false;
 	protected boolean mLevelFinish = false;
+	
+	public Game() {
+		super();
+		
+		attachChild(new Entity());
+	}
 	
 	@Override
 	public void createScene() {
@@ -97,15 +105,16 @@ public class Game extends AdScene {
 			AdPrefs.setValue(AdEnviroment.getInstance().getContext(), "level", GameData.getInstance().mMyLevel.getScore() - 1);
 		
 		GameData.getInstance().mMySeed.resetScore();
+		GameData.getInstance().mMySeed.addScore(20);
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		if (GameData.getInstance().mMyLevel.getScore() > 1)
+		//if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
-		if (GameData.getInstance().mMyLevel.getScore() > 4)
+		//if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
-		if (GameData.getInstance().mMyLevel.getScore() > 9)
+		//if (GameData.getInstance().mMyLevel.getScore() > 9)
 			cards.add(new CardMelon());
 	}
 

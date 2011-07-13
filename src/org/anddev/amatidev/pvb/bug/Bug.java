@@ -161,38 +161,32 @@ public abstract class Bug extends Entity {
 	}
 	
 	private void checkCollisionPlant() {
-		// chiamare solo da thread safe
-		for (int i = 0; i < Game.FIELDS; i++) {
+		if (getX() < 678) {
+			int x = (int) (getX() - 25) / 71;
+			int y = (int) getY() / 77 - 1;
+			int i = (int) (y * 9 + x);
+			
 			IEntity field = AdEnviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
-			if (field.getChildCount() == 1 && field.getFirstChild() instanceof Plant) {
-				try {
-					IShape body_bug = getBody();
-					IShape body_plant = (IShape) field.getFirstChild().getFirstChild().getFirstChild();
-					if (this.mCollide && this.mY == field.getY() && this.mLife > 0 && body_bug.collidesWith(body_plant)) {
-						final Plant plant = (Plant) field.getFirstChild();
-						if (plant.getLife() > 0) {
-							stop();
-							if (plant instanceof PlantMelon) {
-								Bug.this.pushDamage(Bug.this.mLife);
-							} else {
-								registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
-									@Override
-									public void onTimePassed(TimerHandler pTimerHandler) {
-										plant.pushDamage(Bug.this);
-										Bug.this.mCollide = true;
-										
-										Log.w("Game", "collision");
-									}
-								}));
+			if (this.mCollide && getY() == field.getY() && this.mLife > 0 && 
+					field.getChildCount() == 1 && field.getFirstChild() instanceof Plant && field.getFirstChild().getFirstChild().getChildCount() > 0) {
+				final Plant plant = (Plant) field.getFirstChild();
+				if (plant.getLife() > 0) {
+					stop();
+					if (plant instanceof PlantMelon) {
+						pushDamage(this.mLife);
+					} else {
+						registerUpdateHandler(new TimerHandler(this.mAttack, false, new ITimerCallback() {
+							@Override
+							public void onTimePassed(TimerHandler pTimerHandler) {
+								plant.pushDamage(Bug.this);
+								Bug.this.mCollide = true;					
+								Log.w("Game", "collision");
 							}
-						} else {
-							//restart();
-							Log.w("Game", "plant 0 life");
-						}
+						}));
 					}
-				} catch (Exception e) {
+				} else {
 					//restart();
-					Log.w("Game", "plant no exist");
+					Log.w("Game", "plant 0 life");
 				}
 			}
 		}
