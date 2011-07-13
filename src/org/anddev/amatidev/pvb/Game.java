@@ -105,16 +105,16 @@ public class Game extends AdScene {
 			AdPrefs.setValue(AdEnviroment.getInstance().getContext(), "level", GameData.getInstance().mMyLevel.getScore() - 1);
 		
 		GameData.getInstance().mMySeed.resetScore();
-		GameData.getInstance().mMySeed.addScore(20);
+		//GameData.getInstance().mMySeed.addScore(20);
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
 		cards.add(new CardTomato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 1)
+		if (GameData.getInstance().mMyLevel.getScore() > 1)
 			cards.add(new CardBag());
-		//if (GameData.getInstance().mMyLevel.getScore() > 4)
+		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
-		//if (GameData.getInstance().mMyLevel.getScore() > 9)
+		if (GameData.getInstance().mMyLevel.getScore() > 9)
 			cards.add(new CardMelon());
 	}
 
