@@ -1,8 +1,8 @@
 package org.anddev.amatidev.pvb.plant;
 
-import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
 import org.amatidev.util.AdVibration;
+import org.anddev.amatidev.pvb.Game;
 import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -134,7 +134,8 @@ public abstract class Plant extends Entity {
 			}
 		}, EaseSineInOut.getInstance()));
 		
-		AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER).attachChild(shot);
+		int y = (int) getParent().getY() / 77;
+		AdEnviroment.getInstance().getScene().getChild(Game.EXTRA2_GAME_LAYER + y).attachChild(shot);
 	}
 	
 }

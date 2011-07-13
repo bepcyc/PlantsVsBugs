@@ -1,6 +1,5 @@
 package org.anddev.amatidev.pvb.bug;
 
-import org.amatidev.scene.AdScene;
 import org.amatidev.util.AdEnviroment;
 import org.anddev.amatidev.pvb.Game;
 import org.anddev.amatidev.pvb.plant.Plant;
@@ -66,7 +65,7 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	private void addScore() {
+	private void death() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
@@ -108,7 +107,7 @@ public abstract class Bug extends Entity {
 					AdEnviroment.getInstance().safeDetachEntity(Bug.this);
 				}
 			}));
-			addScore(); // score e check level
+			death(); // score e check level
 		}
 	}
 
@@ -146,8 +145,10 @@ public abstract class Bug extends Entity {
 	}
 
 	private void checkCollisionShot() {
+		int y = (int) getY() / 77;
+		
 		// chiamare solo da thread safe
-		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER);
+		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(Game.EXTRA2_GAME_LAYER + y);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = getBody();
 			IShape body_shot = (IShape) shotLayer.getChild(i);

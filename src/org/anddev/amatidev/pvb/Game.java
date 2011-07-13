@@ -38,6 +38,7 @@ import com.openfeint.api.resource.Score;
 public class Game extends AdScene {
 
 	public static int EXTRA2_GAME_LAYER = 5;
+	
 	public static int FIELDS = 36;
 	protected static int ENEMIES = 4;
 	
@@ -48,6 +49,11 @@ public class Game extends AdScene {
 	public Game() {
 		super();
 		
+		attachChild(new Entity());
+		
+		attachChild(new Entity());
+		attachChild(new Entity());
+		attachChild(new Entity());
 		attachChild(new Entity());
 	}
 	
