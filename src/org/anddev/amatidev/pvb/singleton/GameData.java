@@ -43,12 +43,14 @@ public class GameData {
     public TextureRegion mCard;
     public TextureRegion mCardTomato;
 	public TextureRegion mCardPotato;
+	public TextureRegion mCardOrange;
 	public TextureRegion mCardMelon;
 	public TextureRegion mCardBag;
 	
 	// plants
 	public TextureRegion mPlantTomato;
 	public TextureRegion mPlantPotato;
+	public TextureRegion mPlantOrange;
 	public TextureRegion mPlantMelon;
 	public TextureRegion mPlantBag;
 	
@@ -61,6 +63,8 @@ public class GameData {
 	public TextureRegion mBugCaterpillar2;
 	public TextureRegion mBugSnail;
 
+	public TextureRegion mHelm1;
+	
 	// fonts
 	public Font mFontSeed;
 	public Font mFontCard;
@@ -122,6 +126,7 @@ public class GameData {
 		
 		this.mCardTomato = AdResourceLoader.getTexture(64, 64, "card_tomato");
 		this.mCardPotato = AdResourceLoader.getTexture(64, 64, "card_potato");
+		this.mCardOrange = AdResourceLoader.getTexture(64, 64, "card_orange");
 		this.mCardMelon = AdResourceLoader.getTexture(64, 64, "card_melon");
 		this.mCardBag = AdResourceLoader.getTexture(64, 64, "card_bag");
 		
@@ -129,6 +134,7 @@ public class GameData {
 		
 		this.mPlantTomato = AdResourceLoader.getTexture(64, 128, "tomato");
 		this.mPlantPotato = AdResourceLoader.getTexture(64, 128, "potato");
+		this.mPlantOrange = AdResourceLoader.getTexture(64, 128, "orange");
 		this.mPlantMelon = AdResourceLoader.getTexture(64, 128, "melon");
 		this.mPlantBag = AdResourceLoader.getTexture(64, 128, "bag");
 		
@@ -139,6 +145,8 @@ public class GameData {
 		this.mBugCaterpillar = AdResourceLoader.getTexture(64, 128, "caterpillar");
 		this.mBugCaterpillar2 = AdResourceLoader.getTexture(64, 128, "caterpillar2");
 		this.mBugSnail = AdResourceLoader.getTexture(64, 128, "snail");
+		
+		this.mHelm1 = AdResourceLoader.getTexture(64, 128, "helm1");
 		
 		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");

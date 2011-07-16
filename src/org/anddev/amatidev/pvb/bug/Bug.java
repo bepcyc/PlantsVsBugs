@@ -18,7 +18,6 @@ import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
-import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 import android.util.Log;
 
@@ -39,6 +38,13 @@ public abstract class Bug extends Entity {
 		attachChild(shadow);
 		
 		setPosition(705, y);
+	}
+	
+	public void addHelm(final TextureRegion pHelm, final int pLife) {
+		Sprite helm = new Sprite(0, 0, pHelm);
+		getBody().attachChild(helm);
+		
+		this.mLife += pLife;
 	}
 	
 	public void onAttached() {
@@ -65,21 +71,21 @@ public abstract class Bug extends Entity {
 		});
 	}
 
-	private void death() {
+	protected void death() {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
 		((Game) AdEnviroment.getInstance().getScene()).checkLevelFinish();
 	}
-	
-	private void pushDamage() {
+
+	protected void pushDamage() {
 		pushDamage(1);
 	}
-	
+
 	protected IShape getBody() {
 		return ((IShape) getFirstChild().getFirstChild());
 	}
-	
+
 	protected void colorDamage() {
 		getBody().setColor(3f, 3f, 3f);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
@@ -89,8 +95,8 @@ public abstract class Bug extends Entity {
 			}
 		}));
 	}
-	
-	private void pushDamage(final int pDamage) {
+
+	protected void pushDamage(final int pDamage) {
 		// chiamare solo da thread safe
 		colorDamage();
 		
@@ -98,8 +104,10 @@ public abstract class Bug extends Entity {
 		if (this.mLife <= 0) {
 			clearUpdateHandlers();
 			stop();
-			getFirstChild().getFirstChild().detachSelf();
+			
+			bodyDetachSelf();
 			getFirstChild().setAlpha(0f);
+			
 			getFirstChild().attachChild(new Sprite(-3, -63, GameData.getInstance().mBugRip));
 			registerUpdateHandler(new TimerHandler(4f, false, new ITimerCallback() {
 				@Override
@@ -107,8 +115,13 @@ public abstract class Bug extends Entity {
 					AdEnviroment.getInstance().safeDetachEntity(Bug.this);
 				}
 			}));
+			
 			death(); // score e check level
 		}
+	}
+
+	protected void bodyDetachSelf() {
+		getBody().detachSelf();		
 	}
 
 	public int getLife() {
@@ -136,7 +149,7 @@ public abstract class Bug extends Entity {
 			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
 			
 			}
-		}, EaseSineInOut.getInstance()));
+		}));
 	}
 
 	public void stop() {
@@ -144,11 +157,11 @@ public abstract class Bug extends Entity {
 		this.clearEntityModifiers();
 	}
 
-	private void checkCollisionShot() {
+	protected void checkCollisionShot() {
 		int y = (int) getY() / 77;
 		
 		// chiamare solo da thread safe
-		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(Game.EXTRA2_GAME_LAYER + y);
+		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(Game.PRESHOT_GAME_LAYER + y);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = getBody();
 			IShape body_shot = (IShape) shotLayer.getChild(i);
@@ -161,7 +174,7 @@ public abstract class Bug extends Entity {
 		}
 	}
 	
-	private void checkCollisionPlant() {
+	protected void checkCollisionPlant() {
 		if (getX() < 678) {
 			int x = (int) (getX() - 25) / 71;
 			int y = (int) getY() / 77 - 1;

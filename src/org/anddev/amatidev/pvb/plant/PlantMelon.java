@@ -15,7 +15,6 @@ import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListe
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.util.modifier.IModifier;
-import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 public class PlantMelon extends Plant {
 	
@@ -28,7 +27,7 @@ public class PlantMelon extends Plant {
 	
 	public void onAttached() {
 		final Sprite plant = new Sprite(getParent().getX() + 2, getParent().getY() - 300, GameData.getInstance().mPlantMelon);
-		AdEnviroment.getInstance().getScene().getChild(Game.EXTRA2_GAME_LAYER).attachChild(plant);
+		AdEnviroment.getInstance().getScene().getChild(Game.PRESHOT_GAME_LAYER).attachChild(plant);
 		
 		Path path = new Path(2).to(getParent().getX() + 2, getParent().getY() - 300).to(getParent().getX() + 2,  getParent().getY() - 13);
 		plant.registerEntityModifier(new PathModifier(1.5f, path, new IEntityModifierListener() {
@@ -68,7 +67,7 @@ public class PlantMelon extends Plant {
 			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
 			
 			}
-		}, EaseSineInOut.getInstance()));
+		}));
 	}
 	
 	public void pushDamage(final Bug pBug) {

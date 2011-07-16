@@ -86,13 +86,11 @@ public abstract class Card extends Sprite {
 		return sel;
 	}
 
-	private void setUnselect() {
+	protected void setUnselect() {
 		if (getChildCount() > 3)
-			AdEnviroment.getInstance().safeDetachEntity(getLastChild());
+			getLastChild().detachSelf();
 	}
 
-	public Plant getPlant() {
-		return null;
-	}
+	public abstract Plant getPlant();
 	
 }

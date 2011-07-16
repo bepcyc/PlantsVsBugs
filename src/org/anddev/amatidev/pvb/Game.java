@@ -13,6 +13,7 @@ import org.anddev.amatidev.pvb.bug.BugSnail;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.amatidev.pvb.card.CardBag;
 import org.anddev.amatidev.pvb.card.CardMelon;
+import org.anddev.amatidev.pvb.card.CardOrange;
 import org.anddev.amatidev.pvb.card.CardPotato;
 import org.anddev.amatidev.pvb.card.CardTomato;
 import org.anddev.amatidev.pvb.plant.Plant;
@@ -37,10 +38,10 @@ import com.openfeint.api.resource.Score;
 
 public class Game extends AdScene {
 
-	public static int EXTRA2_GAME_LAYER = 5;
+	public static int PRESHOT_GAME_LAYER = 5;
 	
 	public static int FIELDS = 36;
-	protected static int ENEMIES = 4;
+	public static int ENEMIES = 4;
 	
 	protected Card mSelect;
 	protected boolean mGameOver = false;
@@ -48,9 +49,7 @@ public class Game extends AdScene {
 	
 	public Game() {
 		super();
-		
 		attachChild(new Entity());
-		
 		attachChild(new Entity());
 		attachChild(new Entity());
 		attachChild(new Entity());
@@ -112,6 +111,7 @@ public class Game extends AdScene {
 		
 		GameData.getInstance().mMySeed.resetScore();
 		//GameData.getInstance().mMySeed.addScore(20);
+		//GameData.getInstance().mMyLevel.addScore(9);
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();
@@ -121,6 +121,8 @@ public class Game extends AdScene {
 		if (GameData.getInstance().mMyLevel.getScore() > 4)
 			cards.add(new CardPotato());
 		if (GameData.getInstance().mMyLevel.getScore() > 9)
+			cards.add(new CardOrange());
+		if (GameData.getInstance().mMyLevel.getScore() > 14)
 			cards.add(new CardMelon());
 	}
 
@@ -255,7 +257,7 @@ public class Game extends AdScene {
 			if (field.getChildCount() == 1 && !(field.getFirstChild() instanceof Plant)) {
 				GameData.getInstance().mSoundSeed.play();
 				GameData.getInstance().mMySeed.addScore(1);
-				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
+				field.getFirstChild().detachSelf();
 			} else {
 				if (this.mSelect != null && this.mSelect.isReady() && field.getChildCount() == 0) {
 					if (GameData.getInstance().mMySeed.getScore() >= this.mSelect.getPrice()) {
@@ -269,30 +271,41 @@ public class Game extends AdScene {
 	}
 
 	private void addMonster(final int pEnemyIndex, final int pY) {
-		IEntity e = null;
+		Bug e = null;
 		switch (pEnemyIndex) {
 		case 0:
 			e = new BugBeetle(pY);
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
+				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 1:
 			e = new BugLadybug(pY);
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
+				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 2:
 			e = new BugCaterpillar(pY);
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
+				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 3:
 			e = new BugSnail(pY);
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
+				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		default:
 			e = new BugBeetle(pY);
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
+				e.addHelm(GameData.getInstance().mHelm1, 5);
 		}
+		
 		if (e != null)
 			getChild(GAME_LAYER).attachChild(e);
 	}
 	
 	private void firstRushEnemy() {
 		// tipi di nemici
-		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 7);
 		if (ee >= ENEMIES)
 			ee = ENEMIES - 1;
 		
@@ -312,7 +325,7 @@ public class Game extends AdScene {
 		int diff = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
 		
 		// tipi di nemici
-		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 7);
 		if (ee >= ENEMIES)
 			ee = ENEMIES - 1;
 		//ee = 3; 
@@ -351,7 +364,7 @@ public class Game extends AdScene {
 		registerUpdateHandler(new TimerHandler(4f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				AdEnviroment.getInstance().safeDetachEntity(e);
+				e.detachSelf();
 			}
 		}));
 	}

@@ -20,14 +20,16 @@ import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.util.SimplePreferences;
 import org.anddev.andengine.util.modifier.IModifier;
-import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
+
+import android.util.Log;
 
 public abstract class Plant extends Entity {
 	
 	protected int mLife = 3;
 	protected float mShotHeight = 28f;
-	protected float mShotSpeed = 200f;
+	protected float mShotSpeed = 250f;
 	protected float mShotDelay = 4f;
+	protected boolean mShotDouble = false;
 	
 	public Plant(final TextureRegion pTexture) {
 		Sprite shadow = new Sprite(2, 55, GameData.getInstance().mPlantShadow);
@@ -43,15 +45,25 @@ public abstract class Plant extends Entity {
 			registerUpdateHandler(new TimerHandler(this.mShotDelay, true, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					//Log.i("Game", "plant");
-					if (Plant.this.canShot())
-						Plant.this.shot();
+					Log.i("Game", "shot");
+					if (Plant.this.canShot()) {
+						Plant.this.shot(true);
+						if (Plant.this.mShotDouble) {
+							registerUpdateHandler(new TimerHandler(0.3f, false, new ITimerCallback() {
+								@Override
+								public void onTimePassed(TimerHandler pTimerHandler) {
+									Log.i("Game", "2shot");
+									Plant.this.shot(false);
+								}
+							}));
+						}
+					}
 				}
 			}));
 		}
 	}
-	
-	private boolean canShot() {
+
+	protected boolean canShot() {
 		String y = Float.toString(getParent().getY());
 		if (SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "count" + y) > 0)
 			return true;
@@ -59,7 +71,7 @@ public abstract class Plant extends Entity {
 			return false;
 	}
 
-	public void pushDamage(final Bug pBug) {
+	protected void colorDamage() {
 		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
 		AdVibration.duration(100);
 		registerUpdateHandler(new TimerHandler(0.1f, false, new ITimerCallback() {
@@ -68,6 +80,10 @@ public abstract class Plant extends Entity {
 				Plant.this.getFirstChild().getFirstChild().setColor(1f, 1f, 1f);
 			}
 		}));
+	}
+	
+	public void pushDamage(final Bug pBug) {
+		colorDamage();
 		
 		this.mLife--;
 		if (this.mLife <= 0) {
@@ -83,12 +99,7 @@ public abstract class Plant extends Entity {
 								
 								@Override
 								public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-									AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
-										@Override
-										public void run() {
-											Plant.this.detachSelf();
-										}
-									});
+									Plant.this.detachSelf();
 								}
 							}, 
 							3, 
@@ -105,14 +116,16 @@ public abstract class Plant extends Entity {
 		return this.mLife;
 	}
 
-	private void shot() {
+	protected void shot(boolean pAnim) {
 		// plant animation
-		getFirstChild().registerEntityModifier(
-				new SequenceEntityModifier(
-						new ScaleModifier(0.3f, 1f, 1.1f),
-						new ScaleModifier(0.3f, 1.1f, 1f)
-				)
-		);
+		if (pAnim) {
+			getFirstChild().registerEntityModifier(
+					new SequenceEntityModifier(
+							new ScaleModifier(0.3f, 1f, 1.1f),
+							new ScaleModifier(0.3f, 1.1f, 1f)
+					)
+			);
+		}
 		
 		// creazione shot
 		float duration = (680 - getParent().getX() -  45) / this.mShotSpeed;
@@ -132,10 +145,10 @@ public abstract class Plant extends Entity {
 			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
 				
 			}
-		}, EaseSineInOut.getInstance()));
+		}));
 		
 		int y = (int) getParent().getY() / 77;
-		AdEnviroment.getInstance().getScene().getChild(Game.EXTRA2_GAME_LAYER + y).attachChild(shot);
+		AdEnviroment.getInstance().getScene().getChild(Game.PRESHOT_GAME_LAYER + y).attachChild(shot);
 	}
 	
 }

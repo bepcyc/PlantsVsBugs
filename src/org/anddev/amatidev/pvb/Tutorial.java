@@ -21,7 +21,7 @@ import org.anddev.andengine.entity.text.Text;
 
 public class Tutorial extends Game {
 
-	private Sprite mTutorial;
+	private Sprite mArrow;
 	private int mTutorialStep = 1;
 
 	@Override
@@ -74,9 +74,9 @@ public class Tutorial extends Game {
 		cards.add(new CardTomato());
 		
 		// TUTORIAL
-		this.mTutorial = new Sprite(106, 95, GameData.getInstance().mArrow);
-		this.mTutorial.setColor(1f, 0.4f, 0.4f);
-		this.mTutorial.registerEntityModifier(
+		this.mArrow = new Sprite(106, 95, GameData.getInstance().mArrow);
+		this.mArrow.setColor(1f, 0.4f, 0.4f);
+		this.mArrow.registerEntityModifier(
 				new LoopEntityModifier(
 						null, 
 						-1, 
@@ -87,7 +87,7 @@ public class Tutorial extends Game {
 						)
 				)
 		);
-		getChild(GUI_LAYER).attachChild(this.mTutorial);
+		getChild(GUI_LAYER).attachChild(this.mArrow);
 		
 		AdEnviroment.getInstance().showMessage("Select a card to use");
 		AdEnviroment.getInstance().showMessage("Each card has a recharge time and price");
@@ -125,8 +125,8 @@ public class Tutorial extends Game {
 							field.attachChild(e);
 						
 						Tutorial.this.mTutorialStep++;
-						Tutorial.this.mTutorial.setPosition(310, 135);
-						Tutorial.this.mTutorial.setRotation(-132f);
+						Tutorial.this.mArrow.setPosition(310, 135);
+						Tutorial.this.mArrow.setRotation(-132f);
 						AdEnviroment.getInstance().showMessage("Pick the seeds producing the field to increase the stock");
 					}
 				}
@@ -163,8 +163,8 @@ public class Tutorial extends Game {
 			// TUTORIAL
 			if (this.mTutorialStep == 1) {
 				this.mTutorialStep++;
-				this.mTutorial.setPosition(615, 203);
-				this.mTutorial.setRotation(132f);
+				this.mArrow.setPosition(615, 203);
+				this.mArrow.setRotation(132f);
 				AdEnviroment.getInstance().showMessage("If bugs incoming, try to kill them by planting");
 				
 				BugBeetle e = new BugBeetle(250f);
@@ -174,8 +174,8 @@ public class Tutorial extends Game {
 					@Override
 					public void onTimePassed(TimerHandler pTimerHandler) {
 						Tutorial.this.mTutorialStep++;
-						Tutorial.this.mTutorial.setPosition(100, 203);
-						Tutorial.this.mTutorial.setRotation(-132f);
+						Tutorial.this.mArrow.setPosition(100, 203);
+						Tutorial.this.mArrow.setRotation(-132f);
 						AdEnviroment.getInstance().showMessage("If you have enough seeds you can plant");		
 					}
 				}));
@@ -188,8 +188,8 @@ public class Tutorial extends Game {
 				AdEnviroment.getInstance().safeDetachEntity(field.getFirstChild());
 				if (this.mTutorialStep == 5) {
 					this.mTutorialStep++;
-					this.mTutorial.setPosition(17, 95);
-					this.mTutorial.setRotation(0f);
+					this.mArrow.setPosition(17, 95);
+					this.mArrow.setRotation(0f);
 					AdEnviroment.getInstance().showMessage("Seeds stock are increased to +1");
 					AdEnviroment.getInstance().showMessage("Kill bugs to complete levels and obtain score and new plants");
 					registerUpdateHandler(new TimerHandler(9f, false, new ITimerCallback() {
@@ -217,8 +217,8 @@ public class Tutorial extends Game {
 						// TUTORIAL
 						if (this.mTutorialStep == 3) {
 							this.mTutorialStep++;
-							this.mTutorial.setPosition(17, 95);
-							this.mTutorial.setRotation(0f);
+							this.mArrow.setPosition(17, 95);
+							this.mArrow.setRotation(0f);
 							AdEnviroment.getInstance().showMessage("Seeds stock are decreased because you bought a plant");
 						}
 					}

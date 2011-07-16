@@ -13,7 +13,6 @@ import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListe
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.util.modifier.IModifier;
-import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 public class PlantBag extends Plant {
 	
@@ -50,6 +49,7 @@ public class PlantBag extends Plant {
 		seed.registerEntityModifier(new PathModifier(1f, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+				GameData.getInstance().mSoundSeed.play();
 				GameData.getInstance().mMySeed.addScore(1);
 				AdEnviroment.getInstance().safeDetachEntity(pItem);
 			}
@@ -58,7 +58,7 @@ public class PlantBag extends Plant {
 			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
 				
 			}
-		}, EaseSineInOut.getInstance()));
+		}));
 		
 		AdEnviroment.getInstance().getScene().getChild(AdScene.EXTRA_GAME_LAYER).attachChild(seed);
 	}

@@ -30,7 +30,11 @@ public class BugCaterpillar extends Bug {
 	protected IShape getBody() {
 		return ((IShape) getFirstChild().getFirstChild().getChild(2));
 	}
-	
+
+	protected void bodyDetachSelf() {
+		getFirstChild().getFirstChild().detachSelf();
+	}
+
 	protected void colorDamage() {
 		getFirstChild().getFirstChild().setColor(3f, 3f, 3f);
 		getFirstChild().getFirstChild().getChild(0).setColor(3f, 3f, 3f);
