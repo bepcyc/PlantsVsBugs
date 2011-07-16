@@ -275,37 +275,37 @@ public class Game extends AdScene {
 		switch (pEnemyIndex) {
 		case 0:
 			e = new BugBeetle(pY);
-			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
-				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 1:
 			e = new BugLadybug(pY);
-			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
-				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 2:
 			e = new BugCaterpillar(pY);
-			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
-				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		case 3:
 			e = new BugSnail(pY);
-			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
-				e.addHelm(GameData.getInstance().mHelm1, 5);
 			break;
 		default:
 			e = new BugBeetle(pY);
-			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex + 1) * 10)
-				e.addHelm(GameData.getInstance().mHelm1, 5);
 		}
 		
 		if (e != null)
 			getChild(GAME_LAYER).attachChild(e);
+		
+		addHelm(pEnemyIndex, e);
+	}
+	
+	private void addHelm(final int pEnemyIndex, final Bug pEnemy) {
+		if (GameData.getInstance().mMyLevel.getScore() / 5 > 0) {
+			if (GameData.getInstance().mMyLevel.getScore() >= (pEnemyIndex * 5) + 7)
+				if (MathUtils.random(0, 5) != 2)
+					pEnemy.addHelm(GameData.getInstance().mHelm1, 3);
+		}
 	}
 	
 	private void firstRushEnemy() {
 		// tipi di nemici
-		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 7);
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
 		if (ee >= ENEMIES)
 			ee = ENEMIES - 1;
 		
@@ -325,7 +325,7 @@ public class Game extends AdScene {
 		int diff = (int) (GameData.getInstance().mMyLevel.getScore() / 20);
 		
 		// tipi di nemici
-		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 7);
+		int ee = (int) (GameData.getInstance().mMyLevel.getScore() / 5);
 		if (ee >= ENEMIES)
 			ee = ENEMIES - 1;
 		//ee = 3; 
