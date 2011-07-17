@@ -110,8 +110,9 @@ public class Game extends AdScene {
 			AdPrefs.setValue(AdEnviroment.getInstance().getContext(), "level", GameData.getInstance().mMyLevel.getScore() - 1);
 		
 		GameData.getInstance().mMySeed.resetScore();
+		
 		//GameData.getInstance().mMySeed.addScore(20);
-		//GameData.getInstance().mMyLevel.addScore(9);
+		//GameData.getInstance().mMyLevel.addScore(14);
 		
 		LinkedList<Card> cards = GameData.getInstance().mCards;
 		cards.clear();

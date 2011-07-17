@@ -14,7 +14,7 @@ public class BugLadybug extends Bug {
 		getFirstChild().getFirstChild().attachChild(leg);
 		leg.animate(400);
 		
-		this.mLife = 13;
+		this.mLife = 11;
 		this.mSpeed = 12f;
 		this.mPoint = 4;
 		this.mAttack = 1.3f;

@@ -21,8 +21,8 @@ public class BugCaterpillar extends Bug {
 		move(-3, 2, getFirstChild().getFirstChild().getChild(0));
 		move(2, -3, getFirstChild().getFirstChild().getChild(1));
 		
-		this.mLife = 16;
-		this.mSpeed = 14f;
+		this.mLife = 15;
+		this.mSpeed = 13f;
 		this.mPoint = 8;
 		this.mAttack = 2.5f;
 	}

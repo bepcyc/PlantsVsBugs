@@ -7,7 +7,7 @@ public class BugSnail extends Bug {
 	public BugSnail(final float y) {
 		super(y, GameData.getInstance().mBugSnail);
 		
-		this.mLife = 21;
+		this.mLife = 20;
 		this.mSpeed = 9f;
 		this.mPoint = 12;
 		this.mAttack = 1.5f;

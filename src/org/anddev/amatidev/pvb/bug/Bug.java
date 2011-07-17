@@ -23,9 +23,9 @@ import android.util.Log;
 
 public abstract class Bug extends Entity {
 	
-	protected int mLife = 3;
-	protected int mPoint = 10;
-	protected float mSpeed = 21f;
+	protected int mLife = 9;
+	protected int mPoint = 2;
+	protected float mSpeed = 12f;
 	protected float mAttack = 1.5f; // danni a tempo di collisione
 	
 	private Path mPath;
