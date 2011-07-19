@@ -27,7 +27,7 @@ public abstract class Card extends Sprite {
 		Sprite image = new Sprite(4, 4, pTextureRegion);
 		attachChild(image);
 	}
-
+	
 	public void onAttached() {
 		ChangeableText value = new ChangeableText(0, 0, GameData.getInstance().mFontCard, Integer.toString(this.mPrice), 3);
 		value.setPosition(31 - value.getWidthScaled() / 2 , 66 - value.getHeightScaled() / 2);
@@ -44,21 +44,28 @@ public abstract class Card extends Sprite {
 		startRecharge();
 	}
 	
+	public void fullRecharge() {
+		this.mRecharge = 0f;
+	}
+	
 	public void startRecharge() {
 		this.mReady = false;
 		this.mBlack.setScaleY(1f);
 
-		this.mBlack.registerEntityModifier(new ScaleModifier(this.mRecharge, 1f, 1f, 1f, 0f, new IEntityModifierListener() {
-			@Override
-			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-				Card.this.mReady = true;
-			}
-
-			@Override
-			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+		if (this.mRecharge != 0f) {
+			this.mBlack.registerEntityModifier(new ScaleModifier(this.mRecharge, 1f, 1f, 1f, 0f, new IEntityModifierListener() {
+				@Override
+				public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+					Card.this.mReady = true;
+				}
 				
-			}
-		}));
+				@Override
+				public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+					
+				}
+			}));
+		} else
+			this.mBlack.setScaleY(0f);
 	}
 
 	public boolean isReady() {

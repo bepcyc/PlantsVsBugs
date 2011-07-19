@@ -16,17 +16,16 @@ import org.anddev.amatidev.pvb.card.CardMelon;
 import org.anddev.amatidev.pvb.card.CardOrange;
 import org.anddev.amatidev.pvb.card.CardPotato;
 import org.anddev.amatidev.pvb.card.CardTomato;
+import org.anddev.amatidev.pvb.obj.Dialog;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.IEntity;
-import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
@@ -39,6 +38,7 @@ import com.openfeint.api.resource.Score;
 public class Game extends AdScene {
 
 	public static int PRESHOT_GAME_LAYER = 5;
+	public static int GUI2_LAYER = 10;
 	
 	public static int FIELDS = 36;
 	public static int ENEMIES = 4;
@@ -49,6 +49,7 @@ public class Game extends AdScene {
 	
 	public Game() {
 		super();
+		attachChild(new Entity());
 		attachChild(new Entity());
 		attachChild(new Entity());
 		attachChild(new Entity());
@@ -90,8 +91,6 @@ public class Game extends AdScene {
 			
 			registerTouchArea(field);
 		}
-		
-		setOnSceneTouchListener(null);
 	}
 
 	protected void initLevel() {
@@ -160,17 +159,27 @@ public class Game extends AdScene {
 		
 		if (this.mGameOver == false && this.mLevelFinish == false && 
 				SimplePreferences.getAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed") >= 22 + 4 * diff) {
-			Text level = new Text(0, 0, GameData.getInstance().mFontEvent, "Level Complete");
-			level.setColor(1.0f, 0.3f, 0.3f);
-			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
-			level.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - level.getWidthScaled() / 2, 
-							  AdEnviroment.getInstance().getScreenHeight() / 2 - level.getHeightScaled() / 2);
-			getChild(GUI_LAYER).attachChild(level);
 			
-			setOnAreaTouchListener(null);
-			setOnSceneTouchListener(this);
+			Dialog dialog = new Dialog("Level Complete");
+			getChild(GUI2_LAYER).attachChild(dialog);
+			
+			if (GameData.getInstance().mMyLevel.getScore() == 1)
+				dialog.add(new CardBag());
+			if (GameData.getInstance().mMyLevel.getScore() == 4)
+				dialog.add(new CardPotato());
+			if (GameData.getInstance().mMyLevel.getScore() == 9)
+				dialog.add(new CardOrange());
+			if (GameData.getInstance().mMyLevel.getScore() == 14)
+				dialog.add(new CardMelon());
 			
 			clearScene();
+			
+			registerUpdateHandler(new TimerHandler(6, false, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					AdEnviroment.getInstance().nextScene();
+				}
+			}));
 			
 			this.mLevelFinish = true;
 		}
@@ -178,17 +187,17 @@ public class Game extends AdScene {
 	
 	public void gameOver() {
 		if (this.mGameOver == false && this.mLevelFinish == false) {
-			Text gameover = new Text(0, 0, GameData.getInstance().mFontEvent, "Game Over");
-			gameover.setColor(1.0f, 0.3f, 0.3f);
-			gameover.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
-			gameover.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - gameover.getWidthScaled() / 2, 
-								 AdEnviroment.getInstance().getScreenHeight() / 2 - gameover.getHeightScaled() / 2);
-			getChild(GUI_LAYER).attachChild(gameover);
-			
-			setOnAreaTouchListener(null);
-			setOnSceneTouchListener(this);
+			Dialog dialog = new Dialog("Game Over");
+			getChild(GUI2_LAYER).attachChild(dialog);
 			
 			clearScene();
+			
+			registerUpdateHandler(new TimerHandler(6, false, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					AdEnviroment.getInstance().nextScene();
+				}
+			}));
 			
 			this.mGameOver = true;
 			
@@ -372,8 +381,7 @@ public class Game extends AdScene {
 	
 	@Override
 	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
-		GameData.getInstance().mSoundMenu.play();
-		AdEnviroment.getInstance().nextScene();
+		
 	}
 
 	@Override

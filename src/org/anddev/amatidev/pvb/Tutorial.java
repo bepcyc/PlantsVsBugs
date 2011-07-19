@@ -7,6 +7,7 @@ import org.amatidev.util.AdPrefs;
 import org.anddev.amatidev.pvb.bug.BugBeetle;
 import org.anddev.amatidev.pvb.card.Card;
 import org.anddev.amatidev.pvb.card.CardTomato;
+import org.anddev.amatidev.pvb.obj.Dialog;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -52,8 +53,6 @@ public class Tutorial extends Game {
 			
 			registerTouchArea(field);
 		}
-		
-		setOnSceneTouchListener(null);
 	}
 	
 	protected void initLevel() {
@@ -136,17 +135,17 @@ public class Tutorial extends Game {
 	
 	private void levelFinish() {
 		if (this.mGameOver == false && this.mLevelFinish == false) {
-			Text level = new Text(0, 0, GameData.getInstance().mFontTutorial, "Click to Start");
-			level.setColor(1.0f, 0.3f, 0.3f);
-			level.registerEntityModifier(new ScaleModifier(0.7f, 0f, 1.0f));
-			level.setPosition(AdEnviroment.getInstance().getScreenWidth() / 2 - level.getWidthScaled() / 2, 
-							  AdEnviroment.getInstance().getScreenHeight() / 2 - level.getHeightScaled() / 2);
-			getChild(GUI_LAYER).attachChild(level);
-			
-			setOnAreaTouchListener(null);
-			setOnSceneTouchListener(this);
+			Dialog dialog = new Dialog("Tutorial\nComplete");
+			getChild(GUI2_LAYER).attachChild(dialog);
 			
 			clearScene();
+			
+			registerUpdateHandler(new TimerHandler(6, false, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					AdEnviroment.getInstance().nextScene();
+				}
+			}));
 			
 			this.mLevelFinish = true;
 			
@@ -163,7 +162,7 @@ public class Tutorial extends Game {
 			// TUTORIAL
 			if (this.mTutorialStep == 1) {
 				this.mTutorialStep++;
-				this.mArrow.setPosition(615, 203);
+				this.mArrow.setPosition(595, 203);
 				this.mArrow.setRotation(132f);
 				AdEnviroment.getInstance().showMessage("If bugs incoming, try to kill them by planting");
 				

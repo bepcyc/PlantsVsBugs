@@ -69,8 +69,6 @@ public class MainMenu extends AdScene {
     	registerTouchArea(play);
     	registerTouchArea(score);
     	registerTouchArea(more);
-    	
-    	setOnSceneTouchListener(null);
 	}
 
 	@Override

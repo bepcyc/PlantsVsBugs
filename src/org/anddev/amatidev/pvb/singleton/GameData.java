@@ -25,7 +25,7 @@ public class GameData {
     public AdTextScoring mMyLevel;
     
     public TextureRegion mSplash;
-    
+    public TextureRegion mDialog;
     public TextureRegion mMainTitle;
     public TextureRegion mMainBackground;
     public TextureRegion mBackground;
@@ -103,7 +103,8 @@ public class GameData {
 		this.mFontCard = AdResourceLoader.getFont("akaDylan Plain", 14, 1, Color.WHITE, Color.BLACK);
 		this.mFontScore = AdResourceLoader.getFont("akaDylan Plain", 22, 2, Color.WHITE, Color.BLACK);
 		
-		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 60, 3, Color.WHITE, Color.BLACK);
+		this.mDialog = AdResourceLoader.getTexture(512, 256, "dialog");
+		this.mFontEvent = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 38, 3, Color.WHITE, Color.BLACK);
 		this.mFontTutorial = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 56, 3, Color.WHITE, Color.BLACK);
 		this.mFontMainMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 40	, 2, Color.WHITE, Color.BLACK);
 		this.mFontGameMenu = AdResourceLoader.getFont(512, 512, "akaDylan Plain", 48, 3, Color.WHITE, Color.BLACK);
