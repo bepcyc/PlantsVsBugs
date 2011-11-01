@@ -15,6 +15,10 @@ import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.modifier.IModifier;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
+
 import com.openfeint.api.ui.Dashboard;
 
 public class MainMenu extends AdScene {
@@ -54,19 +58,30 @@ public class MainMenu extends AdScene {
     	//play.setColor(1.0f, 1.0f, 0.6f);
     	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex);
     	
-    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "CONTINUE");
+    	Text cont = new Text(0, 0, GameData.getInstance().mFontMainMenu, "CONTINUE");
     	//more.setColor(1.0f, 1.0f, 0.6f);
-    	more.setPosition(x - more.getWidthScaled() / 2, this.mIndex + 90);
+    	cont.setPosition(x - cont.getWidthScaled() / 2, this.mIndex + 90);
     	
     	Text score = new Text(0, 0, GameData.getInstance().mFontMainMenu, "SCORE");
     	//score.setColor(1.0f, 1.0f, 0.6f);
-    	score.setPosition(x - score.getWidthScaled() / 2, this.mIndex + 180);
+    	score.setPosition(60, this.mIndex + 180);
+    	
+    	Text sep = new Text(0, 0, GameData.getInstance().mFontMainMenu, "/");
+    	//score.setColor(1.0f, 1.0f, 0.6f);
+    	sep.setPosition(250, this.mIndex + 180);
+    	
+    	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "MORE GAME");
+    	//score.setColor(1.0f, 1.0f, 0.6f);
+    	more.setPosition(300, this.mIndex + 180);
     	
     	getChild(AdScene.GAME_LAYER).attachChild(play);
+    	getChild(AdScene.GAME_LAYER).attachChild(cont);
+    	getChild(AdScene.GAME_LAYER).attachChild(sep);
     	getChild(AdScene.GAME_LAYER).attachChild(score);
     	getChild(AdScene.GAME_LAYER).attachChild(more);
     	
     	registerTouchArea(play);
+    	registerTouchArea(cont);
     	registerTouchArea(score);
     	registerTouchArea(more);
 	}
@@ -120,20 +135,40 @@ public class MainMenu extends AdScene {
 			this.mContinue = true;
 			AdEnviroment.getInstance().nextScene();
 		} else if ((int) item.getY() == this.mIndex + 180) {
-			try {
-				Dashboard.open();
-			} catch (Exception e) {
+			if ((int) item.getX() > 100) {
+				try{
+					AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingamelite")));
+				} catch (ActivityNotFoundException e) {
+				}
+			} else {
+				try {
+					Dashboard.open();
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
 	
 	@Override
-	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
+	public void startScene() {
 		
 	}
 
 	@Override
-	public void startScene() {
+	public void downSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void upSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
 		
 	}
 

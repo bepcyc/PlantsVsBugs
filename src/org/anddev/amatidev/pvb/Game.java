@@ -378,11 +378,6 @@ public class Game extends AdScene {
 			}
 		}));
 	}
-	
-	@Override
-	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
-		
-	}
 
 	@Override
 	public MenuScene createMenu() {
@@ -390,6 +385,24 @@ public class Game extends AdScene {
 			return null;
 		else
 			return new GameMenu();
+	}
+
+	@Override
+	public void downSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void upSceneTouch(TouchEvent pSceneTouchEvent) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
