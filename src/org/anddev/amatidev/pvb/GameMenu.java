@@ -45,7 +45,7 @@ public class GameMenu extends AdMenuScene {
 			closeMenuScene();
 			return true;
 		case MENU_EXIT:
-			((Game) AdEnviroment.getInstance().getScene()).clearScene();
+			((MainGame) AdEnviroment.getInstance().getScene()).clearScene();
 			AdEnviroment.getInstance().setScene(new MainMenu());
 			return true;
 		default:

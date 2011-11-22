@@ -2,7 +2,7 @@ package org.anddev.amatidev.pvb.plant;
 
 import org.amatidev.util.AdEnviroment;
 import org.amatidev.util.AdVibration;
-import org.anddev.amatidev.pvb.Game;
+import org.anddev.amatidev.pvb.MainGame;
 import org.anddev.amatidev.pvb.bug.Bug;
 import org.anddev.amatidev.pvb.singleton.GameData;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
@@ -148,7 +148,7 @@ public abstract class Plant extends Entity {
 		}));
 		
 		int y = (int) getParent().getY() / 77;
-		AdEnviroment.getInstance().getScene().getChild(Game.PRESHOT_GAME_LAYER + y).attachChild(shot);
+		AdEnviroment.getInstance().getScene().getChild(MainGame.PRESHOT_GAME_LAYER + y).attachChild(shot);
 	}
 	
 }

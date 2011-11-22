@@ -20,7 +20,7 @@ import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.Text;
 
-public class Tutorial extends Game {
+public class Tutorial extends MainGame {
 
 	private Sprite mArrow;
 	private int mTutorialStep = 1;
@@ -36,6 +36,7 @@ public class Tutorial extends Game {
 		Sprite seed = new Sprite(25, 14, GameData.getInstance().mSeed);
 		table.attachChild(seed);
 		
+		GameData.getInstance().mMySeed.setParent(null);
 		table.attachChild(GameData.getInstance().mMySeed);
 		
 		// field position

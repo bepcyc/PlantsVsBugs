@@ -95,7 +95,7 @@ public class MainMenu extends AdScene {
 		if (this.mContinue) {
 			int lev = AdPrefs.getValue(AdEnviroment.getInstance().getContext(), "level", 0);
 			GameData.getInstance().mMyLevel.addScore(lev);
-			AdEnviroment.getInstance().setScene(new Game());
+			AdEnviroment.getInstance().setScene(new MainGame());
 		} else {
 			AdEnviroment.getInstance().setScene(new Tutorial());
 		}

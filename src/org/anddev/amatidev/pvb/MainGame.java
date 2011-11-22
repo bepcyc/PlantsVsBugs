@@ -35,7 +35,7 @@ import android.app.Activity;
 import com.openfeint.api.resource.Leaderboard;
 import com.openfeint.api.resource.Score;
 
-public class Game extends AdScene {
+public class MainGame extends AdScene {
 
 	public static int PRESHOT_GAME_LAYER = 5;
 	public static int GUI2_LAYER = 10;
@@ -47,7 +47,7 @@ public class Game extends AdScene {
 	protected boolean mGameOver = false;
 	protected boolean mLevelFinish = false;
 	
-	public Game() {
+	public MainGame() {
 		super();
 		attachChild(new Entity());
 		attachChild(new Entity());
@@ -68,12 +68,15 @@ public class Game extends AdScene {
 		Sprite seed = new Sprite(25, 14, GameData.getInstance().mSeed);
 		table.attachChild(seed);
 		
+		GameData.getInstance().mMySeed.setParent(null);
 		table.attachChild(GameData.getInstance().mMySeed);
 		
 		//GameData.getInstance().mMyScore.setColor(1.0f, 0.3f, 0.3f);
+		GameData.getInstance().mMyScore.setParent(null);
 		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyScore);
 		
 		//GameData.getInstance().mMyLevel.setColor(1.0f, 0.3f, 0.3f);
+		GameData.getInstance().mMyLevel.setParent(null);
 		getChild(BACKGROUND_LAYER).attachChild(GameData.getInstance().mMyLevel);
 		
 		// field position
@@ -142,14 +145,14 @@ public class Game extends AdScene {
 		registerUpdateHandler(new TimerHandler(5f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.firstRushEnemy();
+				MainGame.this.firstRushEnemy();
 			}
 		}));
 		
 		registerUpdateHandler(new TimerHandler(6f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.createSeed();
+				MainGame.this.createSeed();
 			}
 		}));
 	}
@@ -254,7 +257,7 @@ public class Game extends AdScene {
 		if (this.mGameOver)
 			AdEnviroment.getInstance().setScene(new MainMenu());
 		else
-			AdEnviroment.getInstance().setScene(new Game());
+			AdEnviroment.getInstance().setScene(new MainGame());
 	}
 
 	@Override
@@ -326,7 +329,7 @@ public class Game extends AdScene {
 		registerUpdateHandler(new TimerHandler(12f, false, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				Game.this.secondRushEnemy(3);
+				MainGame.this.secondRushEnemy(3);
 			}
 		}));
 	}
@@ -349,7 +352,7 @@ public class Game extends AdScene {
 			registerUpdateHandler(new TimerHandler(delay, false, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					Game.this.addMonster(enemyIndex, y);
+					MainGame.this.addMonster(enemyIndex, y);
 				}
 			}));
 		}
@@ -358,7 +361,7 @@ public class Game extends AdScene {
 			registerUpdateHandler(new TimerHandler(20f, false, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					Game.this.secondRushEnemy(6);
+					MainGame.this.secondRushEnemy(6);
 				}
 			}));
 		}

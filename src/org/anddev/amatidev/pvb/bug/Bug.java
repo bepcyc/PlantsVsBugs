@@ -1,7 +1,7 @@
 package org.anddev.amatidev.pvb.bug;
 
 import org.amatidev.util.AdEnviroment;
-import org.anddev.amatidev.pvb.Game;
+import org.anddev.amatidev.pvb.MainGame;
 import org.anddev.amatidev.pvb.plant.Plant;
 import org.anddev.amatidev.pvb.plant.PlantMelon;
 import org.anddev.amatidev.pvb.singleton.GameData;
@@ -75,7 +75,7 @@ public abstract class Bug extends Entity {
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "enemy_killed");
 		SimplePreferences.incrementAccessCount(AdEnviroment.getInstance().getContext(), "count" + Float.toString(this.mY), -1);
 		GameData.getInstance().mMyScore.addScore(this.mPoint);
-		((Game) AdEnviroment.getInstance().getScene()).checkLevelFinish();
+		((MainGame) AdEnviroment.getInstance().getScene()).checkLevelFinish();
 	}
 
 	protected void pushDamage() {
@@ -140,7 +140,7 @@ public abstract class Bug extends Entity {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
-						((Game) AdEnviroment.getInstance().getScene()).gameOver();
+						((MainGame) AdEnviroment.getInstance().getScene()).gameOver();
 					}
 				});
 			}
@@ -161,7 +161,7 @@ public abstract class Bug extends Entity {
 		int y = (int) getY() / 77;
 		
 		// chiamare solo da thread safe
-		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(Game.PRESHOT_GAME_LAYER + y);
+		IEntity shotLayer = AdEnviroment.getInstance().getScene().getChild(MainGame.PRESHOT_GAME_LAYER + y);
 		for (int i = 0; i < shotLayer.getChildCount(); i++) {
 			IShape body_bug = getBody();
 			IShape body_shot = (IShape) shotLayer.getChild(i);
@@ -180,7 +180,7 @@ public abstract class Bug extends Entity {
 			int y = (int) getY() / 77 - 1;
 			int i = (int) (y * 9 + x);
 			
-			IEntity field = AdEnviroment.getInstance().getScene().getChild(Game.GAME_LAYER).getChild(i);
+			IEntity field = AdEnviroment.getInstance().getScene().getChild(MainGame.GAME_LAYER).getChild(i);
 			if (this.mCollide && getY() == field.getY() && this.mLife > 0 && 
 					field.getChildCount() == 1 && field.getFirstChild() instanceof Plant && field.getFirstChild().getFirstChild().getChildCount() > 0) {
 				final Plant plant = (Plant) field.getFirstChild();
