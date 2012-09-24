@@ -46,26 +46,25 @@ public final class R {
         public static final int of_notification_bkg=0x7f02001d;
     }
     public static final class id {
-        public static final int adView=0x7f080001;
-        public static final int exit_feint=0x7f080014;
-        public static final int frameLayout=0x7f08000b;
-        public static final int home=0x7f080012;
-        public static final int nested_window_root=0x7f08000a;
-        public static final int of_achievement_icon=0x7f080003;
-        public static final int of_achievement_icon_frame=0x7f080004;
-        public static final int of_achievement_notification=0x7f080002;
-        public static final int of_achievement_progress_icon=0x7f080008;
-        public static final int of_achievement_score=0x7f080006;
-        public static final int of_achievement_score_icon=0x7f080007;
-        public static final int of_achievement_text=0x7f080005;
-        public static final int of_icon=0x7f08000e;
-        public static final int of_ll_logo_image=0x7f08000d;
-        public static final int of_text=0x7f08000f;
-        public static final int of_text1=0x7f080010;
-        public static final int of_text2=0x7f080011;
-        public static final int progress=0x7f080009;
-        public static final int settings=0x7f080013;
-        public static final int web_view=0x7f08000c;
+        public static final int exit_feint=0x7f080013;
+        public static final int frameLayout=0x7f08000a;
+        public static final int home=0x7f080011;
+        public static final int nested_window_root=0x7f080009;
+        public static final int of_achievement_icon=0x7f080002;
+        public static final int of_achievement_icon_frame=0x7f080003;
+        public static final int of_achievement_notification=0x7f080001;
+        public static final int of_achievement_progress_icon=0x7f080007;
+        public static final int of_achievement_score=0x7f080005;
+        public static final int of_achievement_score_icon=0x7f080006;
+        public static final int of_achievement_text=0x7f080004;
+        public static final int of_icon=0x7f08000d;
+        public static final int of_ll_logo_image=0x7f08000c;
+        public static final int of_text=0x7f08000e;
+        public static final int of_text1=0x7f08000f;
+        public static final int of_text2=0x7f080010;
+        public static final int progress=0x7f080008;
+        public static final int settings=0x7f080012;
+        public static final int web_view=0x7f08000b;
         public static final int xmllayoutexample_rendersurfaceview=0x7f080000;
     }
     public static final class layout {
