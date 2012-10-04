@@ -19,8 +19,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.openfeint.api.ui.Dashboard;
-
 public class MainMenu extends AdScene {
 	
 	private int mIndex;
@@ -141,10 +139,7 @@ public class MainMenu extends AdScene {
 				} catch (ActivityNotFoundException e) {
 				}
 			} else {
-				try {
-					Dashboard.open();
-				} catch (Exception e) {
-				}
+
 			}
 		}
 	}
@@ -155,21 +150,11 @@ public class MainMenu extends AdScene {
 	}
 
 	@Override
-	public void downSceneTouch(TouchEvent pSceneTouchEvent) {
+	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void moveSceneTouch(TouchEvent pSceneTouchEvent) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void upSceneTouch(TouchEvent pSceneTouchEvent) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

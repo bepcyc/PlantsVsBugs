@@ -30,11 +30,6 @@ import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
 
-import android.app.Activity;
-
-import com.openfeint.api.resource.Leaderboard;
-import com.openfeint.api.resource.Score;
-
 public class MainGame extends AdScene {
 
 	public static int PRESHOT_GAME_LAYER = 5;
@@ -204,37 +199,6 @@ public class MainGame extends AdScene {
 			
 			this.mGameOver = true;
 			
-			try {
-				Score s = new Score(GameData.getInstance().mMyScore.getScore());
-				Leaderboard l = new Leaderboard(AdEnviroment.getInstance().getContext().getString(R.string.score));
-				s.submitTo(l, new Score.SubmitToCB() {
-					@Override public void onSuccess(boolean newHighScore) {
-						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_OK);
-					}
-					
-					@Override public void onFailure(String exceptionMessage) {
-						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_CANCELED);
-					}
-				});
-			} catch (Exception e) {
-				
-			}
-			
-			try {
-				Score s = new Score(GameData.getInstance().mMyLevel.getScore());
-				Leaderboard l = new Leaderboard(AdEnviroment.getInstance().getContext().getString(R.string.level));
-				s.submitTo(l, new Score.SubmitToCB() {
-					@Override public void onSuccess(boolean newHighScore) {
-						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_OK);
-					}
-					
-					@Override public void onFailure(String exceptionMessage) {
-						((Activity) AdEnviroment.getInstance().getContext()).setResult(Activity.RESULT_CANCELED);
-					}
-				});
-			} catch (Exception e) {
-				
-			}
 		}
 	}
 
@@ -391,21 +355,10 @@ public class MainGame extends AdScene {
 	}
 
 	@Override
-	public void downSceneTouch(TouchEvent pSceneTouchEvent) {
+	public void manageSceneTouch(TouchEvent pSceneTouchEvent) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void moveSceneTouch(TouchEvent pSceneTouchEvent) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void upSceneTouch(TouchEvent pSceneTouchEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
